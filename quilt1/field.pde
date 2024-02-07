@@ -31,7 +31,13 @@ class Field {
             translate(x, y);
             translate(0, pgTextSize * 0.7/2);
             
-            text(coreString.charAt(counter%coreString.length()), 0, 0);
+            if(fillField){
+              text(coreString.charAt(counter%coreString.length()), 0, 0);            
+            } else {
+              if(n < coreStringArray[m].length()){
+                text(coreStringArray[m].charAt(n), 0, 0);                
+              }
+            }
           pop();
           
           counter ++;

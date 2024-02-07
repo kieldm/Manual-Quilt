@@ -12,6 +12,8 @@ PFont genFont;
 ControlApplet controls;
 
 String coreString = "BETTER BY DESIGN ";
+int lineMax = 10;
+String[] coreStringArray = new String[lineMax];
 
 Field coreFlag;
 int xCount = 20;

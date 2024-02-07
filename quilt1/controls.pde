@@ -30,7 +30,6 @@ class ControlApplet extends PApplet {
        .setValue(true)
        .setCaptionLabel("Fill Field");
     cp5.getController("fillField").getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
-
     
     cp5.addSlider("xCount")
        .setPosition(25, 250)
@@ -48,32 +47,41 @@ class ControlApplet extends PApplet {
        .setCaptionLabel("Y Count");    
     cp5.getController("yCount").getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
        
-    cp5.setColorBackground(color(200))
-       .setColorForeground(color(0))
-       .setColorActive(color(0))
+    cp5.addSlider("xSpace")
+       .setPosition(25, 330)
+       .setSize(300, 20)
+       .setRange(1, 100)
+       .setValue(25)
+       .setCaptionLabel("X-Space");
+    cp5.getController("xSpace").getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
+
+    cp5.addSlider("ySpace")
+       .setPosition(25, 365)
+       .setSize(300, 20)
+       .setRange(1, 100)
+       .setValue(25)
+       .setCaptionLabel("Y-Space");    
+    cp5.getController("ySpace").getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
+       
+    cp5.setColorBackground(color(220))
+       .setColorForeground(color(30))
+       .setColorActive(color(30))
        .setColorCaptionLabel(color(0))
        .setFont(uiFontSys1);
        
-       
-    cp6.setColorBackground(color(200))
-       .setColorForeground(color(0))
-       .setColorActive(color(0))
-       .setColorCaptionLabel(color(0))
-       .setColorValueLabel(color(0))
+    cp6.setColorBackground(color(220))
+       .setColorForeground(color(30))
+       .setColorActive(color(30))
+       .setColorCaptionLabel(color(30))
+       .setColorValueLabel(color(30))
        .setFont(uiFontSys2);
   }
 
   public void draw() {
-    coreString = cp6.get(Textfield.class,"mainInput").getText();      ///////// PROBLEM AREA?
-    if(fillField == false && xCount != coreString.length()){
-      for(int n = 0; n < coreString.length(); n++){
-        if(coreString.charAt(n) == '|'){
-          splitIntoArray();
-          break;
-        }
-      }
-      xCount = coreString.length();
-      yCount = 1;  
+    if(fillField){
+      coreString = cp6.get(Textfield.class,"mainInput").getText();      ///////// PROBLEM AREA? Does this alwyas need to be running?
+    } else if(cp6.get(Textfield.class,"mainInput").getText().length() != coreString.length()){
+      splitInputIntoArray();
     }
     
     background(uiBkgdColor);
@@ -82,7 +90,7 @@ class ControlApplet extends PApplet {
     fill(uiForeColor);
     
     push();
-      translate(25, 60);
+      translate(25, 65);
             
       textFont(uiFontMain);
       textSize(50);
@@ -90,7 +98,7 @@ class ControlApplet extends PApplet {
       
       translate(0, 40);
       textFont(uiFontSub);
-      textSize(14);
+      textSize(16);
       text("TEXT", 0, 0);
       
       translate(0, 140);
@@ -99,9 +107,9 @@ class ControlApplet extends PApplet {
         noFill();
         stroke(125);
         
-        rect(0, 15, 300, 60);
-        line(0, 15, 300, 75);
-        line(300, 15, 0, 75);
+        rect(0, 10, 300, 65);
+        line(0, 10, 300, 75);
+        line(300, 10, 0, 75);
       }
 
       translate(0, 240);
@@ -126,21 +134,28 @@ class ControlApplet extends PApplet {
     if(theFlag){
       xCount = xCountHold;
       yCount = yCountHold;
-      cp5.getController("xCount").setVisible(true);
-      cp5.getController("yCount").setVisible(true);
+      //cp5.getController("xCount").setVisible(true);
+      //cp5.getController("yCount").setVisible(true);
+      cp5.getController("xCount").setLock(false);
+      cp5.getController("yCount").setLock(false);
     } else {
       xCountHold = xCount;
       yCountHold = yCount;
-      xCount = coreString.length();
-      yCount = 1;
-      cp5.getController("xCount").setVisible(false);
-      cp5.getController("yCount").setVisible(false);
+
+      splitInputIntoArray(); 
+
+      //cp5.getController("xCount").setVisible(false);
+      //cp5.getController("yCount").setVisible(false);
+      cp5.getController("xCount").setLock(true);
+      cp5.getController("yCount").setLock(true);
     }
-    cp5.getController("xCount").setValue(xCount);
-    cp5.getController("yCount").setValue(yCount);
+    //cp5.getController("xCount").setValue(xCount);
+    //cp5.getController("yCount").setValue(yCount);
   }
   public void xCount(int n){ xCount = n; }
   public void yCount(int n){ yCount = n; }
+  public void xSpace(float n){ xSpace = n; }
+  public void ySpace(float n){ ySpace = n; }
   //public void mainInput(String s) {        ////////// WOULD LOVE THIS TO BE LIVE AND RESPONSIVE; as you type it refreshes
   //  coreString = s;
   //  if(fillField == false){
@@ -151,6 +166,16 @@ class ControlApplet extends PApplet {
   //  }
   //}
   public void splitInputIntoArray(){
+    coreString = cp6.get(Textfield.class,"mainInput").getText();
+    coreStringArray = coreString.split("\\|");
     
+    yCount = coreStringArray.length;
+    int measurer = 0;
+    for(int m = 0; m < coreStringArray.length; m++){
+      if(coreStringArray[m].length() > measurer){
+        xCount = coreStringArray[m].length();
+        measurer = coreStringArray[m].length();
+      }
+    }
   }
 }
