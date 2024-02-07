@@ -16,15 +16,36 @@ class ControlApplet extends PApplet {
     
     cp5 = new ControlP5(this);
     
+    cp5.addTextfield("mainInput")
+       .setPosition(25, 150)
+       .setSize(300, 40)
+       .setValue("BETTER BY DESIGN")
+       .setAutoClear(false)
+       .setCaptionLabel("");
+    
     cp5.addSlider("xCount")
-       .setPosition(25, 340)
-       .setSize(350, 40)
-       .setFont(uiFontSub)
-       .setRange(1, 50);
+       .setPosition(25, 310)
+       .setSize(300, 20)
+       .setRange(1, 50)
+       .setValue(20)
+       .setCaptionLabel("X Count");
+       
+    cp5.addSlider("yCount")
+       .setPosition(25, 335)
+       .setSize(300, 20)
+       .setRange(1, 50)
+       .setValue(20)
+       .setCaptionLabel("Y Count");
+       
+    cp5.setColorBackground(color(200))
+       .setColorForeground(color(0))
+       .setColorActive(color(0))
+       .setColorCaptionLabel(color(0))
+       .setFont(uiFontSys);
   }
 
   public void draw() {
-    background(125);
+    background(uiBkgdColor);
     
     noStroke();
     fill(uiForeColor);
@@ -41,11 +62,17 @@ class ControlApplet extends PApplet {
       textSize(14);
       text("TEXT", 0, 0);
       
-      translate(0, 200);
+      translate(0, 140);
       text("FIELD", 0, 0);
-      text("X Count", 0, 10);      
-      
-      
+
+      translate(0, 240);
+      text("WAVE", 0, 0);
+     
+      translate(0, 340);
+      text("CAMERA", 0, 0);
     pop();    
   }
+  
+  public void xCount(int n){ xCount = n; }
+  public void yCount(int n){ yCount = n; }
 }

@@ -6,7 +6,7 @@ color foreColor = #ffffff;
 color uiBkgdColor = #ffffff;
 color uiForeColor = #000000;
 
-PFont uiFontMain, uiFontSub;
+PFont uiFontMain, uiFontSub, uiFontSys;
 PFont genFont;
 
 ControlApplet controls;
@@ -14,9 +14,9 @@ ControlApplet controls;
 String coreString = "BETTER BY DESIGN ";
 
 Field coreFlag;
-int xCount = 12;
+int xCount = 20;
+int yCount = 20;
 float xSpace = 25;
-int yCount = 12;
 float ySpace = 25;
 
 float pgTextSize = 20;
@@ -29,8 +29,9 @@ void settings(){
 void setup() {
   uiFontMain = createFont("Inter-Black.ttf", 100);
   uiFontSub = createFont("Inter-Medium.ttf", 100);
+  uiFontSys = createFont("Inter-Medium.ttf", 10);
   
-  genFont = createFont("EditorialNew-Regular.ttf", 100);
+  genFont = createFont("STKBureau-Sans-Book-Trial.otf", 100);
   
   controls = new ControlApplet();
 
