@@ -1,12 +1,12 @@
 import controlP5.*;
-ControlP5 cp5;
+ControlP5 cp5, cp6;
 
 color bkgdColor = #0000ff;
 color foreColor = #ffffff;
 color uiBkgdColor = #ffffff;
 color uiForeColor = #000000;
 
-PFont uiFontMain, uiFontSub, uiFontSys;
+PFont uiFontMain, uiFontSub, uiFontSys1, uiFontSys2;
 PFont genFont;
 
 ControlApplet controls;
@@ -15,11 +15,15 @@ String coreString = "BETTER BY DESIGN ";
 
 Field coreFlag;
 int xCount = 20;
+int xCountHold = xCount;
 int yCount = 20;
+int yCountHold = yCount;
 float xSpace = 25;
 float ySpace = 25;
 
 float pgTextSize = 20;
+
+boolean fillField = true;
 
 void settings(){
   size(1080, 1080, P3D);
@@ -29,7 +33,8 @@ void settings(){
 void setup() {
   uiFontMain = createFont("Inter-Black.ttf", 100);
   uiFontSub = createFont("Inter-Medium.ttf", 100);
-  uiFontSys = createFont("Inter-Medium.ttf", 10);
+  uiFontSys1 = createFont("Inter-Medium.ttf", 10);
+  uiFontSys2 = createFont("Inter-Medium.ttf", 20);
   
   genFont = createFont("STKBureau-Sans-Book-Trial.otf", 100);
   
@@ -39,7 +44,7 @@ void setup() {
 
   surface.setTitle("Main");
   surface.setResizable(false);
-  surface.setLocation(410, 10);
+  surface.setLocation(400, 10);
   
   coreFlag = new Field();
 }

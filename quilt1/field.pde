@@ -26,7 +26,6 @@ class Field {
         for(int n = 0; n < xCount; n++){
           float x = n * xSpace;
           float y = m * ySpace;
-          
   
           push();
             translate(x, y);
