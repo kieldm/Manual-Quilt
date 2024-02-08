@@ -27,15 +27,29 @@ class Field {
           float x = n * xSpace;
           float y = m * ySpace;
   
+          float xWaverPre = sinEngine(n - 1, xWaveOffset, xWaveSpeed, 1) * waveSize;  
+          float xWaver = sinEngine(n, xWaveOffset, xWaveSpeed, 1) * waveSize;
+          float xWaverPost = sinEngine(n + 1, xWaveOffset, xWaveSpeed, 1) * waveSize;  
+        
+          float yWaverPre = sinEngine(m - 1, yWaveOffset, yWaveSpeed, 1) * waveSize;
+          float yWaver = sinEngine(m, yWaveOffset, yWaveSpeed, 1) * waveSize;
+          float yWaverPost = sinEngine(m + 1, yWaveOffset, yWaveSpeed, 1) * waveSize;
+  
+          float rotX = atan2(yWaverPost - yWaverPre, 2 * ySpace);
+          float rotY = atan2(xWaverPre - xWaverPost, 2 * xSpace);
           push();
             translate(x, y);
-            translate(0, pgTextSize * 0.7/2);
+            //translate(0, pgTextSize * 0.7/2);
+            translate(0, 0, xWaver + yWaver);
+            
+            rotateY(rotY);
+            rotateX(rotX);
             
             if(fillField){
-              text(coreString.charAt(counter%coreString.length()), 0, 0);            
+              text(coreString.charAt(counter%coreString.length()), 0, pgTextSize * 0.7/2);            
             } else {
               if(n < coreStringArray[m].length()){
-                text(coreStringArray[m].charAt(n), 0, 0);                
+                text(coreStringArray[m].charAt(n), 0, pgTextSize * 0.7/2);                
               }
             }
           pop();

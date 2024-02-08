@@ -23,6 +23,13 @@ int yCountHold = yCount;
 float xSpace = 25;
 float ySpace = 25;
 
+float xWaveOffset = 0;
+float xWaveSpeed = 0;
+float yWaveOffset = 0;
+float yWaveSpeed = 0;
+
+float waveSize = 0;
+
 float pgTextSize = 20;
 
 boolean fillField = true;
@@ -56,7 +63,9 @@ void draw(){
   
   push();
     translate(width/2, height/2);
-        
+    rotateZ(-PI/6);
+    rotateX(PI/8);
+    
     coreFlag.run();
   pop();
 }
