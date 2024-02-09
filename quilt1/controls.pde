@@ -30,8 +30,8 @@ class ControlApplet extends PApplet {
     cp7.getController("canvasHeight").getValueLabel().setPaddingX(3);
     
     //////////////// TEXT
-    cp6.addTextfield("mainInput").setPosition(20, 170).setSize(310, 32).setValue("BETTER BY DESIGN ").setAutoClear(false).setCaptionLabel("");
-    cp6.getController("mainInput").getValueLabel().setPaddingX(5);
+    cp6.addTextfield("mainInput").setPosition(20, 170).setSize(310, 32).setValue("BETTER BY DESIGN").setAutoClear(false).setCaptionLabel("");
+    cp6.getController("mainInput").getValueLabel().setPaddingX(2);
     
     cp5.addToggle("fillField").setPosition(20, 205).setSize(60, 20).setValue(true).setCaptionLabel("Fill Field");
     cp5.getController("fillField").getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
@@ -54,7 +54,7 @@ class ControlApplet extends PApplet {
     cp5.addButton("swatch10").setPosition(228, 325).setSize(50,20).setImage(swatch[10]);
 
     //////////////// FIELD
-    cp5.addSlider("xCount").setPosition(20, 380).setSize(150, 14).setRange(1, 50).setValue(17).setCaptionLabel("X Count");
+    cp5.addSlider("xCount").setPosition(20, 380).setSize(150, 14).setRange(1, 50).setValue(16).setCaptionLabel("X Count");
     cp5.getController("xCount").getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
 
     cp5.addSlider("yCount").setPosition(20, 410).setSize(150, 14).setRange(1, 50).setValue(30).setCaptionLabel("Y Count");    
@@ -67,6 +67,9 @@ class ControlApplet extends PApplet {
     cp5.getController("ySpace").getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
 
     //////////////// WAVE
+    cp5.addToggle("waveDimension").setPosition(20,470).setSize(80,14).setValue(true).setMode(ControlP5.SWITCH).setCaptionLabel("3D Wave");
+    cp5.getController("waveDimension").getCaptionLabel().align(ControlP5.LEFT, ControlP5.RIGHT_OUTSIDE).setPaddingX(90);
+    
     cp5.addSlider("yWaveOffset").setPosition(20, 490).setSize(150, 14).setRange(-PI/4, PI/4).setValue(-0.1).setCaptionLabel("Vertical Offset");    
     cp5.getController("yWaveOffset").getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
 
@@ -140,7 +143,12 @@ class ControlApplet extends PApplet {
 
   public void draw() {
     if(fillField){
-      coreString = cp6.get(Textfield.class,"mainInput").getText();      ///////// PROBLEM AREA? Does this alwyas need to be running?
+      if(cp6.get(Textfield.class,"mainInput").getText().length() == 0){
+        cp6.get(Textfield.class,"mainInput").setText(" ");
+        coreString = " ";
+      } else {
+        coreString = cp6.get(Textfield.class,"mainInput").getText();      ///////// PROBLEM AREA? Does this alwyas need to be running?    
+      }
     } else if(cp6.get(Textfield.class,"mainInput").getText().length() != coreString.length()){
       splitInputIntoArray();
     }
@@ -168,7 +176,7 @@ class ControlApplet extends PApplet {
       
       text("FIELD", 0, 310);
 
-      text("WAVE", 0, 420);
+      text("WAVE", 0, 400);
       
       textFont(uiFontSub);
       textSize(14);
@@ -239,6 +247,7 @@ class ControlApplet extends PApplet {
   public void xSpace(float n){ xSpace = n; }
   public void ySpace(float n){ ySpace = n; }
   
+  public void waveDimension(boolean theFlag){ wave3D = theFlag; }
   public void yWaveOffset(float n){ yWaveOffset = n; }
   public void xWaveOffset(float n){ xWaveOffset = n; }
   public void loopLength(int n){
@@ -293,7 +302,16 @@ class ControlApplet extends PApplet {
   }
 
   public void splitInputIntoArray(){
+        //  if(cp6.get(Textfield.class,"mainInput").getText().length() == 0){
+        //cp6.get(Textfield.class,"mainInput").setText(" ");
+        //coreString = " ";
+    
+    if(cp6.get(Textfield.class,"mainInput").getText().length() == 0){
+      cp6.get(Textfield.class,"mainInput").setText(" ");
+      coreString = " ";
+    }
     coreString = cp6.get(Textfield.class,"mainInput").getText();
+    
     coreStringArray = coreString.split("\\|");
     
     yCount = coreStringArray.length;

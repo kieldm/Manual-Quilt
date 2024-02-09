@@ -16,7 +16,7 @@ int currentWidth, currentHeight;
 
 ControlApplet controls;
 
-String coreString = "BETTER BY DESIGN ";
+String coreString = "BETTER BY DESIGN";
 int lineMax = 10;
 String[] coreStringArray = new String[lineMax];
 PImage[] swatch = new PImage[11];
@@ -62,6 +62,11 @@ boolean exportSeqToggle = false;
 String seqTag;
 int seqCount = 0;
 int seqCap = 0;
+
+boolean wave3D = true;
+
+//boolean drawOn = true;
+//int drawCap = 0;
 
 void settings(){
   size(1080, 1080, P3D);
@@ -118,7 +123,7 @@ void draw(){
     translate(width/2, height/2);
     
     // ANIMATE CAMERA
-    if(animateCamera){
+    if(animateCamera && wave3D){
       cameraAnimation();
       translate(0, 0, animatorZoomZ);
       
@@ -128,15 +133,21 @@ void draw(){
     }
         
     // CAMERA
-    rotateX(cameraRotX);
-    rotateY(cameraRotY);
-    rotateZ(cameraRotZ);
-        
+    if(wave3D){
+      rotateX(cameraRotX);
+      rotateY(cameraRotY);
+      rotateZ(cameraRotZ);    
+    }
+
     // SCALE
     scale(coreScale);
     
     coreFlag.run();
   pop();
+
+  //float tk0 = map(frameCount, 0, loopLength, 0, 1);
+  //drawCap = round(map(easeOutExpo(tk0), 0, 1, 0, yCount));
+  //drawCap += 3;
 
   if(currentHeight != canvasHeight || currentWidth != canvasWidth){
     resizeWindow();

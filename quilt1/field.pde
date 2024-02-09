@@ -26,26 +26,31 @@ class Field {
         for(int n = 0; n < xCount; n++){
           float x = n * xSpace;
           float y = m * ySpace;
-  
-          float fullWave =  sinEngine2(m, yWaveOffset, n, xWaveOffset, waveSpeed, 1) * waveSize;
-    
-          float fullWaveAbove =  sinEngine2(m - 1, yWaveOffset, n, xWaveOffset, waveSpeed, 1) * waveSize;
-          float fullWaveBelow =  sinEngine2(m + 1, yWaveOffset, n, xWaveOffset, waveSpeed, 1) * waveSize;
-          float fullWavePre =  sinEngine2(m, yWaveOffset, n - 1, xWaveOffset, waveSpeed, 1) * waveSize;
-          float fullWavePost =  sinEngine2(m, yWaveOffset, n + 1, xWaveOffset, waveSpeed, 1) * waveSize;
-    
-          float rotX = atan2(fullWaveBelow - fullWaveAbove, 2 * ySpace);
-          float rotY = atan2(fullWavePre - fullWavePost, 2 * xSpace);
-                    
+                      
           push();
             translate(x, y);
-            translate(0, 0, fullWave);
             
-            rotateY(rotY);
-            rotateX(rotX);
+            if(wave3D){
+              float fullWave =  sinEngine2(m, yWaveOffset, n, xWaveOffset, waveSpeed, 1) * waveSize;
+              float fullWaveAbove =  sinEngine2(m - 1, yWaveOffset, n, xWaveOffset, waveSpeed, 1) * waveSize;
+              float fullWaveBelow =  sinEngine2(m + 1, yWaveOffset, n, xWaveOffset, waveSpeed, 1) * waveSize;
+              float fullWavePre =  sinEngine2(m, yWaveOffset, n - 1, xWaveOffset, waveSpeed, 1) * waveSize;
+              float fullWavePost =  sinEngine2(m, yWaveOffset, n + 1, xWaveOffset, waveSpeed, 1) * waveSize;
+              float rotX = atan2(fullWaveBelow - fullWaveAbove, 2 * ySpace);
+              float rotY = atan2(fullWavePre - fullWavePost, 2 * xSpace);          
+              translate(0, 0, fullWave);
+              rotateY(rotY);
+              rotateX(rotX);
+            } else {
+              float waver = sinEngine2(m, yWaveOffset, n, xWaveOffset, waveSpeed, 1);
+              float fullWave = map(waver, -1, 1, 0.1, 1);
+              scale(fullWave);
+            }
             
             if(fillField){
-              text(coreString.charAt(counter%coreString.length()), 0, pgTextSize * 0.7/2);
+              //if(drawOn && m < drawCap){
+                text(coreString.charAt(counter%coreString.length()), 0, pgTextSize * 0.7/2);            
+              //}
             } else {
               if(n < coreStringArray[m].length()){
                 text(coreStringArray[m].charAt(n), 0, pgTextSize * 0.7/2);               
