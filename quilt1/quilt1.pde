@@ -1,6 +1,7 @@
 import controlP5.*;
+import processing.svg.*;
 ControlP5 cp5, cp6, cp7;
-RadioButton r1;
+
 
 color bkgdColor = #FEF9F3;
 color foreColor = #000000;
@@ -51,8 +52,16 @@ float animateZoomZ = 0;
 float pgTextSize = 20;
 float coreScale = 1;
 
+float projZdist = -2000;
+float projZFact = 3.13833429;
+
 boolean fillField = true;
 boolean animateCamera = false;
+boolean exportSVGtoggle = false;
+boolean exportSeqToggle = false;
+String seqTag;
+int seqCount = 0;
+int seqCap = 0;
 
 void settings(){
   size(1080, 1080, P3D);
@@ -64,7 +73,7 @@ void settings(){
   smooth(8);
 }
 
-void setup() {
+void setup() {  
   uiFontHead= createFont("STKBureau-Sans-Book-Trial.otf", 60);
   uiFontMain = createFont("STKBureau-Sans-Book-Trial.otf", 50);
   uiFontSub = createFont("IBMPlexMono-Medium.otf", 50);
@@ -91,6 +100,19 @@ void setup() {
 
 void draw(){
   background(bkgdColor);
+
+  if(exportSVGtoggle){
+    String saveTag = "quiltVector_" + day() + minute() + second();
+    beginRaw(SVG, "export/svg" + saveTag + ".svg");
+
+    push();
+      noStroke();
+      fill(bkgdColor);
+      translate(width/2, height/2, -2000);
+      rectMode(CENTER);
+      rect(0, 0, width * projZFact, height * projZFact);
+    pop();
+  }
   
   push();
     translate(width/2, height/2);
@@ -120,7 +142,19 @@ void draw(){
     resizeWindow();
   }
   
-
+  if(exportSeqToggle){
+    saveFrame("export/sequence/" + seqTag + "/quiltFrame-###.png");
+    seqCount++;
+    
+    if(seqCount >= seqCap){
+      exportSeqToggle = false;
+    }
+  }
+  
+  if(exportSVGtoggle){
+    endRaw();
+    exportSVGtoggle = false;
+  }
 }
 
 void cameraAnimation(){

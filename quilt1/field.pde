@@ -39,8 +39,6 @@ class Field {
                     
           push();
             translate(x, y);
-            //translate(0, pgTextSize * 0.7/2);
-            //translate(0, 0, xWaver + yWaver);
             translate(0, 0, fullWave);
             
             rotateY(rotY);
@@ -48,15 +46,9 @@ class Field {
             
             if(fillField){
               text(coreString.charAt(counter%coreString.length()), 0, pgTextSize * 0.7/2);
-              
-              //translate(0,0,0.5);
-              //text(coreString.charAt(counter%coreString.length()), 0, pgTextSize * 0.7/2);
             } else {
               if(n < coreStringArray[m].length()){
-                text(coreStringArray[m].charAt(n), 0, pgTextSize * 0.7/2);
-                
-                //translate(0,0,0.5);
-                //text(coreStringArray[m].charAt(n), 0, pgTextSize * 0.7/2);
+                text(coreStringArray[m].charAt(n), 0, pgTextSize * 0.7/2);               
               }
             }
           pop();

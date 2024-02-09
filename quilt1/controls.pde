@@ -104,6 +104,10 @@ class ControlApplet extends PApplet {
     cp5.addSlider("animateZoomZ").setPosition(180, 740).setSize(150, 14).setRange(-300, 300).setValue(0).setCaptionLabel("Animate Zoom");
     cp5.getController("animateZoomZ").getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
 
+    //////////////// EXPORT
+    cp5.addButton("exportSVG").setPosition(20, 800).setSize(150,40).setCaptionLabel("Export SVG");
+    cp5.addButton("exportSeq").setPosition(180, 800).setSize(150,40).setCaptionLabel("Export Sequence");
+
     cp5.setColorBackground(color(220))
        .setColorForeground(color(30))
        .setColorActive(color(30))
@@ -173,7 +177,7 @@ class ControlApplet extends PApplet {
       textSize(20);
       text("CAMERA", 0, 550);
       
-      text("EXPORT", 0, 740);
+      text("EXPORT", 0, 730);
     pop();    
   }
   
@@ -274,6 +278,18 @@ class ControlApplet extends PApplet {
       cp5.getController("animateRotZ").setColorForeground(color(200)); cp5.getController("animateRotZ").setColorCaptionLabel(color(200));
       cp5.getController("animateZoomZ").setColorForeground(color(200)); cp5.getController("animateZoomZ").setColorCaptionLabel(color(200));
     }
+  }
+  
+  public void exportSVG(){ exportSVGtoggle = true; println("SVG LAUNCH!");}
+  public void exportSeq(){
+    exportSeqToggle = true;
+    seqTag = "quiltSeq_" + day() + minute() + second();
+    seqCount = 0;
+    seqCap = loopLength;
+    if(animateCamera){
+      seqCap *= 2;
+    }
+    println("SEQ LAUNCH!");
   }
 
   public void splitInputIntoArray(){
