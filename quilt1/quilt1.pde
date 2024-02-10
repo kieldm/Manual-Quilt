@@ -1,6 +1,5 @@
 import controlP5.*;
 import processing.svg.*;
-ControlP5 cp5, cp6, cp7;
 
 
 color bkgdColor = #FEF9F3;
