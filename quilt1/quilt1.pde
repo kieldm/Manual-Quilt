@@ -26,44 +26,28 @@ int xCount = 17;
 int xCountHold = xCount;
 int yCount = 20;
 int yCountHold = yCount;
-float xSpace = 25;
-float ySpace = 25;
-
-float xWaveOffset = 0;
-float yWaveOffset = 0;
-float waveSize = 0;
-
 int loopLength = 0;
-float waveSpeed = 0;
 
-float cameraRotX = 0;
-float cameraRotY = 0;
-float cameraRotZ = 0;
-
-float animatorRotX = 0;
-float animatorRotY = 0;
-float animatorRotZ = 0;
-float animateRotX = 0;
-float animateRotY = 0;
-float animateRotZ = 0;
-float animatorZoomZ = 0;
-float animateZoomZ = 0;
-
+float xSpace, ySpace = 25;
+float xWaveOffset, yWaveOffset, waveSize, waveSpeed = 0;
+float cameraRotX, cameraRotY,cameraRotZ = 0;
+float animatorRotX, animatorRotY, animatorRotZ = 0;
+float animateRotX, animateRotY, animateRotZ = 0;
+float animatorZoomZ, animateZoomZ = 0;
 float pgTextSize = 20;
 float coreScale = 1;
-
 float projZdist = -2000;
 float projZFact = 3.13833429;
 
+boolean wave3D = true;
 boolean fillField = true;
 boolean animateCamera = false;
 boolean exportSVGtoggle = false;
 boolean exportSeqToggle = false;
+
 String seqTag;
 int seqCount = 0;
 int seqCap = 0;
-
-boolean wave3D = true;
 
 //boolean drawOn = true;
 //int drawCap = 0;
