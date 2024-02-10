@@ -1,6 +1,6 @@
 class ControlApplet extends PApplet {
 
-  private ControlP5 cp5, cp6, cp7;
+  private ControlP5 cp5, cp6;
   private Slider xCountSlider;
   private Slider yCountSlider;
   private Slider animateRotXSlider;
@@ -32,48 +32,42 @@ class ControlApplet extends PApplet {
        .setColorActive(color(30))
        .setColorCaptionLabel(color(0))
        .setFont(uiFontSys1);
-       
-    cp6 = new ControlP5(this);
-    cp6.setColorBackground(color(200))
-       .setColorForeground(color(30))
-       .setColorActive(color(30))
-       .setColorCaptionLabel(color(30))
-       .setColorValueLabel(color(30))
-       .setFont(uiFontSys2);
-       
-    cp7 = new ControlP5(this);
-    cp7.setColorBackground(color(200))
-       .setColorForeground(color(30))
-       .setColorActive(color(30))
-       .setColorCaptionLabel(color(30))
-       .setColorValueLabel(color(30))
-       .setFont(uiFontSys1);
 
     // CANVAS
-    Textfield canvasWidth = cp7.addTextfield("canvasWidth")
+    Textfield canvasWidth = cp5.addTextfield("canvasWidth")
                                .setPosition(20, 100)
                                .setSize(50, 25)
                                .setValue("1080")
                                .setAutoClear(false)
+                               .setColorBackground(color(200))
+                               .setColorCaptionLabel(color(30))
+                               .setColorValueLabel(color(30))
                                .setCaptionLabel("Width");
     canvasWidth.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
     canvasWidth.getValueLabel().setPaddingX(3);
 
-    Textfield canvasHeight = cp7.addTextfield("canvasHeight")
+    Textfield canvasHeight = cp5.addTextfield("canvasHeight")
                                 .setPosition(75, 100)
                                 .setSize(50, 25)
                                 .setValue("1080")
                                 .setAutoClear(false)
+                                .setColorBackground(color(200))
+                                .setColorCaptionLabel(color(30))
+                                .setColorValueLabel(color(30))
                                 .setCaptionLabel("Height");
     canvasHeight.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
     canvasHeight.getValueLabel().setPaddingX(3);
     
     // TEXT
-    mainInputText = cp6.addTextfield("mainInput")
+    mainInputText = cp5.addTextfield("mainInput")
                              .setPosition(20, 170)
                              .setSize(310, 32)
                              .setValue("BETTER BY DESIGN")
                              .setAutoClear(false)
+                             .setColorBackground(color(200))
+                             .setColorCaptionLabel(color(30))
+                             .setColorValueLabel(color(30))
+                             .setFont(uiFontSys2)
                              .setCaptionLabel("");
     mainInputText.getValueLabel().setPaddingX(2);
     
