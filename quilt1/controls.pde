@@ -9,7 +9,7 @@ class ControlApplet extends PApplet {
     smooth(8);
   }
 
-  public void setup() { 
+  public void setup() {
     frameRate(30);
       
     surface.setTitle("Controls");
@@ -17,21 +17,21 @@ class ControlApplet extends PApplet {
     surface.setLocation(10, 10);
     
     cp5 = new ControlP5(this);
-    cp6 = new ControlP5(this);
-    cp7 = new ControlP5(this);
+    cp5 = new ControlP5(this);
+    cp5 = new ControlP5(this);
 
     //////////////// CANVAS
-    cp7.addTextfield("canvasWidth").setPosition(20, 100).setSize(50, 25).setValue("1080").setAutoClear(false).setCaptionLabel("Width");
-    cp7.getController("canvasWidth").getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
-    cp7.getController("canvasWidth").getValueLabel().setPaddingX(3);
+    cp5.addTextfield("canvasWidth").setPosition(20, 100).setSize(50, 25).setValue("1080").setAutoClear(false).setCaptionLabel("Width");
+    cp5.getController("canvasWidth").getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
+    cp5.getController("canvasWidth").getValueLabel().setPaddingX(3);
 
-    cp7.addTextfield("canvasHeight").setPosition(75, 100).setSize(50, 25).setValue("1080").setAutoClear(false).setCaptionLabel("Height");
-    cp7.getController("canvasHeight").getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
-    cp7.getController("canvasHeight").getValueLabel().setPaddingX(3);
+    cp5.addTextfield("canvasHeight").setPosition(75, 100).setSize(50, 25).setValue("1080").setAutoClear(false).setCaptionLabel("Height");
+    cp5.getController("canvasHeight").getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
+    cp5.getController("canvasHeight").getValueLabel().setPaddingX(3);
     
     //////////////// TEXT
-    cp6.addTextfield("mainInput").setPosition(20, 170).setSize(310, 32).setValue("BETTER BY DESIGN").setAutoClear(false).setCaptionLabel("");
-    cp6.getController("mainInput").getValueLabel().setPaddingX(2);
+    cp5.addTextfield("mainInput").setPosition(20, 170).setSize(310, 32).setValue("BETTER BY DESIGN").setAutoClear(false).setCaptionLabel("");
+    cp5.getController("mainInput").getValueLabel().setPaddingX(2);
     
     cp5.addToggle("fillField").setPosition(20, 205).setSize(60, 20).setValue(true).setCaptionLabel("Fill Field");
     cp5.getController("fillField").getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
@@ -117,14 +117,14 @@ class ControlApplet extends PApplet {
        .setColorCaptionLabel(color(0))
        .setFont(uiFontSys1);
        
-    cp6.setColorBackground(color(200))
+    cp5.setColorBackground(color(200))
        .setColorForeground(color(30))
        .setColorActive(color(30))
        .setColorCaptionLabel(color(30))
        .setColorValueLabel(color(30))
        .setFont(uiFontSys2);
        
-    cp7.setColorBackground(color(200))
+    cp5.setColorBackground(color(200))
        .setColorForeground(color(30))
        .setColorActive(color(30))
        .setColorCaptionLabel(color(30))
@@ -143,13 +143,13 @@ class ControlApplet extends PApplet {
 
   public void draw() {
     if(fillField){
-      if(cp6.get(Textfield.class,"mainInput").getText().length() == 0){
-        cp6.get(Textfield.class,"mainInput").setText(" ");
+      if(cp5.get(Textfield.class,"mainInput").getText().length() == 0){
+        cp5.get(Textfield.class,"mainInput").setText(" ");
         coreString = " ";
       } else {
-        coreString = cp6.get(Textfield.class,"mainInput").getText();      ///////// PROBLEM AREA? Does this alwyas need to be running?    
+        coreString = cp5.get(Textfield.class,"mainInput").getText();      ///////// PROBLEM AREA? Does this alwyas need to be running?    
       }
-    } else if(cp6.get(Textfield.class,"mainInput").getText().length() != coreString.length()){
+    } else if(cp5.get(Textfield.class,"mainInput").getText().length() != coreString.length()){
       splitInputIntoArray();
     }
     
@@ -302,15 +302,15 @@ class ControlApplet extends PApplet {
   }
 
   public void splitInputIntoArray(){
-        //  if(cp6.get(Textfield.class,"mainInput").getText().length() == 0){
-        //cp6.get(Textfield.class,"mainInput").setText(" ");
+        //  if(cp5.get(Textfield.class,"mainInput").getText().length() == 0){
+        //cp5.get(Textfield.class,"mainInput").setText(" ");
         //coreString = " ";
     
-    if(cp6.get(Textfield.class,"mainInput").getText().length() == 0){
-      cp6.get(Textfield.class,"mainInput").setText(" ");
+    if(cp5.get(Textfield.class,"mainInput").getText().length() == 0){
+      cp5.get(Textfield.class,"mainInput").setText(" ");
       coreString = " ";
     }
-    coreString = cp6.get(Textfield.class,"mainInput").getText();
+    coreString = cp5.get(Textfield.class,"mainInput").getText();
     
     coreStringArray = coreString.split("\\|");
     
