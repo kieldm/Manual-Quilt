@@ -240,15 +240,19 @@ class ControlApplet extends PApplet {
     if(theFlag){
       xCount = xCountHold;
       yCount = yCountHold;
-      xCountSlider.setLock(false).setColorForeground(color(30)).setColorCaptionLabel(color(0));
-      yCountSlider.setLock(false).setColorForeground(color(30)).setColorCaptionLabel(color(0));
+      if (xCountSlider != null) {
+        xCountSlider.setLock(false).setColorForeground(color(30)).setColorCaptionLabel(color(0));
+        yCountSlider.setLock(false).setColorForeground(color(30)).setColorCaptionLabel(color(0));
+      }
     } else {
       xCountHold = xCount;
       yCountHold = yCount;
 
       splitInputIntoArray(); 
-      xCountSlider.setLock(true).setColorForeground(color(200)).setColorCaptionLabel(color(200));
-      yCountSlider.setLock(true).setColorForeground(color(200)).setColorCaptionLabel(color(200));
+      if (xCountSlider != null) {
+        xCountSlider.setLock(true).setColorForeground(color(200)).setColorCaptionLabel(color(200));
+        yCountSlider.setLock(true).setColorForeground(color(200)).setColorCaptionLabel(color(200));
+      }
     }
   }
 
@@ -314,10 +318,12 @@ class ControlApplet extends PApplet {
       ccl = 200;
     }
 
-    animateRotXSlider.setLock(toggle).setColorForeground(color(cfo)).setColorCaptionLabel(color(ccl));
-    animateRotYSlider.setLock(toggle).setColorForeground(color(cfo)).setColorCaptionLabel(color(ccl));
-    animateRotZSlider.setLock(toggle).setColorForeground(color(cfo)).setColorCaptionLabel(color(ccl));
-    animateZoomZSlider.setLock(toggle).setColorForeground(color(cfo)).setColorCaptionLabel(color(ccl));
+    if (animateRotXSlider != null) {
+      animateRotXSlider.setLock(toggle).setColorForeground(color(cfo)).setColorCaptionLabel(color(ccl));
+      animateRotYSlider.setLock(toggle).setColorForeground(color(cfo)).setColorCaptionLabel(color(ccl));
+      animateRotZSlider.setLock(toggle).setColorForeground(color(cfo)).setColorCaptionLabel(color(ccl));
+      animateZoomZSlider.setLock(toggle).setColorForeground(color(cfo)).setColorCaptionLabel(color(ccl));
+    }
   }
   
   public void exportSVG(){ exportSVGtoggle = true; println("SVG LAUNCH!");}
