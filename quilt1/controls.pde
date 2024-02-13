@@ -1,4 +1,14 @@
 class ControlApplet extends PApplet {
+
+  private ControlP5 cp5, cp6;
+  private Slider xCountSlider;
+  private Slider yCountSlider;
+  private Slider animateRotXSlider;
+  private Slider animateRotYSlider;
+  private Slider animateRotZSlider;
+  private Slider animateZoomZSlider;
+  private Textfield mainInputText;
+
   public ControlApplet() {
     super();
     PApplet.runSketch(new String[]{this.getClass().getName()}, this);
@@ -15,32 +25,70 @@ class ControlApplet extends PApplet {
     surface.setTitle("Controls");
     surface.setResizable(false);
     surface.setLocation(10, 10);
-    
+
     cp5 = new ControlP5(this);
-    cp6 = new ControlP5(this);
-    cp7 = new ControlP5(this);
+    cp5.setColorBackground(color(220))
+       .setColorForeground(color(30))
+       .setColorActive(color(30))
+       .setColorCaptionLabel(color(0))
+       .setFont(uiFontSys1);
 
-    //////////////// CANVAS
-    cp7.addTextfield("canvasWidth").setPosition(20, 100).setSize(50, 25).setValue("1080").setAutoClear(false).setCaptionLabel("Width");
-    cp7.getController("canvasWidth").getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
-    cp7.getController("canvasWidth").getValueLabel().setPaddingX(3);
+    // CANVAS
+    Textfield canvasWidth = cp5.addTextfield("canvasWidth")
+                               .setPosition(20, 100)
+                               .setSize(50, 25)
+                               .setValue("1080")
+                               .setAutoClear(false)
+                               .setColorBackground(color(200))
+                               .setColorCaptionLabel(color(30))
+                               .setColorValueLabel(color(30))
+                               .setCaptionLabel("Width");
+    canvasWidth.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
+    canvasWidth.getValueLabel().setPaddingX(3);
 
-    cp7.addTextfield("canvasHeight").setPosition(75, 100).setSize(50, 25).setValue("1080").setAutoClear(false).setCaptionLabel("Height");
-    cp7.getController("canvasHeight").getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
-    cp7.getController("canvasHeight").getValueLabel().setPaddingX(3);
+    Textfield canvasHeight = cp5.addTextfield("canvasHeight")
+                                .setPosition(75, 100)
+                                .setSize(50, 25)
+                                .setValue("1080")
+                                .setAutoClear(false)
+                                .setColorBackground(color(200))
+                                .setColorCaptionLabel(color(30))
+                                .setColorValueLabel(color(30))
+                                .setCaptionLabel("Height");
+    canvasHeight.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
+    canvasHeight.getValueLabel().setPaddingX(3);
     
-    //////////////// TEXT
-    cp6.addTextfield("mainInput").setPosition(20, 170).setSize(310, 32).setValue("BETTER BY DESIGN").setAutoClear(false).setCaptionLabel("");
-    cp6.getController("mainInput").getValueLabel().setPaddingX(2);
+    // TEXT
+    mainInputText = cp5.addTextfield("mainInput")
+                             .setPosition(20, 170)
+                             .setSize(310, 32)
+                             .setValue("BETTER BY DESIGN")
+                             .setAutoClear(false)
+                             .setColorBackground(color(200))
+                             .setColorCaptionLabel(color(30))
+                             .setColorValueLabel(color(30))
+                             .setFont(uiFontSys2)
+                             .setCaptionLabel("");
+    mainInputText.getValueLabel().setPaddingX(2);
     
-    cp5.addToggle("fillField").setPosition(20, 205).setSize(60, 20).setValue(true).setCaptionLabel("Fill Field");
-    cp5.getController("fillField").getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
+    Toggle fillFieldToggle = cp5.addToggle("fillField")
+                                .setPosition(20, 205)
+                                .setSize(60, 14)
+                                .setValue(true)
+                                .setCaptionLabel("Fill Field")
+                                .setMode(ControlP5.SWITCH);
+    fillFieldToggle.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
 
-    cp5.addSlider("coreScale").setPosition(20, 240).setSize(310, 14).setRange(0.1, 5).setValue(1.6).setCaptionLabel("Scale");
-    cp5.getController("coreScale").getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
+    Slider coreScale = cp5.addSlider("coreScale")
+                          .setPosition(20, 240)
+                          .setSize(310, 14)
+                          .setRange(0.1, 5)
+                          .setValue(1.6)
+                          .setCaptionLabel("Scale");
+    coreScale.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
 
     
-    //////////////// COLOR
+    // COLOR
     cp5.addButton("swatch0").setPosition(20, 300).setSize(50,20).setImage(swatch[0]);
     cp5.addButton("swatch1").setPosition(72, 300).setSize(50,20).setImage(swatch[1]);
     cp5.addButton("swatch2").setPosition(124, 300).setSize(50,20).setImage(swatch[2]);
@@ -53,12 +101,12 @@ class ControlApplet extends PApplet {
     cp5.addButton("swatch9").setPosition(176, 325).setSize(50,20).setImage(swatch[9]);
     cp5.addButton("swatch10").setPosition(228, 325).setSize(50,20).setImage(swatch[10]);
 
-    //////////////// FIELD
-    cp5.addSlider("xCount").setPosition(20, 380).setSize(150, 14).setRange(1, 50).setValue(16).setCaptionLabel("X Count");
-    cp5.getController("xCount").getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
+    // FIELD
+    xCountSlider = cp5.addSlider("xCount").setPosition(20, 380).setSize(150, 14).setRange(1, 50).setValue(16).setCaptionLabel("X Count");
+    xCountSlider.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
 
-    cp5.addSlider("yCount").setPosition(20, 410).setSize(150, 14).setRange(1, 50).setValue(30).setCaptionLabel("Y Count");    
-    cp5.getController("yCount").getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
+    yCountSlider = cp5.addSlider("yCount").setPosition(20, 410).setSize(150, 14).setRange(1, 50).setValue(30).setCaptionLabel("Y Count");    
+    yCountSlider.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
        
     cp5.addSlider("xSpace").setPosition(180, 380).setSize(150, 14).setRange(1, 100).setValue(30).setCaptionLabel("X Space");
     cp5.getController("xSpace").getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
@@ -66,7 +114,7 @@ class ControlApplet extends PApplet {
     cp5.addSlider("ySpace").setPosition(180, 410).setSize(150, 14).setRange(1, 100).setValue(30).setCaptionLabel("Y Space");    
     cp5.getController("ySpace").getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
 
-    //////////////// WAVE
+    // WAVE
     cp5.addToggle("waveDimension").setPosition(20,470).setSize(80,14).setValue(true).setMode(ControlP5.SWITCH).setCaptionLabel("3D Wave");
     cp5.getController("waveDimension").getCaptionLabel().align(ControlP5.LEFT, ControlP5.RIGHT_OUTSIDE).setPaddingX(90);
     
@@ -82,7 +130,7 @@ class ControlApplet extends PApplet {
     cp5.addSlider("loopLength").setPosition(20, 550).setSize(310, 14).setRange(60,400).setValue(180).setCaptionLabel("Loop Length");    
     cp5.getController("loopLength").getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
 
-    //////////////// CAMERA
+    // CAMERA
     cp5.addSlider("cameraRotX").setPosition(20, 620).setSize(150, 14).setRange(-PI/3, PI/3).setValue(0.33).setCaptionLabel("Rotate X");
     cp5.getController("cameraRotX").getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
 
@@ -95,61 +143,64 @@ class ControlApplet extends PApplet {
     cp5.addToggle("animateCamera").setPosition(230,620).setSize(80,14).setValue(false).setMode(ControlP5.SWITCH).setCaptionLabel("Animate");
     cp5.getController("animateCamera").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.LEFT_OUTSIDE).setPaddingX(88);
 
-    cp5.addSlider("animateRotX").setPosition(180, 650).setSize(150, 14).setRange(-PI/3, PI/3).setValue(0).setCaptionLabel("Animate X");
-    cp5.getController("animateRotX").getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
+    animateRotXSlider = cp5.addSlider("animateRotX")
+                           .setPosition(180, 650)
+                           .setSize(150, 14)
+                           .setRange(-PI/3, PI/3)
+                           .setValue(0)
+                           .setCaptionLabel("Animate X")
+                           .setLock(true)
+                           .setColorForeground(color(200))
+                           .setColorCaptionLabel(color(200));
+    animateRotXSlider.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
 
-    cp5.addSlider("animateRotY").setPosition(180, 680).setSize(150, 14).setRange(-PI/3, PI/3).setValue(0.25).setCaptionLabel("Animate Y");
-    cp5.getController("animateRotY").getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
+    animateRotYSlider = cp5.addSlider("animateRotY")
+                           .setPosition(180, 680)
+                           .setSize(150, 14)
+                           .setRange(-PI/3, PI/3)
+                           .setValue(0.25)
+                           .setCaptionLabel("Animate Y")
+                           .setLock(true)
+                           .setColorForeground(color(200))
+                           .setColorCaptionLabel(color(200));
+    animateRotYSlider.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
     
-    cp5.addSlider("animateRotZ").setPosition(180, 710).setSize(150, 14).setRange(-PI/3, PI/3).setValue(0).setCaptionLabel("Animate Z");
-    cp5.getController("animateRotZ").getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
+    animateRotZSlider = cp5.addSlider("animateRotZ")
+                           .setPosition(180, 710)
+                           .setSize(150, 14)
+                           .setRange(-PI/3, PI/3)
+                           .setValue(0)
+                           .setCaptionLabel("Animate Z")
+                           .setLock(true)
+                           .setColorForeground(color(200))
+                           .setColorCaptionLabel(color(200));
+    animateRotZSlider.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
 
-    cp5.addSlider("animateZoomZ").setPosition(180, 740).setSize(150, 14).setRange(-300, 300).setValue(0).setCaptionLabel("Animate Zoom");
-    cp5.getController("animateZoomZ").getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
+    animateZoomZSlider = cp5.addSlider("animateZoomZ")
+                            .setPosition(180, 740)
+                            .setSize(150, 14)
+                            .setRange(-300, 300)
+                            .setValue(0)
+                            .setCaptionLabel("Animate Zoom")
+                            .setLock(true)
+                            .setColorForeground(color(200))
+                            .setColorCaptionLabel(color(200));
+    animateZoomZSlider.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
 
-    //////////////// EXPORT
+    // EXPORT
     cp5.addButton("exportSVG").setPosition(20, 800).setSize(150,40).setCaptionLabel("Export SVG");
     cp5.addButton("exportSeq").setPosition(180, 800).setSize(150,40).setCaptionLabel("Export Sequence");
-
-    cp5.setColorBackground(color(220))
-       .setColorForeground(color(30))
-       .setColorActive(color(30))
-       .setColorCaptionLabel(color(0))
-       .setFont(uiFontSys1);
-       
-    cp6.setColorBackground(color(200))
-       .setColorForeground(color(30))
-       .setColorActive(color(30))
-       .setColorCaptionLabel(color(30))
-       .setColorValueLabel(color(30))
-       .setFont(uiFontSys2);
-       
-    cp7.setColorBackground(color(200))
-       .setColorForeground(color(30))
-       .setColorActive(color(30))
-       .setColorCaptionLabel(color(30))
-       .setColorValueLabel(color(30))
-       .setFont(uiFontSys1);
-       
-      cp5.getController("animateRotX").setLock(true);
-      cp5.getController("animateRotY").setLock(true);
-      cp5.getController("animateRotZ").setLock(true);
-      cp5.getController("animateZoomZ").setLock(true);
-      cp5.getController("animateRotX").setColorForeground(color(200)); cp5.getController("animateRotX").setColorCaptionLabel(color(200));
-      cp5.getController("animateRotY").setColorForeground(color(200)); cp5.getController("animateRotY").setColorCaptionLabel(color(200));
-      cp5.getController("animateRotZ").setColorForeground(color(200)); cp5.getController("animateRotZ").setColorCaptionLabel(color(200));
-      cp5.getController("animateZoomZ").setColorForeground(color(200)); cp5.getController("animateZoomZ").setColorCaptionLabel(color(200));
   }
 
   public void draw() {
     if(fillField){
-      if(cp6.get(Textfield.class,"mainInput").getText().length() == 0){
-        cp6.get(Textfield.class,"mainInput").setText(" ");
+      if(mainInputText.getText().length() == 0){
+        mainInputText.setText(" ");
         coreString = " ";
       } else {
-        coreString = cp6.get(Textfield.class,"mainInput").getText();      ///////// PROBLEM AREA? Does this alwyas need to be running?    
+        coreString = mainInputText.getText();
       }
-    } else if(cp6.get(Textfield.class,"mainInput").getText().length() != coreString.length()){
+    } else if(mainInputText.getText().length() != coreString.length()){
       splitInputIntoArray();
     }
     
@@ -167,62 +218,50 @@ class ControlApplet extends PApplet {
       
       textFont(uiFontMain);
       textSize(20);
-
       text("CANVAS", 0, 30);
-      
       text("TEXT", 0, 100);
-
       text("COLOR", 0, 230);
-      
       text("FIELD", 0, 310);
-
       text("WAVE", 0, 400);
       
-      textFont(uiFontSub);
-      textSize(14);
-     
+      //textFont(uiFontSub);
+      //textSize(14);
+
       textFont(uiFontMain);
       textSize(20);
       text("CAMERA", 0, 550);
-      
       text("EXPORT", 0, 730);
     pop();    
   }
-  
-  //public void mainInput(String theText) {
-  //  // automatically receives results from controller input
-  //  println("NEW INPUT! " + theText);
-  //}
-  public void refreshText(){
-    println("NEW TEXT!");
-  }
-  
+
   public void fillField(boolean theFlag){
     fillField = theFlag;
-    
+
     if(theFlag){
       xCount = xCountHold;
       yCount = yCountHold;
-      cp5.getController("xCount").setLock(false);
-      cp5.getController("yCount").setLock(false);
-      cp5.getController("xCount").setColorForeground(color(30)); cp5.getController("xCount").setColorCaptionLabel(color(0));
-      cp5.getController("yCount").setColorForeground(color(30)); cp5.getController("yCount").setColorCaptionLabel(color(0));
+      if (xCountSlider != null) {
+        xCountSlider.setLock(false).setColorForeground(color(30)).setColorCaptionLabel(color(0));
+        yCountSlider.setLock(false).setColorForeground(color(30)).setColorCaptionLabel(color(0));
+      }
     } else {
       xCountHold = xCount;
       yCountHold = yCount;
 
       splitInputIntoArray(); 
-      cp5.getController("xCount").setLock(true);
-      cp5.getController("yCount").setLock(true);
-      cp5.getController("xCount").setColorForeground(color(200)); cp5.getController("xCount").setColorCaptionLabel(color(200));
-      cp5.getController("yCount").setColorForeground(color(200)); cp5.getController("yCount").setColorCaptionLabel(color(200));
+      if (xCountSlider != null) {
+        xCountSlider.setLock(true).setColorForeground(color(200)).setColorCaptionLabel(color(200));
+        yCountSlider.setLock(true).setColorForeground(color(200)).setColorCaptionLabel(color(200));
+      }
     }
   }
+
   public void canvasWidth(String theText){
     canvasWidth = int(theText);
     println("NEW WIDTH: " + canvasWidth);
     
   }
+
   public void canvasHeight(String theText){
     canvasHeight = int(theText);
     println("NEW Height: " + canvasHeight);
@@ -266,26 +305,24 @@ class ControlApplet extends PApplet {
   public void animateZoomZ(float n){ animateZoomZ = n; }
 
   public void animateCamera(boolean theFlag){
+
+    boolean toggle = true;
+    int cfo = 200;
+    int ccl = 200;
+
     animateCamera = theFlag;
-    
-    if(theFlag){
-      cp5.getController("animateRotX").setLock(false);
-      cp5.getController("animateRotY").setLock(false);
-      cp5.getController("animateRotZ").setLock(false);
-      cp5.getController("animateZoomZ").setLock(false);
-      cp5.getController("animateRotX").setColorForeground(color(30)); cp5.getController("animateRotX").setColorCaptionLabel(color(0));
-      cp5.getController("animateRotY").setColorForeground(color(30)); cp5.getController("animateRotY").setColorCaptionLabel(color(0));
-      cp5.getController("animateRotZ").setColorForeground(color(30)); cp5.getController("animateRotZ").setColorCaptionLabel(color(0));
-      cp5.getController("animateZoomZ").setColorForeground(color(30)); cp5.getController("animateZoomZ").setColorCaptionLabel(color(0));
-    } else {
-      cp5.getController("animateRotX").setLock(true);
-      cp5.getController("animateRotY").setLock(true);
-      cp5.getController("animateRotZ").setLock(true);
-      cp5.getController("animateZoomZ").setLock(true);
-      cp5.getController("animateRotX").setColorForeground(color(200)); cp5.getController("animateRotX").setColorCaptionLabel(color(200));
-      cp5.getController("animateRotY").setColorForeground(color(200)); cp5.getController("animateRotY").setColorCaptionLabel(color(200));
-      cp5.getController("animateRotZ").setColorForeground(color(200)); cp5.getController("animateRotZ").setColorCaptionLabel(color(200));
-      cp5.getController("animateZoomZ").setColorForeground(color(200)); cp5.getController("animateZoomZ").setColorCaptionLabel(color(200));
+
+    if (theFlag) {
+      toggle = false;
+      cfo = 30;
+      ccl = 200;
+    }
+
+    if (animateRotXSlider != null) {
+      animateRotXSlider.setLock(toggle).setColorForeground(color(cfo)).setColorCaptionLabel(color(ccl));
+      animateRotYSlider.setLock(toggle).setColorForeground(color(cfo)).setColorCaptionLabel(color(ccl));
+      animateRotZSlider.setLock(toggle).setColorForeground(color(cfo)).setColorCaptionLabel(color(ccl));
+      animateZoomZSlider.setLock(toggle).setColorForeground(color(cfo)).setColorCaptionLabel(color(ccl));
     }
   }
   
@@ -302,15 +339,11 @@ class ControlApplet extends PApplet {
   }
 
   public void splitInputIntoArray(){
-        //  if(cp6.get(Textfield.class,"mainInput").getText().length() == 0){
-        //cp6.get(Textfield.class,"mainInput").setText(" ");
-        //coreString = " ";
-    
-    if(cp6.get(Textfield.class,"mainInput").getText().length() == 0){
-      cp6.get(Textfield.class,"mainInput").setText(" ");
+    if(mainInputText.getText().length() == 0){
+      mainInputText.setText(" ");
       coreString = " ";
     }
-    coreString = cp6.get(Textfield.class,"mainInput").getText();
+    coreString = mainInputText.getText();
     
     coreStringArray = coreString.split("\\|");
     
