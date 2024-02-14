@@ -1,6 +1,9 @@
 import controlP5.*;
 import processing.svg.*;
 
+import com.hamoid.*;
+VideoExport videoExport;
+
 color bkgdColor = #FEF9F3;
 color foreColor = #000000;
 color uiBkgdColor = #282828;
@@ -85,7 +88,7 @@ void setup() {
   uiFontSys1 = createFont("IBMPlexMono-Medium.otf", 10);
   uiFontSys2 = createFont("IBMPlexMono-Medium.otf", 20);
   
-  genFont = createFont("STKBureau-Sans-Book-Trial.otf", 100);
+  genFont = createFont("STKBureau-Sans-Book-Trial.otf", pgTextSize);
   
   for(var n = 0; n < 11; n++){
     swatch[n] = loadImage("swatch_main" + n + ".png");
@@ -257,19 +260,24 @@ void setup() {
   
   //coreCanvas.smooth(8);
   coreCanvas = createGraphics(coreCanvasW, coreCanvasH, P3D);
-  coreCanvas.smooth(8);
 
-  coreCanvas.textMode(SHAPE);
   frameRate(30);
 
   surface.setTitle("Main");
   surface.setResizable(false);
-  surface.setLocation(400, 10);
+  surface.setLocation(10, 10);
+  
+  String tempTag = "quiltMotion" + hour() + "_" + minute() + "_" + second();
+  videoExport = new VideoExport(this, "export/mp4/" + tempTag + ".mp4");
+  videoExport.setQuality(90, 0);
   
   coreFlag = new Field();
 }
 
 void draw(){
+  coreCanvas.smooth(8);
+  coreCanvas.textMode(SHAPE);
+
   if(fillField){
     if(mainInputText.getText().length() == 0){
       mainInputText.setText(" ");
@@ -313,7 +321,7 @@ void draw(){
   coreCanvas.beginDraw();
   coreCanvas.background(bkgdColor);
 
-  if(exportSVGtoggle){
+  if(exportSVGtoggle){          /////////////////////////////////////////////////////// TURN ON SVG SAVING
     String saveTag = "quiltVector_" + day() + minute() + second();
     beginRaw(SVG, "export/svg/" + saveTag + ".svg");
 
@@ -355,16 +363,12 @@ void draw(){
 
   image(coreCanvas, (width + 350)/2 - displayCoreW/2, height/2 - displayCoreH/2, displayCoreW, displayCoreH);
 
-  //float tk0 = map(frameCount, 0, loopLength, 0, 1);
-  //drawCap = round(map(easeOutExpo(tk0), 0, 1, 0, yCount));
-  //drawCap += 3;
-
   if(currentHeight != canvasHeight || currentWidth != canvasWidth){
     resizeWindow();
   }
   
   if(exportSeqToggle){
-    saveFrame("export/sequence/" + seqTag + "/quiltFrame-###.png");
+    coreCanvas.save("export/sequence/" + seqTag + "/quiltFrame-" + seqCount + ".png");
     seqCount++;
     
     if(seqCount >= seqCap){
@@ -375,6 +379,19 @@ void draw(){
   if(exportSVGtoggle){
     endRaw();
     exportSVGtoggle = false;
+  }
+  
+  if(exportMP4toggle){
+        println("MP4 FRAME!");
+    videoExport.saveFrame();
+    seqCount++;
+    
+    if(seqCount >= seqCap){
+      videoExport.endMovie();
+          println("MP4 END!");
+
+      exportMP4toggle = false;
+    }
   }
 }
 
@@ -501,6 +518,22 @@ public void fillField(boolean theFlag){
       seqCap *= 2;
     }
     println("SEQ LAUNCH!");
+  }
+
+  public void exportMP4(){
+    exportMP4toggle = true;
+    
+    videoExport.setQuality(97, 1 );
+    videoExport.setFrameRate(30);
+    videoExport.startMovie();
+    
+    seqCount = 0;
+    seqCap = loopLength;
+    
+    if(animateCamera){
+      seqCap *= 2;
+    }
+    println("MP4 LAUNCH!");
   }
 
   public void splitInputIntoArray(){
