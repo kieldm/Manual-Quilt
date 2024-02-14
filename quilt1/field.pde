@@ -13,22 +13,22 @@ class Field {
   void display(){
     int counter = 0;
 
-    fill(foreColor);
-    noStroke();
+    coreCanvas.fill(foreColor);
+    coreCanvas.noStroke();
     
-    textFont(genFont);
-    textSize(pgTextSize);
-    textAlign(CENTER);
+    coreCanvas.textFont(genFont);
+    coreCanvas.textSize(pgTextSize);
+    coreCanvas.textAlign(CENTER);
     
-    push();
-      translate(-(xCount - 1) * xSpace/2, -(yCount - 1) * ySpace/2);
+    coreCanvas.push();
+      coreCanvas.translate(-(xCount - 1) * xSpace/2, -(yCount - 1) * ySpace/2);
       for(int m = 0; m < yCount; m++){
         for(int n = 0; n < xCount; n++){
           float x = n * xSpace;
           float y = m * ySpace;
                       
-          push();
-            translate(x, y);
+          coreCanvas.push();
+            coreCanvas.translate(x, y);
             
             if(wave3D){
               float fullWave =  sinEngine2(m, yWaveOffset, n, xWaveOffset, waveSpeed, 1) * waveSize;
@@ -38,29 +38,29 @@ class Field {
               float fullWavePost =  sinEngine2(m, yWaveOffset, n + 1, xWaveOffset, waveSpeed, 1) * waveSize;
               float rotX = atan2(fullWaveBelow - fullWaveAbove, 2 * ySpace);
               float rotY = atan2(fullWavePre - fullWavePost, 2 * xSpace);          
-              translate(0, 0, fullWave);
-              rotateY(rotY);
-              rotateX(rotX);
+              coreCanvas.translate(0, 0, fullWave);
+              coreCanvas.rotateY(rotY);
+              coreCanvas.rotateX(rotX);
             } else {
               float waver = sinEngine2(m, yWaveOffset, n, xWaveOffset, waveSpeed, 1);
               float fullWave = map(waver, -1, 1, 0.1, 1);
-              scale(fullWave);
+              coreCanvas.scale(fullWave);
             }
             
             if(fillField){
               //if(drawOn && m < drawCap){
-                text(coreString.charAt(counter%coreString.length()), 0, pgTextSize * 0.7/2);            
+                coreCanvas.text(coreString.charAt(counter%coreString.length()), 0, pgTextSize * 0.7/2);            
               //}
             } else {
               if(n < coreStringArray[m].length()){
-                text(coreStringArray[m].charAt(n), 0, pgTextSize * 0.7/2);               
+                coreCanvas.text(coreStringArray[m].charAt(n), 0, pgTextSize * 0.7/2);               
               }
             }
-          pop();
+          coreCanvas.pop();
           
           counter ++;
         }
       }
-    pop();
+    coreCanvas.pop();
   }
 }
