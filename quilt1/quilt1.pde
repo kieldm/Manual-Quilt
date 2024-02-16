@@ -6,7 +6,7 @@ VideoExport videoExport;
 
 color bkgdColor = #FEF9F3;
 color foreColor = #000000;
-color uiBkgdColor = #282828;
+color uiBkgdColor = color(50);
 color uiForeColor = #ffffff;
 
 PFont uiFontHead, uiFontMain, uiFontSub, uiFontSys1, uiFontSys2;
@@ -28,11 +28,12 @@ int yCountHold = yCount;
 int loopLength = 0;
 
 float xSpace, ySpace = 25;
-float xWaveOffset, yWaveOffset, waveSize, waveSpeed = 0;
+float xWaveOffset, yWaveOffset, radialOffset, waveSize, waveSpeed = 0;
 float cameraRotX, cameraRotY,cameraRotZ = 0;
 float animatorRotX, animatorRotY, animatorRotZ = 0;
 float animateRotX, animateRotY, animateRotZ = 0;
 float animatorZoomZ, animateZoomZ = 0;
+float animatorPosX, animatePosX = 0;
 float pgTextSize = 20;
 float coreScale = 1;
 float projZdist = -2000;
@@ -41,6 +42,7 @@ float projZFact = 3.13833429;
 boolean wave3D = true;
 boolean fillField = true;
 boolean animateCamera = false;
+boolean radialWave = false;
 boolean exportSVGtoggle = false;
 boolean exportSeqToggle = false;
 boolean exportMP4toggle = false;
@@ -49,21 +51,36 @@ String seqTag;
 int seqCount = 0;
 int seqCap = 0;
 
+int uiWidth = 340;
+int padding = 30;
+int boardWidth = 1920 - uiWidth - padding * 2;
+int boardHeight = 1080 - padding * 2;
 PGraphics coreCanvas;
-int coreCanvasW = 1080;
-int coreCanvasH = 1080;
-
-int padding = 20;
-int displayCoreW = coreCanvasW - 2 * padding;
-int displayCoreH = coreCanvasH - 2 * padding;
+float coreCanvasW = 1080;
+float coreCanvasH = 1080;
+float coreRatio = coreCanvasH/coreCanvasW;
+float displayCoreH = boardHeight;
+float displayCoreW = displayCoreH/coreRatio;
+float imageScale = round((displayCoreH/coreCanvasH) * 100);
 
   private ControlP5 cp5;
+  private Toggle fillFieldToggle;
   private Slider xCountSlider;
   private Slider yCountSlider;
+  private Toggle waveDimensionToggle;
+  private Slider xWaveOffsetSlider;
+  private Slider yWaveOffsetSlider;
+  private Slider radialOffsetSlider;
+  private Toggle radialWaveToggle;
+  private Toggle animateCameraToggle;
+  private Slider cameraRotXSlider;
+  private Slider cameraRotYSlider;
+  private Slider cameraRotZSlider;
   private Slider animateRotXSlider;
   private Slider animateRotYSlider;
   private Slider animateRotZSlider;
   private Slider animateZoomZSlider;
+  private Slider animatePosXSlider;
   private Textfield mainInputText;
 
 //boolean drawOn = true;
@@ -75,6 +92,7 @@ int displayCoreH = coreCanvasH - 2 * padding;
 
 void setup() {
   size(1920, 1080, P3D);
+  //fullScreen(P3D);
   canvasWidth = 1080;
   canvasHeight = 1080;
   currentWidth = canvasWidth;
@@ -83,10 +101,10 @@ void setup() {
   smooth(8);
   
   uiFontHead= createFont("STKBureau-Sans-Book-Trial.otf", 60);
-  uiFontMain = createFont("STKBureau-Sans-Book-Trial.otf", 50);
+  uiFontMain = createFont("STKBureau-Sans-Book-Trial.otf", 20);
   uiFontSub = createFont("IBMPlexMono-Medium.otf", 50);
   uiFontSys1 = createFont("IBMPlexMono-Medium.otf", 10);
-  uiFontSys2 = createFont("IBMPlexMono-Medium.otf", 20);
+  uiFontSys2 = createFont("IBMPlexMono-Medium.otf", 14);
   
   genFont = createFont("STKBureau-Sans-Book-Trial.otf", pgTextSize);
   
@@ -95,7 +113,7 @@ void setup() {
   }
   
     cp5 = new ControlP5(this);
-    cp5.setColorBackground(color(100))
+    cp5.setColorBackground(color(60))
        .setColorForeground(color(150))
        .setColorActive(color(200))
        .setColorCaptionLabel(color(255))
@@ -104,22 +122,24 @@ void setup() {
     // CANVAS
     Textfield canvasWidth = cp5.addTextfield("canvasWidth")
                                .setPosition(20, 100)
-                               .setSize(50, 25)
+                               .setSize(60, 25)
                                .setValue("1080")
                                .setAutoClear(false)
-                               .setColorBackground(color(200))
-                               .setColorValueLabel(color(0))
+                               .setColorBackground(color(0))
+                               .setColorValueLabel(color(200))
+                               .setFont(uiFontSys2)
                                .setCaptionLabel("Width");
     canvasWidth.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
     canvasWidth.getValueLabel().setPaddingX(3);
 
     Textfield canvasHeight = cp5.addTextfield("canvasHeight")
-                                .setPosition(75, 100)
-                                .setSize(50, 25)
+                                .setPosition(85, 100)
+                                .setSize(60, 25)
                                 .setValue("1080")
                                 .setAutoClear(false)
-                                .setColorBackground(color(200))
-                                .setColorValueLabel(color(0))
+                                .setColorBackground(color(0))
+                                .setColorValueLabel(color(200))
+                                .setFont(uiFontSys2)
                                 .setCaptionLabel("Height");
     canvasHeight.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
     canvasHeight.getValueLabel().setPaddingX(3);
@@ -130,18 +150,18 @@ void setup() {
                              .setSize(310, 32)
                              .setValue("BETTER BY DESIGN")
                              .setAutoClear(false)
-                             .setColorBackground(color(200))
-                             .setColorCaptionLabel(color(30))
-                             .setColorValueLabel(color(30))
+                             .setColorBackground(color(0))
+                             .setColorValueLabel(color(255))
                              .setFont(uiFontSys2)
                              .setCaptionLabel("");
     mainInputText.getValueLabel().setPaddingX(2);
     
-    Toggle fillFieldToggle = cp5.addToggle("fillField")
+    fillFieldToggle = cp5.addToggle("fillField")
                                 .setPosition(20, 205)
                                 .setSize(60, 14)
                                 .setValue(true)
                                 .setCaptionLabel("Fill Field")
+                                .setColorActive(color(#6497F9))
                                 .setMode(ControlP5.SWITCH);
     fillFieldToggle.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
 
@@ -173,7 +193,7 @@ void setup() {
 
     yCountSlider = cp5.addSlider("yCount").setPosition(20, 410).setSize(150, 14).setRange(1, 50).setValue(30).setCaptionLabel("Y Count");    
     yCountSlider.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
-       
+
     cp5.addSlider("xSpace").setPosition(180, 380).setSize(150, 14).setRange(1, 100).setValue(30).setCaptionLabel("X Space");
     cp5.getController("xSpace").getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
 
@@ -181,14 +201,33 @@ void setup() {
     cp5.getController("ySpace").getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
 
     // WAVE
-    cp5.addToggle("waveDimension").setPosition(20,470).setSize(80,14).setValue(true).setMode(ControlP5.SWITCH).setCaptionLabel("3D Wave");
-    cp5.getController("waveDimension").getCaptionLabel().align(ControlP5.LEFT, ControlP5.RIGHT_OUTSIDE).setPaddingX(90);
+    waveDimensionToggle = cp5.addToggle("waveDimension")
+                             .setPosition(20,470)
+                             .setSize(80,14)
+                             .setValue(true)
+                             .setMode(ControlP5.SWITCH)
+                             .setColorActive(color(#6497F9))
+                             .setCaptionLabel("3D Wave");
+    waveDimensionToggle.getCaptionLabel().align(ControlP5.LEFT, ControlP5.RIGHT_OUTSIDE).setPaddingX(88);
     
-    cp5.addSlider("yWaveOffset").setPosition(20, 490).setSize(150, 14).setRange(-PI/4, PI/4).setValue(-0.1).setCaptionLabel("Vertical Offset");    
-    cp5.getController("yWaveOffset").getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
+    radialWaveToggle = cp5.addToggle("radialWave")
+                                .setPosition(180, 470)
+                                .setSize(60, 14)
+                                .setValue(false)
+                                .setCaptionLabel("Radial Wave")
+                                .setColorActive(color(#374760))
+                                .setMode(ControlP5.SWITCH);
+    radialWaveToggle.getCaptionLabel().align(ControlP5.LEFT, ControlP5.RIGHT_OUTSIDE).setPaddingX(68);
+    
+    yWaveOffsetSlider = cp5.addSlider("yWaveOffset").setPosition(20, 490).setSize(150, 14).setRange(-PI/4, PI/4).setValue(-0.1).setCaptionLabel("Vertical Offset");    
+    yWaveOffsetSlider.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
 
-    cp5.addSlider("xWaveOffset").setPosition(180, 490).setSize(150, 14).setRange(-PI/4, PI/4).setValue(0.55).setCaptionLabel("Horizontal Offset");    
-    cp5.getController("xWaveOffset").getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
+    xWaveOffsetSlider = cp5.addSlider("xWaveOffset").setPosition(180, 490).setSize(150, 14).setRange(-PI/4, PI/4).setValue(0.55).setCaptionLabel("Horizontal Offset");    
+    xWaveOffsetSlider.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
+
+    radialOffsetSlider = cp5.addSlider("radialOffset").setPosition(20, 490).setSize(310, 14).setRange(-1000, 1000).setValue(-300).setCaptionLabel("Radial Offset").setVisible(false);    
+    radialOffsetSlider.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
+
 
     cp5.addSlider("waveSize").setPosition(20, 520).setSize(310, 14).setRange(0, 200).setValue(24).setCaptionLabel("Size");    
     cp5.getController("waveSize").getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
@@ -197,26 +236,32 @@ void setup() {
     cp5.getController("loopLength").getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
 
     // CAMERA
-    cp5.addSlider("cameraRotX").setPosition(20, 620).setSize(150, 14).setRange(-PI/3, PI/3).setValue(0.33).setCaptionLabel("Rotate X");
-    cp5.getController("cameraRotX").getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
+    cameraRotXSlider = cp5.addSlider("cameraRotX").setPosition(20, 620).setSize(150, 14).setRange(-PI/3, PI/3).setValue(0.33).setCaptionLabel("Rotate X");
+    cameraRotXSlider.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
 
-    cp5.addSlider("cameraRotY").setPosition(20, 650).setSize(150, 14).setRange(-PI/3, PI/3).setValue(0.33).setCaptionLabel("Rotate Y");
-    cp5.getController("cameraRotY").getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
+    cameraRotYSlider = cp5.addSlider("cameraRotY").setPosition(20, 650).setSize(150, 14).setRange(-PI/3, PI/3).setValue(0.33).setCaptionLabel("Rotate Y");
+    cameraRotYSlider.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
     
-    cp5.addSlider("cameraRotZ").setPosition(20, 680).setSize(150, 14).setRange(-PI/3, PI/3).setValue(-0.17).setCaptionLabel("Rotate Z");
-    cp5.getController("cameraRotZ").getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
+    cameraRotZSlider = cp5.addSlider("cameraRotZ").setPosition(20, 680).setSize(150, 14).setRange(-PI/3, PI/3).setValue(-0.17).setCaptionLabel("Rotate Z");
+    cameraRotZSlider.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
 
-    cp5.addToggle("animateCamera").setPosition(230,620).setSize(80,14).setValue(false).setMode(ControlP5.SWITCH).setCaptionLabel("Animate");
-    cp5.getController("animateCamera").getCaptionLabel().align(ControlP5.RIGHT, ControlP5.LEFT_OUTSIDE).setPaddingX(88);
+    animateCameraToggle = cp5.addToggle("animateCamera")
+                             .setPosition(180,620)
+                             .setSize(60,14)
+                             .setValue(false)
+                             .setMode(ControlP5.SWITCH)
+                             .setColorActive(color(#374760))
+                             .setCaptionLabel("Animate Camera");
+    animateCameraToggle.getCaptionLabel().align(ControlP5.LEFT, ControlP5.RIGHT_OUTSIDE).setPaddingX(65);
 
     animateRotXSlider = cp5.addSlider("animateRotX")
                            .setPosition(180, 650)
                            .setSize(150, 14)
                            .setRange(-PI/3, PI/3)
                            .setValue(0)
-                           .setCaptionLabel("Animate X")
+                           .setCaptionLabel("Animate Rotate X")
                            .setLock(true)
-                           .setColorForeground(color(200))
+                           .setColorForeground(color(70))
                            .setColorCaptionLabel(color(100));
     animateRotXSlider.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
 
@@ -225,9 +270,9 @@ void setup() {
                            .setSize(150, 14)
                            .setRange(-PI/3, PI/3)
                            .setValue(0.25)
-                           .setCaptionLabel("Animate Y")
+                           .setCaptionLabel("Animate Rotate Y")
                            .setLock(true)
-                           .setColorForeground(color(200))
+                           .setColorForeground(color(70))
                            .setColorCaptionLabel(color(100));
     animateRotYSlider.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
     
@@ -236,9 +281,9 @@ void setup() {
                            .setSize(150, 14)
                            .setRange(-PI/3, PI/3)
                            .setValue(0)
-                           .setCaptionLabel("Animate Z")
+                           .setCaptionLabel("Animate Rotate Z")
                            .setLock(true)
-                           .setColorForeground(color(200))
+                           .setColorForeground(color(70))
                            .setColorCaptionLabel(color(100));
     animateRotZSlider.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
 
@@ -247,30 +292,37 @@ void setup() {
                             .setSize(150, 14)
                             .setRange(-300, 300)
                             .setValue(0)
-                            .setCaptionLabel("Animate Zoom")
+                            .setCaptionLabel("Animate Zoom Z")
                             .setLock(true)
-                            .setColorForeground(color(200))
+                            .setColorForeground(color(70))
                             .setColorCaptionLabel(color(100));
     animateZoomZSlider.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
 
+    animatePosXSlider = cp5.addSlider("animatePosX")
+                            .setPosition(180, 770)
+                            .setSize(150, 14)
+                            .setRange(-400, 400)
+                            .setValue(0)
+                            .setCaptionLabel("Animate Pan X")
+                            .setLock(true)
+                            .setColorForeground(color(70))
+                            .setColorCaptionLabel(color(100));
+    animatePosXSlider.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
+
     // EXPORT
-    cp5.addButton("exportSVG").setPosition(20, 800).setSize(150,40).setCaptionLabel("Export SVG");
-    cp5.addButton("exportSeq").setPosition(180, 800).setSize(150,40).setCaptionLabel("Export Sequence");
-    cp5.addButton("exportMP4").setPosition(180, 850).setSize(150,40).setCaptionLabel("Export MP4");
+    cp5.addButton("exportSVG").setPosition(20, 850).setSize(150,40).setCaptionLabel("Export SVG");
+    cp5.addButton("exportSeq").setPosition(180, 850).setSize(150,40).setCaptionLabel("Export Sequence");
+    cp5.addButton("exportMP4").setPosition(180, 900).setSize(150,40).setCaptionLabel("Export MP4");
   
   //coreCanvas.smooth(8);
-  coreCanvas = createGraphics(coreCanvasW, coreCanvasH, P3D);
+  coreCanvas = createGraphics(int(coreCanvasW), int(coreCanvasH), P3D);
 
   frameRate(30);
 
   surface.setTitle("Main");
   surface.setResizable(false);
   surface.setLocation(10, 10);
-  
-  String tempTag = "quiltMotion" + hour() + "_" + minute() + "_" + second();
-  videoExport = new VideoExport(this, "export/mp4/" + tempTag + ".mp4");
-  videoExport.setQuality(90, 0);
-  
+    
   coreFlag = new Field();
 }
 
@@ -315,7 +367,7 @@ void draw(){
       textFont(uiFontMain);
       textSize(20);
       text("CAMERA", 0, 550);
-      text("EXPORT", 0, 730);
+      text("EXPORT", 0, 780);
     pop();    
 
   coreCanvas.beginDraw();
@@ -340,7 +392,7 @@ void draw(){
     // ANIMATE CAMERA
     if(animateCamera && wave3D){
       cameraAnimation();
-      coreCanvas.translate(0, 0, animatorZoomZ);
+      coreCanvas.translate(animatorPosX, 0, animatorZoomZ);
       
       coreCanvas.rotateX(animatorRotX);
       coreCanvas.rotateY(animatorRotY);
@@ -361,11 +413,23 @@ void draw(){
   coreCanvas.pop();
   coreCanvas.endDraw();
 
-  image(coreCanvas, (width + 350)/2 - displayCoreW/2, height/2 - displayCoreH/2, displayCoreW, displayCoreH);
+  push();
+    translate(uiWidth + padding + boardWidth/2, padding + boardHeight/2);
+    
+    noFill();
+    stroke(255,50);
+    strokeWeight(0.5);
+    rectMode(CENTER);
+    rect(0, 0, boardWidth, boardHeight);
+        
+    image(coreCanvas, -displayCoreW/2, -displayCoreH/2, displayCoreW, displayCoreH);
+  pop();
 
-  if(currentHeight != canvasHeight || currentWidth != canvasWidth){
-    resizeWindow();
-  }
+  fill(255,50);
+  noStroke();
+  textFont(uiFontSys2);
+  text("SCALE: " + imageScale + "%", uiWidth + padding, height - padding/2);
+
   
   if(exportSeqToggle){
     coreCanvas.save("export/sequence/" + seqTag + "/quiltFrame-" + seqCount + ".png");
@@ -382,14 +446,11 @@ void draw(){
   }
   
   if(exportMP4toggle){
-        println("MP4 FRAME!");
     videoExport.saveFrame();
     seqCount++;
     
     if(seqCount >= seqCap){
       videoExport.endMovie();
-          println("MP4 END!");
-
       exportMP4toggle = false;
     }
   }
@@ -401,15 +462,7 @@ void cameraAnimation(){
   animatorRotY = waver * animateRotY;
   animatorRotZ = waver * animateRotZ;
   animatorZoomZ = waver * animateZoomZ;
-}
-
-void resizeWindow(){
-  if(canvasWidth < 10){ canvasWidth = 100; }
-  if(canvasHeight < 10){ canvasHeight = 100; }
-  println("RESIZED!");
-  surface.setSize(canvasWidth, canvasHeight);
-  currentWidth = canvasWidth;
-  currentHeight = canvasHeight;
+  animatorPosX = waver * animatePosX;
 }
 
 public void fillField(boolean theFlag){
@@ -419,30 +472,71 @@ public void fillField(boolean theFlag){
       xCount = xCountHold;
       yCount = yCountHold;
       if (xCountSlider != null) {
-        xCountSlider.setLock(false).setColorForeground(color(30)).setColorCaptionLabel(color(255));
-        yCountSlider.setLock(false).setColorForeground(color(30)).setColorCaptionLabel(color(255));
+        xCountSlider.setLock(false).setColorForeground(color(150)).setColorCaptionLabel(color(255));
+        yCountSlider.setLock(false).setColorForeground(color(150)).setColorCaptionLabel(color(255));
+        fillFieldToggle.setColorActive(color(#6497F9));      
       }
+   
     } else {
       xCountHold = xCount;
       yCountHold = yCount;
 
       splitInputIntoArray(); 
       if (xCountSlider != null) {
-        xCountSlider.setLock(true).setColorForeground(color(200)).setColorCaptionLabel(color(100));
-        yCountSlider.setLock(true).setColorForeground(color(200)).setColorCaptionLabel(color(100));
+        xCountSlider.setLock(true).setColorForeground(color(70)).setColorCaptionLabel(color(100));
+        yCountSlider.setLock(true).setColorForeground(color(70)).setColorCaptionLabel(color(100));
+        fillFieldToggle.setColorActive(color(#374760));      
       }
+
     }
   }
-
-  public void canvasWidth(String theText){
-    canvasWidth = int(theText);
-    println("NEW WIDTH: " + canvasWidth);
     
-  }
+  public void canvasWidth(String theText){
+    coreCanvasW = int(theText);
+    if(coreCanvasW < 10){ coreCanvasW = 10; }
+    
+    canvasResizer();
+   }
 
   public void canvasHeight(String theText){
-    canvasHeight = int(theText);
-    println("NEW Height: " + canvasHeight);
+    coreCanvasH = int(theText);
+    if(coreCanvasH < 10){ coreCanvasH = 10; }
+    
+    canvasResizer();
+  }
+  
+  public void canvasResizer(){
+    coreCanvas = createGraphics(int(coreCanvasW), int(coreCanvasH), P3D);  // create at actual size
+    
+    // figure out display dimensions so it's scaled to proper display (displayCore) size
+    if(coreCanvasW > coreCanvasH){    //////////// HORZ COMP
+      println("HORIZONTAL COMP");
+      coreRatio = coreCanvasH/coreCanvasW;
+      if(coreCanvasW > boardWidth){
+        displayCoreW = boardWidth;
+        displayCoreH = displayCoreW * coreRatio;
+      } else if(coreCanvasH > boardHeight){
+        displayCoreH = boardHeight;
+        displayCoreW = displayCoreH/coreRatio;
+      } else {
+        displayCoreW = coreCanvasW;
+        displayCoreH = coreCanvasH;
+      }
+    } else {                          //////////// VERT COMP
+      println("VERTICAL, SQUARE COMP");
+      coreRatio = coreCanvasW/coreCanvasH;
+      if(coreCanvasH > boardHeight){
+        displayCoreH = boardHeight;
+        displayCoreW = displayCoreH * coreRatio;
+      } else if(coreCanvasW > boardWidth){
+        displayCoreW = boardWidth;
+        displayCoreH = displayCoreW/coreRatio;
+      } else {
+        displayCoreW = coreCanvasW;
+        displayCoreH = coreCanvasH;
+      }
+    }
+    imageScale = round((displayCoreH/coreCanvasH) * 100);
   }
   
   public void swatch0(){ bkgdColor = #ffffff; foreColor = #000000;}
@@ -464,9 +558,44 @@ public void fillField(boolean theFlag){
   public void xSpace(float n){ xSpace = n; }
   public void ySpace(float n){ ySpace = n; }
   
-  public void waveDimension(boolean theFlag){ wave3D = theFlag; }
+  public void waveDimension(boolean theFlag){
+    wave3D = theFlag;
+    if(waveDimensionToggle != null){
+      if(theFlag){
+        waveDimensionToggle.setColorActive(color(#6497F9));
+        cameraRotXSlider.setLock(false).setColorForeground(color(150)).setColorCaptionLabel(color(255));
+        cameraRotYSlider.setLock(false).setColorForeground(color(150)).setColorCaptionLabel(color(255));
+        cameraRotZSlider.setLock(false).setColorForeground(color(150)).setColorCaptionLabel(color(255));
+        animateCameraToggle.setLock(false);
+      } else {
+        waveDimensionToggle.setColorActive(color(#374760));
+        cameraRotXSlider.setLock(true).setColorForeground(color(70)).setColorCaptionLabel(color(100));
+        cameraRotYSlider.setLock(true).setColorForeground(color(70)).setColorCaptionLabel(color(100));
+        cameraRotZSlider.setLock(true).setColorForeground(color(70)).setColorCaptionLabel(color(100));
+        animateCameraToggle.setLock(true);
+      }
+    }
+  }
+  public void radialWave(boolean theFlag){
+    radialWave = theFlag;
+    if(radialWaveToggle != null){
+      if(theFlag){
+        radialWaveToggle.setColorActive(color(#6497F9));
+        yWaveOffsetSlider.setVisible(false);
+        xWaveOffsetSlider.setVisible(false);
+        radialOffsetSlider.setVisible(true);
+      } else {
+        radialWaveToggle.setColorActive(color(#374760));
+        yWaveOffsetSlider.setVisible(true);
+        xWaveOffsetSlider.setVisible(true);
+        radialOffsetSlider.setVisible(false);
+      }
+    }
+  }
+  
   public void yWaveOffset(float n){ yWaveOffset = n; }
   public void xWaveOffset(float n){ xWaveOffset = n; }
+  public void radialOffset(float n){ radialOffset = n; }
   public void loopLength(int n){
     loopLength = n;
     waveSpeed = (TWO_PI)/loopLength;
@@ -481,18 +610,18 @@ public void fillField(boolean theFlag){
   public void animateRotY(float n){ animateRotY = n; }
   public void animateRotZ(float n){ animateRotZ = n; }
   public void animateZoomZ(float n){ animateZoomZ = n; }
+  public void animatePosX(float n){ animatePosX = n; }
 
   public void animateCamera(boolean theFlag){
+    animateCamera = theFlag;
 
     boolean toggle = true;
-    int cfo = 200;
+    int cfo = 70;
     int ccl = 100;
-
-    animateCamera = theFlag;
 
     if (theFlag) {
       toggle = false;
-      cfo = 30;
+      cfo = 200;
       ccl = 255;
     }
 
@@ -501,12 +630,17 @@ public void fillField(boolean theFlag){
       animateRotYSlider.setLock(toggle).setColorForeground(color(cfo)).setColorCaptionLabel(color(ccl));
       animateRotZSlider.setLock(toggle).setColorForeground(color(cfo)).setColorCaptionLabel(color(ccl));
       animateZoomZSlider.setLock(toggle).setColorForeground(color(cfo)).setColorCaptionLabel(color(ccl));
+      animatePosXSlider.setLock(toggle).setColorForeground(color(cfo)).setColorCaptionLabel(color(ccl));
+      if(theFlag){
+        animateCameraToggle.setColorActive(color(#6497F9));
+      } else {
+        animateCameraToggle.setColorActive(color(70));
+      }
     }
   }
   
   public void exportSVG(){
     exportSVGtoggle = true;
-    println("SVG LAUNCH!");
   }
   
   public void exportSeq(){
@@ -517,12 +651,14 @@ public void fillField(boolean theFlag){
     if(animateCamera){
       seqCap *= 2;
     }
-    println("SEQ LAUNCH!");
   }
 
   public void exportMP4(){
     exportMP4toggle = true;
     
+    String tempTag = "quiltMotion" + hour() + "_" + minute() + "_" + second();
+    videoExport = new VideoExport(this, "export/mp4/" + tempTag + ".mp4", coreCanvas);
+       
     videoExport.setQuality(97, 1 );
     videoExport.setFrameRate(30);
     videoExport.startMovie();
@@ -533,7 +669,6 @@ public void fillField(boolean theFlag){
     if(animateCamera){
       seqCap *= 2;
     }
-    println("MP4 LAUNCH!");
   }
 
   public void splitInputIntoArray(){
