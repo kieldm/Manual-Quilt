@@ -513,15 +513,18 @@ void draw(){
     }
   }
   
-  if(animateColor){
-    colorAnimation();
-  }
+  colorAnimation();
 }
 
 void colorAnimation(){
-  float waver = map(sinEngine(0,0,waveSpeed/2,1), -1, 1, 0, 1);
-  bkgdColorActual = lerpColor(bkgdColor, bkgdColorAnim, waver);
-  foreColorActual = lerpColor(foreColor, foreColorAnim, waver);
+  if(animateColor){
+    float waver = map(sinEngine(0,0,waveSpeed/2,1), -1, 1, 0, 1);
+    bkgdColorActual = lerpColor(bkgdColor, bkgdColorAnim, waver);
+    foreColorActual = lerpColor(foreColor, foreColorAnim, waver);  
+  } else {
+    bkgdColorActual = bkgdColor;
+    foreColorActual = foreColor;
+  }
 }
 
 void cameraAnimation(){
@@ -619,9 +622,7 @@ public void fillField(boolean theFlag){
   public void animateColor(boolean theFlag){
     boolean toggle = theFlag;
     animateColor = theFlag;
-    
-    
-    
+        
     if(swatchButton[0] != null){
       for(int m = 0; m < 11; m++){
         swatchAnimButton[m].setVisible(toggle);
@@ -630,8 +631,7 @@ public void fillField(boolean theFlag){
       if(theFlag){
         animateColorToggle.setColorActive(color(#6497F9));
       } else {
-        bkgdColorActual = bkgdColor;
-        foreColorActual = foreColor;
+
 
         animateColorToggle.setColorActive(color(#374760));   
       }
