@@ -13,7 +13,7 @@ class Field {
   void display(){
     int counter = 0;
 
-    coreCanvas.fill(foreColor);
+    coreCanvas.fill(foreColorActual);
     coreCanvas.noStroke();
     
     coreCanvas.textFont(genFont);
