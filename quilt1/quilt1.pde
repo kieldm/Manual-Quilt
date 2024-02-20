@@ -59,8 +59,8 @@ int seqCap = 0;
 
 int uiWidth = 340;
 int padding = 30;
-int boardWidth = 1920 - uiWidth - padding * 2;
-int boardHeight = 1080 - padding * 2;
+int boardWidth = 1700 - uiWidth - padding * 2;
+int boardHeight = 1000 - padding * 2;
 PGraphics coreCanvas;
 float coreCanvasW = 1080;
 float coreCanvasH = 1080;
@@ -93,7 +93,7 @@ float imageScale = round((displayCoreH/coreCanvasH) * 100);
 //}
 
 void setup() {
-  size(1920, 1080, P3D);
+  size(1700, 1000, P3D);
   //fullScreen(P3D);
   canvasWidth = 1080;
   canvasHeight = 1080;
@@ -335,15 +335,15 @@ void setup() {
     // EXPORT
     //cp5.addButton("exportSVG").setPosition(20, 950).setSize(150,40).setCaptionLabel("Export SVG");
     cp5.addButton("exportSeq").setPosition(180, 950).setSize(150,40).setCaptionLabel("Export Sequence");
-    cp5.addButton("exportMP4").setPosition(180, 1000).setSize(150,40).setCaptionLabel("Export MP4");
+    cp5.addButton("exportMP4").setPosition(20, 950).setSize(150,40).setCaptionLabel("Export MP4");
 
   resetSwatch();
   swatchSel[1] = true;
   resetSwatchAnim();
   swatchAnimSel[5] = true;
   
-  //coreCanvas.smooth(8);
   coreCanvas = createGraphics(int(coreCanvasW), int(coreCanvasH), P3D);
+  coreCanvas.smooth(4);
 
   frameRate(30);
 
@@ -355,7 +355,9 @@ void setup() {
 }
 
 void draw(){
-  coreCanvas.smooth(8);
+  background(uiBkgdColor);
+  
+  coreCanvas.beginDraw();
   coreCanvas.textMode(SHAPE);
 
   if(fillField){
@@ -369,14 +371,13 @@ void draw(){
     splitInputIntoArray();
   }
   
-  background(uiBkgdColor);
 
   noStroke();
   fill(uiForeColor);
             
   textFont(uiFontHead);
   textSize(60);
-  text("QUILT_1", 20, 65);
+  text("QUILT_3", 20, 65);
   
   textFont(uiFontMain);
   textSize(20);
@@ -428,7 +429,7 @@ void draw(){
   text("CAMERA", 20, 715);
   text("EXPORT", 20, 940);
 
-  coreCanvas.beginDraw();
+
   coreCanvas.background(bkgdColorActual);
 
   if(exportSVGtoggle){          /////////////////////////////////////////////////////// TURN ON SVG SAVING
@@ -587,7 +588,8 @@ public void fillField(boolean theFlag){
   
   public void canvasResizer(){
     coreCanvas = createGraphics(int(coreCanvasW), int(coreCanvasH), P3D);  // create at actual size
-    
+    coreCanvas.smooth(4);
+
     // figure out display dimensions so it's scaled to proper display (displayCore) size
     if(coreCanvasW > coreCanvasH){    //////////// HORZ COMP
       println("HORIZONTAL COMP");
@@ -631,8 +633,6 @@ public void fillField(boolean theFlag){
       if(theFlag){
         animateColorToggle.setColorActive(color(#6497F9));
       } else {
-
-
         animateColorToggle.setColorActive(color(#374760));   
       }
     }
