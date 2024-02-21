@@ -52,6 +52,7 @@ boolean radialWave = false;
 boolean exportSVGtoggle = false;
 boolean exportSeqToggle = false;
 boolean exportMP4toggle = false;
+int justifyMode = 0;
 
 String seqTag;
 int seqCount = 0;
@@ -71,6 +72,7 @@ float imageScale = round((displayCoreH/coreCanvasH) * 100);
 
   private ControlP5 cp5;
   private Toggle fillFieldToggle;
+  private RadioButton justifyRadio;
   private Slider xCountSlider, yCountSlider;
   private Toggle waveDimensionToggle;
   private Toggle animateColorToggle;
@@ -85,16 +87,8 @@ float imageScale = round((displayCoreH/coreCanvasH) * 100);
   private Button[] swatchButton = new Button[11];
   private Button[] swatchAnimButton = new Button[11];
 
-//boolean drawOn = true;
-//int drawCap = 0;
-
-//void settings(){  
-  //coreCanvas.smooth(8); 
-//}
-
 void setup() {
   size(1700, 1000, P3D);
-  //fullScreen(P3D);
   canvasWidth = 1080;
   canvasHeight = 1080;
   currentWidth = canvasWidth;
@@ -166,6 +160,20 @@ void setup() {
                                 .setColorActive(color(#6497F9))
                                 .setMode(ControlP5.SWITCH);
     fillFieldToggle.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
+
+    justifyRadio = cp5.addRadioButton("justifyMode")
+                                .setPosition(100, 205)
+                                .setSize(30, 14)
+                                .setItemsPerRow(5).setSpacingColumn(50)
+                                .setColorActive(color(#6497F9))
+                                .addItem("LEFT", 0)
+                                .addItem("CENTER", 1)
+                                .addItem("RIGHT", 2)
+                                .setVisible(false)
+                                .activate(0)
+                                .setNoneSelectedAllowed(false);
+    justifyRadio.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
+
 
     Slider coreScale = cp5.addSlider("coreScale")
                           .setPosition(20, 235)
@@ -333,9 +341,9 @@ void setup() {
     animatePosXSlider.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
 
     // EXPORT
-    //cp5.addButton("exportSVG").setPosition(20, 950).setSize(150,40).setCaptionLabel("Export SVG");
-    cp5.addButton("exportSeq").setPosition(180, 950).setSize(150,40).setCaptionLabel("Export Sequence");
-    cp5.addButton("exportMP4").setPosition(20, 950).setSize(150,40).setCaptionLabel("Export MP4");
+    cp5.addButton("exportSVG").setPosition(20, 950).setSize(100,40).setCaptionLabel("SVG");
+    cp5.addButton("exportSeq").setPosition(125, 950).setSize(100,40).setCaptionLabel("Sequence");
+    cp5.addButton("exportMP4").setPosition(230, 950).setSize(100,40).setCaptionLabel("MP4");
 
   resetSwatch();
   swatchSel[1] = true;
@@ -355,6 +363,11 @@ void setup() {
 }
 
 void draw(){
+  if(exportSVGtoggle){
+    String saveTag = "quiltVector_" + day() + minute() + second();
+    beginRaw(SVG, "export/svg/" + saveTag + ".svg");
+  }
+  
   background(uiBkgdColor);
   
   coreCanvas.beginDraw();
@@ -429,21 +442,20 @@ void draw(){
   text("CAMERA", 20, 715);
   text("EXPORT", 20, 940);
 
-
   coreCanvas.background(bkgdColorActual);
 
-  if(exportSVGtoggle){          /////////////////////////////////////////////////////// TURN ON SVG SAVING
-    String saveTag = "quiltVector_" + day() + minute() + second();
-    beginRaw(SVG, "export/svg/" + saveTag + ".svg");
+  //if(exportSVGtoggle){          /////////////////////////////////////////////////////// TURN ON SVG SAVING
+  //  String saveTag = "quiltVector_" + day() + minute() + second();
+  //  beginRaw(SVG, "export/svg/" + saveTag + ".svg");
 
-    coreCanvas.push();          /////////// draws background rect that's the same size as canvas size
-      coreCanvas.noStroke();
-      coreCanvas.fill(bkgdColorActual);
-      coreCanvas.translate(width/2, height/2, -2000);
-      coreCanvas.rectMode(CENTER);
-      coreCanvas.rect(0, 0, width * projZFact, height * projZFact);
-    coreCanvas.pop();
-  }
+  //  coreCanvas.push();          /////////// draws background rect that's the same size as canvas size
+  //    coreCanvas.noStroke();
+  //    coreCanvas.fill(bkgdColorActual);
+  //    coreCanvas.translate(width/2, height/2, -2000);
+  //    coreCanvas.rectMode(CENTER);
+  //    coreCanvas.rect(0, 0, width * projZFact, height * projZFact);
+  //  coreCanvas.pop();
+  //}
   
   coreCanvas.push();
     coreCanvas.translate(coreCanvasW/2, coreCanvasH/2);
@@ -548,7 +560,7 @@ void resetSwatchAnim(){
   }
 }
 
-public void fillField(boolean theFlag){
+  public void fillField(boolean theFlag){
     fillField = theFlag;
 
     if(theFlag){
@@ -557,7 +569,8 @@ public void fillField(boolean theFlag){
       if (xCountSlider != null) {
         xCountSlider.setLock(false).setColorForeground(color(150)).setColorCaptionLabel(color(255));
         yCountSlider.setLock(false).setColorForeground(color(150)).setColorCaptionLabel(color(255));
-        fillFieldToggle.setColorActive(color(#6497F9));      
+        fillFieldToggle.setColorActive(color(#6497F9));
+        justifyRadio.setVisible(false);
       }
     } else {
       xCountHold = xCount;
@@ -567,11 +580,14 @@ public void fillField(boolean theFlag){
       if (xCountSlider != null) {
         xCountSlider.setLock(true).setColorForeground(color(70)).setColorCaptionLabel(color(100));
         yCountSlider.setLock(true).setColorForeground(color(70)).setColorCaptionLabel(color(100));
-        fillFieldToggle.setColorActive(color(#374760));      
+        fillFieldToggle.setColorActive(color(#374760)); 
+        justifyRadio.setVisible(true);
       }
     }
   }
-    
+  
+  public void justifyMode(int n){ justifyMode = n; }
+  
   public void canvasWidth(String theText){
     coreCanvasW = int(theText);
     if(coreCanvasW < 10){ coreCanvasW = 10; }
@@ -765,6 +781,8 @@ public void fillField(boolean theFlag){
   }
   
   public void exportSVG(){
+    //VectorExportApplet vectorExportWin;
+    //vectorExportWin = new VectorExportApplet();
     exportSVGtoggle = true;
   }
   

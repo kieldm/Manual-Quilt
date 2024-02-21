@@ -27,7 +27,16 @@ class Field {
       coreCanvas.translate(-centerX, -centerY);
       
       for(int m = 0; m < yCount; m++){
-        for(int n = 0; n < xCount; n++){
+        int start = 0;
+        if(!fillField){
+          if(justifyMode == 1){
+            start = int((xCount - coreStringArray[m].length())/2);          
+          } else if(justifyMode == 2){
+            start = xCount - coreStringArray[m].length();
+          }
+        }
+        
+        for(int n = start; n < xCount; n++){
           ////////////// PLACE LETTERS IN GRID
           float x = n * xSpace;
           float y = m * ySpace;
@@ -92,9 +101,10 @@ class Field {
                 coreCanvas.text(coreString.charAt(counter%coreString.length()), 0, pgTextSize * 0.7/2);            
               //}
             } else {
-              if(n < coreStringArray[m].length()){
-                coreCanvas.text(coreStringArray[m].charAt(n), 0, pgTextSize * 0.7/2);               
+              if(n - start < coreStringArray[m].length()){
+                coreCanvas.text(coreStringArray[m].charAt(n - start), 0, pgTextSize * 0.7/2);
               }
+              //coreCanvas.ellipse(0,0,5,5);
             }
           coreCanvas.pop();
           
