@@ -13,7 +13,7 @@ color foreColorAnim = #202A79;
 color uiBkgdColor = color(50);
 color uiForeColor = #ffffff;
 PFont uiFontHead, uiFontMain, uiFontSub, uiFontSys1, uiFontSys2;
-PFont genFont;
+PFont genFont, genFontHeadline;
 
 int canvasWidth, canvasHeight;
 int currentWidth, currentHeight;
@@ -26,6 +26,7 @@ boolean[] swatchSel = new boolean[12];
 boolean[] swatchAnimSel = new boolean[12];
 
 Field coreFlag;
+Field svgFlag;
 int xCount = 17;
 int xCountHold = xCount;
 int yCount = 20;
@@ -103,6 +104,8 @@ void setup() {
   uiFontSys2 = createFont("IBMPlexMono-Medium.otf", 14);
   
   genFont = createFont("STKBureau-Sans-Book-Trial.otf", pgTextSize);
+  genFontHeadline = createFont("STKBureau-Serif-Book-Trial.otf", pgTextSize);
+  //genFont = createFont("STKBureau-Sans-Light-Trial.otf", pgTextSize);
   
   for(var n = 0; n < 11; n++){
     swatch[n] = loadImage("swatch_main" + n + ".png");
@@ -363,17 +366,7 @@ void setup() {
 }
 
 void draw(){
-  if(exportSVGtoggle){
-    String saveTag = "quiltVector_" + day() + minute() + second();
-    beginRaw(SVG, "export/svg/" + saveTag + ".svg");
-  }
-  
-  background(uiBkgdColor);
-  
-  coreCanvas.beginDraw();
-  coreCanvas.textMode(SHAPE);
-
-  if(fillField){
+  if(fillField){        ///////////////////////////////////// MAKE THE TEXTFIELD APPEAR TO BE LIVE
     if(mainInputText.getText().length() == 0){
       mainInputText.setText(" ");
       coreString = " ";
@@ -384,123 +377,111 @@ void draw(){
     splitInputIntoArray();
   }
   
-
-  noStroke();
-  fill(uiForeColor);
-            
-  textFont(uiFontHead);
-  textSize(60);
-  text("QUILT_3", 20, 65);
+  if(exportSVGtoggle){      //////////////////////////////////////////////////////////////////////// SVG EXPORE   
+    String saveTag = "quiltVector_" + day() + minute() + second();
+    beginRaw(SVG, "export/svg/" + saveTag + ".svg");
   
-  textFont(uiFontMain);
-  textSize(20);
-  text("CANVAS", 20, 95);
-  text("TEXT", 20, 165);
-  text("COLOR", 20, 285);
+    push();          /////////// draws background rect that's the same size as canvas size
+      noStroke();
+      fill(bkgdColorActual);
+      translate(width/2, height/2, -2000);
+      rectMode(CENTER);
+      rect(0, 0, width * projZFact, height * projZFact);
+    pop();
+    
+    svgFlag.displaySVG();
+    
+    endRaw();
+    
+    exportSVGtoggle = false;
+    windowResize(1700, 1000);
+  } else {      ///////////////////////////////////////////////////////////////////////////////////// REGULAR DISPLAY
+    
+    background(uiBkgdColor);
+    
+    coreCanvas.beginDraw();
+    coreCanvas.textMode(SHAPE); 
   
-  push();
-    translate(30, 365);
-    rotateZ(-PI/2);
-    textFont(uiFontSub);
-    if(animateColor){
-      text("COLOR A", 0, 0);
-      text("COLOR B", -80, 0);
-    } else {
-      text("SWATCHES", 0, 0);
-    }
-  pop();
-  
-  for(var m = 0; m < 2; m ++){    //////////// DRAW SWATCH SELECT FOR TOP SWATCHES
-    for(var n = 0; n < 6; n ++){
-      if(swatchSel[m * 6 + n]){
-        stroke(255);
-        strokeWeight(2);
-        rect(35 + n * 35, 310 + m * 35, 30, 30);
+    noStroke();
+    fill(uiForeColor);
+              
+    textFont(uiFontHead);
+    textSize(60);
+    text("QUILT_0.5", 20, 65);
+    
+    textFont(uiFontMain);
+    textSize(20);
+    text("CANVAS", 20, 95);
+    text("TEXT", 20, 165);
+    text("COLOR", 20, 285);
+    
+    push();
+      translate(30, 365);
+      rotateZ(-PI/2);
+      textFont(uiFontSub);
+      if(animateColor){
+        text("COLOR A", 0, 0);
+        text("COLOR B", -80, 0);
+      } else {
+        text("SWATCHES", 0, 0);
       }
-    }
-  }
-  if(animateColor){
-    for(var m = 0; m < 2; m ++){    //////////// DRAW SWATCH SELECT FOR BOT SWATCHES
+    pop();
+    
+    for(var m = 0; m < 2; m ++){    //////////// DRAW SWATCH SELECT FOR TOP SWATCHES
       for(var n = 0; n < 6; n ++){
-        if(swatchAnimSel[m * 6 + n]){
+        if(swatchSel[m * 6 + n]){
           stroke(255);
           strokeWeight(2);
-          rect(35 + n * 35, 385 + m * 35, 30, 30);
+          rect(35 + n * 35, 310 + m * 35, 30, 30);
         }
       }
-    }  
-  }
-  
-  text("FIELD", 20, 475);
-  text("WAVE", 20, 565);
-  
-  //textFont(uiFontSub);
-  //textSize(14);
-
-  textFont(uiFontMain);
-  textSize(20);
-  text("CAMERA", 20, 715);
-  text("EXPORT", 20, 940);
-
-  coreCanvas.background(bkgdColorActual);
-
-  //if(exportSVGtoggle){          /////////////////////////////////////////////////////// TURN ON SVG SAVING
-  //  String saveTag = "quiltVector_" + day() + minute() + second();
-  //  beginRaw(SVG, "export/svg/" + saveTag + ".svg");
-
-  //  coreCanvas.push();          /////////// draws background rect that's the same size as canvas size
-  //    coreCanvas.noStroke();
-  //    coreCanvas.fill(bkgdColorActual);
-  //    coreCanvas.translate(width/2, height/2, -2000);
-  //    coreCanvas.rectMode(CENTER);
-  //    coreCanvas.rect(0, 0, width * projZFact, height * projZFact);
-  //  coreCanvas.pop();
-  //}
-  
-  coreCanvas.push();
-    coreCanvas.translate(coreCanvasW/2, coreCanvasH/2);
+    }
+    if(animateColor){
+      for(var m = 0; m < 2; m ++){    //////////// DRAW SWATCH SELECT FOR BOT SWATCHES
+        for(var n = 0; n < 6; n ++){
+          if(swatchAnimSel[m * 6 + n]){
+            stroke(255);
+            strokeWeight(2);
+            rect(35 + n * 35, 385 + m * 35, 30, 30);
+          }
+        }
+      }  
+    }
     
-    // ANIMATE CAMERA
-    if(animateCamera && wave3D){
-      cameraAnimation();
-      coreCanvas.translate(animatorPosX, 0, animatorZoomZ);
+    text("FIELD", 20, 475);
+    text("WAVE", 20, 565);
+    
+    //textFont(uiFontSub);
+    //textSize(14);
+  
+    textFont(uiFontMain);
+    textSize(20);
+    text("CAMERA", 20, 715);
+    text("EXPORT", 20, 940);
+  
+    coreCanvas.background(bkgdColorActual);
       
-      coreCanvas.rotateX(animatorRotX);
-      coreCanvas.rotateY(animatorRotY);
-      coreCanvas.rotateZ(animatorRotZ);
-    }
-        
-    // CAMERA
-    if(wave3D){
-      coreCanvas.rotateX(cameraRotX);
-      coreCanvas.rotateY(cameraRotY);
-      coreCanvas.rotateZ(cameraRotZ);    
-    }
-
-    // SCALE
-    coreCanvas.scale(coreScale);
-    
     coreFlag.run();
-  coreCanvas.pop();
-  coreCanvas.endDraw();
-
-  push();
-    translate(uiWidth + padding + boardWidth/2, padding + boardHeight/2);
     
-    noFill();
-    stroke(0,175);
-    strokeWeight(0.5);
-    rectMode(CENTER);
-    rect(0, 0, boardWidth, boardHeight, 10);
-        
-    image(coreCanvas, -displayCoreW/2, -displayCoreH/2, displayCoreW, displayCoreH);
-  pop();
-
-  fill(0,175);
-  noStroke();
-  textFont(uiFontSys2);
-  text("SCALE: " + imageScale + "%", uiWidth + padding, height - padding/2);
-
+    coreCanvas.endDraw();
+  
+    push();
+      translate(uiWidth + padding + boardWidth/2, padding + boardHeight/2);
+      
+      noFill();
+      stroke(0,175);
+      strokeWeight(0.5);
+      rectMode(CENTER);
+      rect(0, 0, boardWidth, boardHeight, 10);
+          
+      image(coreCanvas, -displayCoreW/2, -displayCoreH/2, displayCoreW, displayCoreH);
+    pop();
+  
+    fill(0,175);
+    noStroke();
+    textFont(uiFontSys2);
+    text("SCALE: " + imageScale + "%", uiWidth + padding, height - padding/2);
+  }
   
   if(exportSeqToggle){
     coreCanvas.save("export/sequence/" + seqTag + "/quiltFrame-" + seqCount + ".png");
@@ -510,12 +491,7 @@ void draw(){
       exportSeqToggle = false;
     }
   }
-  
-  if(exportSVGtoggle){
-    endRaw();
-    exportSVGtoggle = false;
-  }
-  
+    
   if(exportMP4toggle){
     videoExport.saveFrame();
     seqCount++;
@@ -538,15 +514,6 @@ void colorAnimation(){
     bkgdColorActual = bkgdColor;
     foreColorActual = foreColor;
   }
-}
-
-void cameraAnimation(){
-  float waver = sinEngine(0,0,waveSpeed/2,1);
-  animatorRotX = waver * animateRotX;
-  animatorRotY = waver * animateRotY;
-  animatorRotZ = waver * animateRotZ;
-  animatorZoomZ = waver * animateZoomZ;
-  animatorPosX = waver * animatePosX;
 }
 
 void resetSwatch(){
@@ -608,7 +575,6 @@ void resetSwatchAnim(){
 
     // figure out display dimensions so it's scaled to proper display (displayCore) size
     if(coreCanvasW > coreCanvasH){    //////////// HORZ COMP
-      println("HORIZONTAL COMP");
       coreRatio = coreCanvasH/coreCanvasW;
       if(coreCanvasW > boardWidth){
         displayCoreW = boardWidth;
@@ -621,7 +587,6 @@ void resetSwatchAnim(){
         displayCoreH = coreCanvasH;
       }
     } else {                          //////////// VERT COMP
-      println("VERTICAL, SQUARE COMP");
       coreRatio = coreCanvasW/coreCanvasH;
       if(coreCanvasH > boardHeight){
         displayCoreH = boardHeight;
@@ -781,8 +746,11 @@ void resetSwatchAnim(){
   }
   
   public void exportSVG(){
-    //VectorExportApplet vectorExportWin;
-    //vectorExportWin = new VectorExportApplet();
+    svgFlag = new Field();
+    textMode(SHAPE);
+    
+    clear();
+    windowResize(int(coreCanvasW), int(coreCanvasH));
     exportSVGtoggle = true;
   }
   
