@@ -1,4 +1,6 @@
 .DS_Store
 *.autosave
+quilt1/*.autosave
 quilt1/build
 quilt1/export
+quilt1/ffmpeg.txt
