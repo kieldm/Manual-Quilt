@@ -343,6 +343,8 @@ void setup() {
                             .setColorCaptionLabel(color(100));
     animatePosXSlider.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
 
+    String tempTag = "quiltMotion" + hour() + "_" + minute() + "_" + second();
+
     // EXPORT
     cp5.addButton("exportSVG").setPosition(20, 950).setSize(100,40).setCaptionLabel("SVG");
     cp5.addButton("exportSeq").setPosition(125, 950).setSize(100,40).setCaptionLabel("Sequence");
@@ -407,7 +409,7 @@ void draw(){
               
     textFont(uiFontHead);
     textSize(60);
-    text("QUILT_0.5", 20, 65);
+    text("QUILT_0.51", 20, 65);
     
     textFont(uiFontMain);
     textSize(20);
@@ -476,11 +478,18 @@ void draw(){
           
       image(coreCanvas, -displayCoreW/2, -displayCoreH/2, displayCoreW, displayCoreH);
     pop();
-  
-    fill(0,175);
+      
     noStroke();
-    textFont(uiFontSys2);
-    text("SCALE: " + imageScale + "%", uiWidth + padding, height - padding/2);
+    if(exportMP4toggle){
+      fill(255,0,0);
+      rect(uiWidth + padding, height - padding/2 + 5, boardWidth, -20);
+      fill(255);
+      text("RENDERING",uiWidth + padding, height - padding/2);
+    } else {
+      fill(0,175);
+      textFont(uiFontSys2);
+      text("SCALE: " + imageScale + "%", uiWidth + padding, height - padding/2);
+    }
   }
   
   if(exportSeqToggle){

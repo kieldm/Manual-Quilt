@@ -14,10 +14,10 @@ Input #0, rawvideo, from 'fd:':
   Stream #0:0: Video: rawvideo (RGB[24] / 0x18424752), rgb24, 1080x1080, 839808 kb/s, 30 tbr, 30 tbn
 Stream mapping:
   Stream #0:0 -> #0:0 (rawvideo (native) -> h264 (libx264))
-[libx264 @ 0x7f7a6d907080] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2
-[libx264 @ 0x7f7a6d907080] profile High, level 3.2, 4:2:0, 8-bit
-[libx264 @ 0x7f7a6d907080] 264 - core 164 r3095 baee400 - H.264/MPEG-4 AVC codec - Copyleft 2003-2022 - http://www.videolan.org/x264.html - options: cabac=1 ref=3 deblock=1:0:0 analyse=0x3:0x113 me=hex subme=7 psy=1 psy_rd=1.00:0.00 mixed_ref=1 me_range=16 chroma_me=1 trellis=1 8x8dct=1 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=-2 threads=24 lookahead_threads=4 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=3 b_pyramid=2 b_adapt=1 b_bias=0 direct=1 weightb=1 open_gop=0 weightp=2 keyint=250 keyint_min=25 scenecut=40 intra_refresh=0 rc_lookahead=40 rc=crf mbtree=1 crf=1.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 ip_ratio=1.40 aq=1:1.00
-Output #0, mp4, to '/Users/kielmutschelknaus/Documents/GitHub/client/Manual-Quilt/quilt1/export/mp4/quiltMotion16_49_28.mp4':
+[libx264 @ 0x7fcfe6705dc0] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2
+[libx264 @ 0x7fcfe6705dc0] profile High, level 3.2, 4:2:0, 8-bit
+[libx264 @ 0x7fcfe6705dc0] 264 - core 164 r3095 baee400 - H.264/MPEG-4 AVC codec - Copyleft 2003-2022 - http://www.videolan.org/x264.html - options: cabac=1 ref=3 deblock=1:0:0 analyse=0x3:0x113 me=hex subme=7 psy=1 psy_rd=1.00:0.00 mixed_ref=1 me_range=16 chroma_me=1 trellis=1 8x8dct=1 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=-2 threads=24 lookahead_threads=4 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=3 b_pyramid=2 b_adapt=1 b_bias=0 direct=1 weightb=1 open_gop=0 weightp=2 keyint=250 keyint_min=25 scenecut=40 intra_refresh=0 rc_lookahead=40 rc=crf mbtree=1 crf=1.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 ip_ratio=1.40 aq=1:1.00
+Output #0, mp4, to '/Users/kielmutschelknaus/Library/Mobile Documents/com~apple~CloudDocs/091_Manual/001_Quilt/quilt5/export/mp4/quiltMotion15_19_21.mp4':
   Metadata:
     comment         : Made with Video Export for Processing - https://git.io/vAXLk
     encoder         : Lavf60.3.100
@@ -26,24 +26,24 @@ Output #0, mp4, to '/Users/kielmutschelknaus/Documents/GitHub/client/Manual-Quil
       encoder         : Lavc60.3.100 libx264
     Side data:
       cpb: bitrate max/min/avg: 0/0/0 buffer size: 0 vbv_delay: N/A
-frame=    0 fps=0.0 q=0.0 size=       0kB time=-577014:32:22.77 bitrate=  -0.0kbits/s speed=N/A    frame=    0 fps=0.0 q=0.0 size=       0kB time=-577014:32:22.77 bitrate=  -0.0kbits/s speed=N/A    frame=    0 fps=0.0 q=0.0 size=       0kB time=-577014:32:22.77 bitrate=  -0.0kbits/s speed=N/A    frame=    0 fps=0.0 q=0.0 size=       0kB time=-577014:32:22.77 bitrate=  -0.0kbits/s speed=N/A    frame=    0 fps=0.0 q=0.0 size=       0kB time=-577014:32:22.77 bitrate=  -0.0kbits/s speed=N/A    frame=    9 fps=3.5 q=7.0 size=     768kB time=00:00:00.23 bitrate=26965.1kbits/s speed=0.0909x    frame=   24 fps=7.8 q=7.0 size=    1792kB time=00:00:00.73 bitrate=20018.8kbits/s speed=0.239x    frame=   39 fps= 11 q=7.0 size=    3072kB time=00:00:01.23 bitrate=20405.0kbits/s speed=0.345x    frame=   54 fps= 13 q=7.0 size=    4352kB time=00:00:01.73 bitrate=20568.4kbits/s speed=0.424x    frame=   69 fps= 15 q=7.0 size=    5376kB time=00:00:02.23 bitrate=19719.7kbits/s speed=0.487x    frame=   84 fps= 16 q=7.0 size=    6656kB time=00:00:02.73 bitrate=19948.7kbits/s speed=0.537x    frame=   99 fps= 18 q=7.0 size=    7680kB time=00:00:03.23 bitrate=19458.2kbits/s speed=0.577x    frame=  114 fps= 19 q=7.0 size=    8704kB time=00:00:03.73 bitrate=19099.2kbits/s speed=0.612x    frame=  130 fps= 20 q=7.0 size=    9728kB time=00:00:04.26 bitrate=18677.8kbits/s speed=0.643x    frame=  146 fps= 20 q=7.0 size=   11008kB time=00:00:04.80 bitrate=18787.1kbits/s speed=0.67x    frame=  161 fps= 21 q=7.0 size=   12288kB time=00:00:05.30 bitrate=18993.1kbits/s speed=0.691x    frame=  177 fps= 22 q=7.0 size=   13312kB time=00:00:05.83 bitrate=18694.7kbits/s speed=0.711x    frame=  192 fps= 22 q=7.0 size=   14592kB time=00:00:06.33 bitrate=18874.4kbits/s speed=0.727x    frame=  207 fps= 22 q=7.0 size=   15872kB time=00:00:06.83 bitrate=19027.9kbits/s speed=0.741x    frame=  222 fps= 23 q=7.0 size=   16896kB time=00:00:07.33 bitrate=18874.4kbits/s speed=0.754x    frame=  237 fps= 23 q=7.0 size=   18176kB time=00:00:07.83 bitrate=19008.3kbits/s speed=0.765x    frame=  252 fps= 23 q=7.0 size=   19200kB time=00:00:08.33 bitrate=18874.4kbits/s speed=0.776x    frame=  267 fps= 24 q=7.0 size=   20224kB time=00:00:08.83 bitrate=18755.7kbits/s speed=0.786x    frame=  282 fps= 24 q=7.0 size=   21248kB time=00:00:09.33 bitrate=18649.7kbits/s speed=0.794x    frame=  360 fps= 29 q=-1.0 Lsize=   27671kB time=00:00:11.90 bitrate=19048.7kbits/s speed=0.965x    
-video:27665kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 0.019556%
-[libx264 @ 0x7f7a6d907080] frame I:2     Avg QP: 0.52  size:178660
-[libx264 @ 0x7f7a6d907080] frame P:91    Avg QP: 2.85  size:115670
-[libx264 @ 0x7f7a6d907080] frame B:267   Avg QP: 8.69  size: 65339
-[libx264 @ 0x7f7a6d907080] consecutive B-frames:  1.1%  0.0%  0.0% 98.9%
-[libx264 @ 0x7f7a6d907080] mb I  I16..4: 70.1%  0.4% 29.5%
-[libx264 @ 0x7f7a6d907080] mb P  I16..4:  2.9%  0.0%  0.0%  P16..4: 13.5% 11.7%  8.7%  0.0%  0.0%    skip:63.2%
-[libx264 @ 0x7f7a6d907080] mb B  I16..4:  0.2%  0.0%  0.0%  B16..8: 10.0%  6.0%  4.9%  direct:13.2%  skip:65.6%  L0:42.1% L1:32.7% BI:25.2%
-[libx264 @ 0x7f7a6d907080] 8x8 transform intra:0.3% inter:3.4%
-[libx264 @ 0x7f7a6d907080] coded y,uvDC,uvAC intra: 9.2% 30.6% 30.1% inter: 15.5% 23.5% 22.8%
-[libx264 @ 0x7f7a6d907080] i16 v,h,dc,p: 80% 17%  4%  0%
-[libx264 @ 0x7f7a6d907080] i8 v,h,dc,ddl,ddr,vr,hd,vl,hu: 31% 17% 44%  1%  5%  1%  1%  0%  0%
-[libx264 @ 0x7f7a6d907080] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 35% 21% 28%  1%  3%  5%  3%  2%  2%
-[libx264 @ 0x7f7a6d907080] i8c dc,h,v,p: 65% 20% 15%  0%
-[libx264 @ 0x7f7a6d907080] Weighted P-Frames: Y:41.8% UV:40.7%
-[libx264 @ 0x7f7a6d907080] ref P L0: 60.1%  2.2% 15.6% 16.0%  6.1%
-[libx264 @ 0x7f7a6d907080] ref B L0: 74.2% 18.8%  7.1%
-[libx264 @ 0x7f7a6d907080] ref B L1: 89.2% 10.8%
-[libx264 @ 0x7f7a6d907080] kb/s:18885.84
+frame=    0 fps=0.0 q=0.0 size=       0kB time=-577014:32:22.77 bitrate=  -0.0kbits/s speed=N/A    frame=    0 fps=0.0 q=0.0 size=       0kB time=-577014:32:22.77 bitrate=  -0.0kbits/s speed=N/A    frame=    0 fps=0.0 q=0.0 size=       0kB time=-577014:32:22.77 bitrate=  -0.0kbits/s speed=N/A    frame=    0 fps=0.0 q=0.0 size=       0kB time=-577014:32:22.77 bitrate=  -0.0kbits/s speed=N/A    frame=    0 fps=0.0 q=0.0 size=       0kB time=-577014:32:22.77 bitrate=  -0.0kbits/s speed=N/A    frame=    9 fps=3.5 q=7.0 size=     512kB time=00:00:00.23 bitrate=17977.3kbits/s speed=0.0917x    frame=   25 fps=8.1 q=7.0 size=    1536kB time=00:00:00.76 bitrate=16413.0kbits/s speed=0.249x    frame=   40 fps= 11 q=7.0 size=    2560kB time=00:00:01.26 bitrate=16556.8kbits/s speed=0.354x    frame=   55 fps= 13 q=7.0 size=    3584kB time=00:00:01.76 bitrate=16619.2kbits/s speed=0.432x    frame=   70 fps= 15 q=7.0 size=    4608kB time=00:00:02.26 bitrate=16654.0kbits/s speed=0.494x    frame=   85 fps= 17 q=7.0 size=    5632kB time=00:00:02.76 bitrate=16676.3kbits/s speed=0.543x    frame=  101 fps= 18 q=7.0 size=    6656kB time=00:00:03.30 bitrate=16523.1kbits/s speed=0.587x    frame=  180 fps= 29 q=-1.0 Lsize=   12042kB time=00:00:05.90 bitrate=16719.4kbits/s speed=0.949x    
+video:12038kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 0.025991%
+[libx264 @ 0x7fcfe6705dc0] frame I:1     Avg QP: 1.49  size:148749
+[libx264 @ 0x7fcfe6705dc0] frame P:45    Avg QP: 4.71  size: 93466
+[libx264 @ 0x7fcfe6705dc0] frame B:134   Avg QP:11.09  size: 59492
+[libx264 @ 0x7fcfe6705dc0] consecutive B-frames:  0.6%  0.0%  1.7% 97.8%
+[libx264 @ 0x7fcfe6705dc0] mb I  I16..4: 69.0%  0.3% 30.7%
+[libx264 @ 0x7fcfe6705dc0] mb P  I16..4:  3.1%  0.0%  0.1%  P16..4: 12.3% 11.4%  9.3%  0.0%  0.0%    skip:63.9%
+[libx264 @ 0x7fcfe6705dc0] mb B  I16..4:  0.2%  0.0%  0.0%  B16..8: 11.7%  7.4%  6.3%  direct: 8.7%  skip:65.6%  L0:44.1% L1:35.0% BI:20.9%
+[libx264 @ 0x7fcfe6705dc0] 8x8 transform intra:0.3% inter:1.8%
+[libx264 @ 0x7fcfe6705dc0] coded y,uvDC,uvAC intra: 6.7% 17.7% 16.8% inter: 13.6% 8.7% 6.5%
+[libx264 @ 0x7fcfe6705dc0] i16 v,h,dc,p: 76% 20%  4%  0%
+[libx264 @ 0x7fcfe6705dc0] i8 v,h,dc,ddl,ddr,vr,hd,vl,hu: 32% 29% 37%  1%  2%  0%  0%  0%  0%
+[libx264 @ 0x7fcfe6705dc0] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 35% 24% 26%  1%  3%  5%  2%  1%  2%
+[libx264 @ 0x7fcfe6705dc0] i8c dc,h,v,p: 71% 16% 14%  0%
+[libx264 @ 0x7fcfe6705dc0] Weighted P-Frames: Y:0.0% UV:0.0%
+[libx264 @ 0x7fcfe6705dc0] ref P L0: 58.6%  3.6% 19.9% 17.9%
+[libx264 @ 0x7fcfe6705dc0] ref B L0: 72.3% 20.0%  7.7%
+[libx264 @ 0x7fcfe6705dc0] ref B L1: 88.6% 11.4%
+[libx264 @ 0x7fcfe6705dc0] kb/s:16435.53
 Exiting normally, received signal 15.
