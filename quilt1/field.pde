@@ -26,6 +26,7 @@ class Field {
           
       // CAMERA
       if(wave3D){
+        coreCanvas.translate(cameraPosX, 0);
         coreCanvas.rotateX(cameraRotX);
         coreCanvas.rotateY(cameraRotY);
         coreCanvas.rotateZ(cameraRotZ);    
@@ -47,7 +48,7 @@ class Field {
         
         for(int m = 0; m < yCount; m++){
           int start = 0;
-          if(!fillField){
+          if(headlineMode){
             if(justifyMode == 1){
               start = int((xCount - coreStringArray[m].length())/2);          
             } else if(justifyMode == 2){
@@ -115,7 +116,7 @@ class Field {
               }
   
               
-              if(fillField){
+              if(!headlineMode){
                 coreCanvas.textFont(genFont);
                 coreCanvas.textSize(pgTextSize);
                 coreCanvas.textAlign(CENTER);
@@ -156,6 +157,7 @@ class Field {
           
       // CAMERA
       if(wave3D){
+        translate(cameraPosX, 0);
         rotateX(cameraRotX);
         rotateY(cameraRotY);
         rotateZ(cameraRotZ);    
@@ -177,7 +179,7 @@ class Field {
         
         for(int m = 0; m < yCount; m++){
           int start = 0;
-          if(!fillField){
+          if(headlineMode){
             if(justifyMode == 1){
               start = int((xCount - coreStringArray[m].length())/2);          
             } else if(justifyMode == 2){
@@ -245,7 +247,7 @@ class Field {
               }
   
               
-              if(fillField){
+              if(!headlineMode){
                 textFont(genFont);
                 textSize(pgTextSize);
                 textAlign(CENTER);
