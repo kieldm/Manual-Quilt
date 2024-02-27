@@ -396,7 +396,10 @@ void draw(){
     endRaw();
     
     exportSVGtoggle = false;
-    windowResize(1700, 1000);
+    println("SVG COMPLETE. CLOSING.");
+    exit();
+    //windowResize(1700, 1000);
+    //println("DID IT RESIZE?");
   } else {      ///////////////////////////////////////////////////////////////////////////////////// REGULAR DISPLAY
     
     background(uiBkgdColor);
@@ -758,7 +761,6 @@ void resetSwatchAnim(){
     svgFlag = new Field();
     textMode(SHAPE);
     
-    clear();
     windowResize(int(coreCanvasW), int(coreCanvasH));
     exportSVGtoggle = true;
   }
