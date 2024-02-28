@@ -6,10 +6,10 @@ VideoExport videoExport;
 
 color bkgdColorActual = #FEF9F3;
 color bkgdColor = #FEF9F3;
-color bkgdColorAnim = #FEF9F3;
+color bkgdColorAnim = #6497F9;
 color foreColor = #000000;
 color foreColorActual = #000000;
-color foreColorAnim = #202A79;
+color foreColorAnim = #D8F4F7;
 color uiBkgdColor = color(50);
 color uiForeColor = #ffffff;
 PFont uiFontHead, uiFontMain, uiFontSub, uiFontSys1, uiFontSys2;
@@ -21,9 +21,9 @@ int currentWidth, currentHeight;
 String coreString = "BETTER CLIMATE BY DESIGN";
 int lineMax = 10;
 String[] coreStringArray = new String[lineMax];
-PImage[] swatch = new PImage[11];
-boolean[] swatchSel = new boolean[12];
-boolean[] swatchAnimSel = new boolean[12];
+PImage[] swatch = new PImage[10];
+boolean[] swatchSel = new boolean[10];
+boolean[] swatchAnimSel = new boolean[10];
 
 Field coreFlag;
 Field svgFlag;
@@ -54,7 +54,9 @@ boolean radialWave = false;
 boolean exportSVGtoggle = false;
 boolean exportSeqToggle = false;
 boolean exportMP4toggle = false;
+boolean scrubMode = false;
 int justifyMode = 0;
+int scrubbed = 0;
 
 String seqTag;
 int seqCount = 0;
@@ -72,24 +74,26 @@ float displayCoreH = boardHeight;
 float displayCoreW = displayCoreH/coreRatio;
 float imageScale = round((displayCoreH/coreCanvasH) * 100);
 
-ControlP5 cp5;
-Toggle headlineToggle;
-RadioButton justifyRadio;
-Slider xCountSlider, yCountSlider;
-Toggle waveDimensionToggle;
-Toggle animateColorToggle;
-Slider xWaveOffsetSlider, yWaveOffsetSlider;
-Slider radialOffsetSlider;
-Toggle radialWaveToggle;
-Toggle animateCameraToggle;
-Slider waveSizeSlider;
-Slider cameraRotXSlider, cameraRotYSlider, cameraRotZSlider;
-Slider cameraPosXSlider;
-Slider animateRotXSlider, animateRotYSlider, animateRotZSlider;
-Slider animateZoomZSlider, animatePosXSlider;
-Textfield mainInputText;
-Button[] swatchButton = new Button[11];
-Button[] swatchAnimButton = new Button[11];
+private ControlP5 cp5;
+private Toggle headlineToggle;
+private RadioButton justifyRadio;
+private Slider xCountSlider, yCountSlider;
+private Toggle waveDimensionToggle;
+private Toggle animateColorToggle;
+private Slider xWaveOffsetSlider, yWaveOffsetSlider;
+private Slider radialOffsetSlider;
+private Toggle radialWaveToggle;
+private Toggle animateCameraToggle;
+private Slider waveSizeSlider;
+private Toggle scrubToggle;
+private Slider scrubSlider;
+private Slider cameraRotXSlider, cameraRotYSlider, cameraRotZSlider;
+private Slider cameraPosXSlider;
+private Slider animateRotXSlider, animateRotYSlider, animateRotZSlider;
+private Slider animateZoomZSlider, animatePosXSlider;
+private Textfield mainInputText;
+private Button[] swatchButton = new Button[10];
+private Button[] swatchAnimButton = new Button[10];
 
 void setup() {
   size(1700, 1000, P3D);
@@ -110,16 +114,16 @@ void setup() {
   genFontHeadline = createFont("STKBureau-Serif-Book-Trial.otf", pgTextSize);
   //genFont = createFont("STKBureau-Sans-Light-Trial.otf", pgTextSize);
   
-  for(var n = 0; n < 11; n++){
+  for(var n = 0; n < 10; n++){
     swatch[n] = loadImage("swatch_main" + n + ".png");
   }
   
-  drawControls();
-
   resetSwatch();
-  swatchSel[1] = true;
+  swatchSel[2] = true;
   resetSwatchAnim();
-  swatchAnimSel[5] = true;
+  swatchAnimSel[6] = true;
+  
+  drawControls();
   
   coreCanvas = createGraphics(int(coreCanvasW), int(coreCanvasH), P3D);
   coreCanvas.smooth(4);
@@ -155,7 +159,11 @@ void draw(){
   
     drawUI();
   
-    coreCanvas.background(bkgdColorActual);
+    if(swatchSel[9]){
+      coreCanvas.background(0,0,0,0);
+    } else {
+      coreCanvas.background(bkgdColorActual);
+    }      
       
     coreFlag.run();
     
@@ -212,13 +220,15 @@ void drawSVG(){
     String saveTag = "quiltVector_" + day() + minute() + second();
     beginRaw(SVG, "export/svg/" + saveTag + ".svg");
   
-    push();          /////////// draws background rect that's the same size as canvas size
-      noStroke();
-      fill(bkgdColorActual);
-      translate(width/2, height/2, -2000);
-      rectMode(CENTER);
-      rect(0, 0, width * projZFact, height * projZFact);
-    pop();
+    if(!swatchSel[9]){
+      push();          /////////// draws background rect that's the same size as canvas size
+        noStroke();
+        fill(bkgdColorActual);
+        translate(width/2, height/2, -2000);
+        rectMode(CENTER);
+        rect(0, 0, width * projZFact, height * projZFact);
+      pop();
+    }
     
     svgFlag.displaySVG();
     
@@ -243,10 +253,10 @@ void colorAnimation(){
 }
 
 void resetSwatch(){
-  for(var m = 0; m < 12; m++){ swatchSel[m] = false;}
+  for(var m = 0; m < 10; m++){ swatchSel[m] = false;}
 }
 void resetSwatchAnim(){
-  for(var m = 0; m < 12; m++){ swatchAnimSel[m] = false;}
+  for(var m = 0; m < 10; m++){ swatchAnimSel[m] = false;}
 }
 
   

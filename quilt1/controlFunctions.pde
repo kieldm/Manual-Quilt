@@ -73,15 +73,37 @@ public void canvasResizer(){
   imageScale = round((displayCoreH/coreCanvasH) * 100);
 }
 
+public void scrubMode(boolean theFlag){
+  scrubMode = theFlag;
+
+  if(scrubSlider != null){
+    if(theFlag){
+      scrubSlider.setVisible(true);
+      scrubToggle.setColorActive(color(#6497F9));
+    } else {
+      scrubSlider.setVisible(false);
+      scrubToggle.setColorActive(color(#374760));
+    }
+  }
+}
+public void scrubber(float n){
+  if(animateCamera || animateColor){
+    scrubbed = int(map(n, 0, 1, 0, 2 * loopLength));
+  } else {
+    scrubbed = int(map(n, 0, 1, 0, loopLength));  
+  }
+}
+
 public void animateColor(boolean theFlag){
   boolean toggle = theFlag;
   animateColor = theFlag;
       
   if(swatchButton[0] != null){
-    for(int m = 0; m < 11; m++){
+    for(int m = 0; m < 10; m++){
       swatchAnimButton[m].setVisible(toggle);
     }
-    
+  }
+  if(animateColorToggle != null){
     if(theFlag){
       animateColorToggle.setColorActive(color(#6497F9));
     } else {
@@ -91,28 +113,26 @@ public void animateColor(boolean theFlag){
 }
   
 public void swatch0(){ resetSwatch(); swatchSel[0] = true; bkgdColor = #ffffff; foreColor = #000000;}
-public void swatch1(){ resetSwatch(); swatchSel[1] = true; bkgdColor = #FEF9F3; foreColor = #000000;}  
-public void swatch2(){ resetSwatch(); swatchSel[2] = true; bkgdColor = #E5DFD9; foreColor = #000000;}  
-public void swatch3(){ resetSwatch(); swatchSel[3] = true; bkgdColor = #FEF9F3; foreColor = #FF7B5E;}  
-public void swatch4(){ resetSwatch(); swatchSel[4] = true; bkgdColor = #FEF9F3; foreColor = #186767;}  
-public void swatch5(){ resetSwatch(); swatchSel[5] = true; bkgdColor = #FEF9F3; foreColor = #202A79;}
-public void swatch6(){ resetSwatch(); swatchSel[6] = true; bkgdColor = #FFF3D2; foreColor = #000000;}
-public void swatch7(){ resetSwatch(); swatchSel[7] = true; bkgdColor = #FF7B5E; foreColor = #FFF3D2;}  
-public void swatch8(){ resetSwatch(); swatchSel[8] = true; bkgdColor = #D8F4F7; foreColor = #186767;}  
-public void swatch9(){ resetSwatch(); swatchSel[9] = true; bkgdColor = #6497F9; foreColor = #D8F4F7;}  
-public void swatch10(){ resetSwatch(); swatchSel[10] = true; bkgdColor = #186767; foreColor = #D8F4F7;}  
+public void swatch1(){ resetSwatch(); swatchSel[1] = true; bkgdColor = #000000; foreColor = #ffffff;}  
+public void swatch2(){ resetSwatch(); swatchSel[2] = true; bkgdColor = #fef9f3; foreColor = #000000;}  
+public void swatch3(){ resetSwatch(); swatchSel[3] = true; bkgdColor = #fff3d2; foreColor = #FF7B5E;}  
+public void swatch4(){ resetSwatch(); swatchSel[4] = true; bkgdColor = #ff7b5e; foreColor = #fff3d2;}  
+public void swatch5(){ resetSwatch(); swatchSel[5] = true; bkgdColor = #d8f4f7; foreColor = #202a79;}
+public void swatch6(){ resetSwatch(); swatchSel[6] = true; bkgdColor = #6497f9; foreColor = #d8f4f7;}
+public void swatch7(){ resetSwatch(); swatchSel[7] = true; bkgdColor = #fef9f3; foreColor = #186767;}  
+public void swatch8(){ resetSwatch(); swatchSel[8] = true; bkgdColor = #186767; foreColor = #d8f4f7;}  
+public void swatch9(){ resetSwatch(); swatchSel[9] = true; bkgdColor = color(255, 255, 255, 0); foreColor = #ffffff;}  
 
 public void swatchAnim0(){ resetSwatchAnim(); swatchAnimSel[0] = true; bkgdColorAnim = #ffffff; foreColorAnim = #000000;}
-public void swatchAnim1(){ resetSwatchAnim(); swatchAnimSel[1] = true; bkgdColorAnim = #FEF9F3; foreColorAnim = #000000;}  
-public void swatchAnim2(){ resetSwatchAnim(); swatchAnimSel[2] = true; bkgdColorAnim = #E5DFD9; foreColorAnim = #000000;}  
-public void swatchAnim3(){ resetSwatchAnim(); swatchAnimSel[3] = true; bkgdColorAnim = #FEF9F3; foreColorAnim = #FF7B5E;}  
-public void swatchAnim4(){ resetSwatchAnim(); swatchAnimSel[4] = true; bkgdColorAnim = #FEF9F3; foreColorAnim = #186767;}  
-public void swatchAnim5(){ resetSwatchAnim(); swatchAnimSel[5] = true; bkgdColorAnim = #FEF9F3; foreColorAnim = #202A79;}
-public void swatchAnim6(){ resetSwatchAnim(); swatchAnimSel[6] = true; bkgdColorAnim = #FFF3D2; foreColorAnim = #000000;}
-public void swatchAnim7(){ resetSwatchAnim(); swatchAnimSel[7] = true; bkgdColorAnim = #FF7B5E; foreColorAnim = #FFF3D2;}  
-public void swatchAnim8(){ resetSwatchAnim(); swatchAnimSel[8] = true; bkgdColorAnim = #D8F4F7; foreColorAnim = #186767;}  
-public void swatchAnim9(){ resetSwatchAnim(); swatchAnimSel[9] = true; bkgdColorAnim = #6497F9; foreColorAnim = #D8F4F7;}  
-public void swatchAnim10(){ resetSwatchAnim(); swatchAnimSel[10] = true; bkgdColorAnim = #186767; foreColorAnim = #D8F4F7;}  
+public void swatchAnim1(){ resetSwatchAnim(); swatchAnimSel[1] = true; bkgdColorAnim = #000000; foreColorAnim = #ffffff;}  
+public void swatchAnim2(){ resetSwatchAnim(); swatchAnimSel[2] = true; bkgdColorAnim = #fef9f3; foreColorAnim = #000000;}  
+public void swatchAnim3(){ resetSwatchAnim(); swatchAnimSel[3] = true; bkgdColorAnim = #fff3d2; foreColorAnim = #FF7B5E;}  
+public void swatchAnim4(){ resetSwatchAnim(); swatchAnimSel[4] = true; bkgdColorAnim = #ff7b5e; foreColorAnim = #fff3d2;}  
+public void swatchAnim5(){ resetSwatchAnim(); swatchAnimSel[5] = true; bkgdColorAnim = #d8f4f7; foreColorAnim = #202A79;}
+public void swatchAnim6(){ resetSwatchAnim(); swatchAnimSel[6] = true; bkgdColorAnim = #6497f9; foreColorAnim = #d8f4f7;}
+public void swatchAnim7(){ resetSwatchAnim(); swatchAnimSel[7] = true; bkgdColorAnim = #fef9f3; foreColorAnim = #186767;}  
+public void swatchAnim8(){ resetSwatchAnim(); swatchAnimSel[8] = true; bkgdColorAnim = #186767; foreColorAnim = #d8f4f7;}  
+public void swatchAnim9(){ resetSwatchAnim(); swatchAnimSel[9] = true; bkgdColorAnim = color(255, 255, 255, 0); foreColorAnim = #ffffff;}  
 
 public void coreScale(float n){ coreScale = n; }
 public void xCount(int n){ xCount = n; }
@@ -159,7 +179,7 @@ public void radialWave(boolean theFlag){
   }
 }
 
-public void yWaveOffset(float n){ yWaveOffset = n; }
+public void yWaveOffset(float n){ yWaveOffset = n; } 
 public void xWaveOffset(float n){ xWaveOffset = n; }
 public void radialOffset(float n){ radialOffset = n; }
 public void loopLength(int n){

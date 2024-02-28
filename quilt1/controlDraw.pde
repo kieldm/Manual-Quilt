@@ -84,29 +84,40 @@ void drawControls(){
                              .setCaptionLabel("Animate Color");
     animateColorToggle.getCaptionLabel().align(ControlP5.LEFT, ControlP5.RIGHT_OUTSIDE).setPaddingX(88);
     
-    swatchButton[0] = cp5.addButton("swatch0").setPosition(35, 310).setSize(30, 30).setImage(swatch[0]);
-    swatchButton[1] = cp5.addButton("swatch1").setPosition(70, 310).setSize(30, 30).setImage(swatch[1]);
-    swatchButton[2] = cp5.addButton("swatch2").setPosition(105, 310).setSize(30, 30).setImage(swatch[2]);
-    swatchButton[3] = cp5.addButton("swatch3").setPosition(140, 310).setSize(30, 30).setImage(swatch[3]);
-    swatchButton[4] = cp5.addButton("swatch4").setPosition(175, 310).setSize(30, 30).setImage(swatch[4]);
-    swatchButton[5] = cp5.addButton("swatch5").setPosition(210, 310).setSize(30, 30).setImage(swatch[5]);
-    swatchButton[6] = cp5.addButton("swatch6").setPosition(35, 345).setSize(30, 30).setImage(swatch[6]);
-    swatchButton[7] = cp5.addButton("swatch7").setPosition(70, 345).setSize(30, 30).setImage(swatch[7]);
-    swatchButton[8] = cp5.addButton("swatch8").setPosition(105, 345).setSize(30, 30).setImage(swatch[8]);
-    swatchButton[9] = cp5.addButton("swatch9").setPosition(140, 345).setSize(30, 30).setImage(swatch[9]);
-    swatchButton[10] = cp5.addButton("swatch10").setPosition(175, 345).setSize(30, 30).setImage(swatch[10]);
+    swatchButton[0] = cp5.addButton("swatch0").setPosition(35, 315).setSize(55, 15).setImage(swatch[0]);
+    swatchButton[1] = cp5.addButton("swatch1").setPosition(95, 315).setSize(55, 15).setImage(swatch[1]);
+    swatchButton[2] = cp5.addButton("swatch2").setPosition(155, 315).setSize(55, 15).setImage(swatch[2]);
+    swatchButton[3] = cp5.addButton("swatch3").setPosition(215, 315).setSize(55, 15).setImage(swatch[3]);
+    swatchButton[4] = cp5.addButton("swatch4").setPosition(275, 315).setSize(55, 15).setImage(swatch[4]);
+    swatchButton[5] = cp5.addButton("swatch5").setPosition(35, 335).setSize(55, 15).setImage(swatch[5]);
+    swatchButton[6] = cp5.addButton("swatch6").setPosition(95, 335).setSize(55, 15).setImage(swatch[6]);
+    swatchButton[7] = cp5.addButton("swatch7").setPosition(155, 335).setSize(55, 15).setImage(swatch[7]);
+    swatchButton[8] = cp5.addButton("swatch8").setPosition(215, 335).setSize(55, 15).setImage(swatch[8]);
+    swatchButton[9] = cp5.addButton("swatch9").setPosition(275, 335).setSize(55, 15).setImage(swatch[9]);
 
-    swatchAnimButton[0] = cp5.addButton("swatchAnim0").setPosition(35, 385).setSize(30, 30).setVisible(false).setImage(swatch[0]);
-    swatchAnimButton[1] = cp5.addButton("swatchAnim1").setPosition(70, 385).setSize(30, 30).setVisible(false).setImage(swatch[1]);
-    swatchAnimButton[2] = cp5.addButton("swatchAnim2").setPosition(105, 385).setSize(30, 30).setVisible(false).setImage(swatch[2]);
-    swatchAnimButton[3] = cp5.addButton("swatchAnim3").setPosition(140, 385).setSize(30, 30).setVisible(false).setImage(swatch[3]);
-    swatchAnimButton[4] = cp5.addButton("swatchAnim4").setPosition(175, 385).setSize(30, 30).setVisible(false).setImage(swatch[4]);
-    swatchAnimButton[5] = cp5.addButton("swatchAnim5").setPosition(210, 385).setSize(30, 30).setVisible(false).setImage(swatch[5]);
-    swatchAnimButton[6] = cp5.addButton("swatchAnim6").setPosition(35, 420).setSize(30, 30).setVisible(false).setImage(swatch[6]);
-    swatchAnimButton[7] = cp5.addButton("swatchAnim7").setPosition(70, 420).setSize(30, 30).setVisible(false).setImage(swatch[7]);
-    swatchAnimButton[8] = cp5.addButton("swatchAnim8").setPosition(105, 420).setSize(30, 30).setVisible(false).setImage(swatch[8]);
-    swatchAnimButton[9] = cp5.addButton("swatchAnim9").setPosition(140, 420).setSize(30, 30).setVisible(false).setImage(swatch[9]);
-    swatchAnimButton[10] = cp5.addButton("swatchAnim10").setPosition(175, 420).setSize(30, 30).setVisible(false).setImage(swatch[10]);
+    swatchAnimButton[0] = cp5.addButton("swatchAnim0").setPosition(35, 365).setSize(55, 15).setVisible(false).setImage(swatch[0]);
+    swatchAnimButton[1] = cp5.addButton("swatchAnim1").setPosition(95, 365).setSize(55, 15).setVisible(false).setImage(swatch[1]);
+    swatchAnimButton[2] = cp5.addButton("swatchAnim2").setPosition(155, 365).setSize(55, 15).setVisible(false).setImage(swatch[2]);
+    swatchAnimButton[3] = cp5.addButton("swatchAnim3").setPosition(215, 365).setSize(55, 15).setVisible(false).setImage(swatch[3]);
+    swatchAnimButton[4] = cp5.addButton("swatchAnim4").setPosition(275, 365).setSize(55, 15).setVisible(false).setImage(swatch[4]);
+    swatchAnimButton[5] = cp5.addButton("swatchAnim5").setPosition(35, 385).setSize(55, 15).setVisible(false).setImage(swatch[5]);
+    swatchAnimButton[6] = cp5.addButton("swatchAnim6").setPosition(95, 385).setSize(55, 15).setVisible(false).setImage(swatch[6]);
+    swatchAnimButton[7] = cp5.addButton("swatchAnim7").setPosition(155, 385).setSize(55, 15).setVisible(false).setImage(swatch[7]);
+    swatchAnimButton[8] = cp5.addButton("swatchAnim8").setPosition(215, 385).setSize(55, 15).setVisible(false).setImage(swatch[8]);
+    swatchAnimButton[9] = cp5.addButton("swatchAnim9").setPosition(275, 385).setSize(55, 15).setVisible(false).setImage(swatch[9]);
+
+    // SCRUBBER
+    scrubToggle = cp5.addToggle("scrubMode")
+                             .setPosition(180,405)
+                             .setSize(60,14)
+                             .setValue(false)
+                             .setMode(ControlP5.SWITCH)
+                             .setColorActive(color(#374760))
+                             .setCaptionLabel("SCRUB MODE");
+    scrubToggle.getCaptionLabel().align(ControlP5.LEFT, ControlP5.RIGHT_OUTSIDE).setPaddingX(65);
+    
+    scrubSlider = cp5.addSlider("scrubber").setPosition(20, 425).setSize(300, 14).setRange(0, 1).setValue(0).setVisible(false).setCaptionLabel("SCRUBBER");    
+    scrubSlider.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
 
     // FIELD
     xCountSlider = cp5.addSlider("xCount").setPosition(20, 480).setSize(150, 14).setRange(1, 50).setValue(24).setCaptionLabel("X Count");
@@ -249,35 +260,36 @@ void drawUI(){
   text("CANVAS", 20, 95);
   text("TEXT", 20, 165);
   text("COLOR", 20, 285);
+  text("ANIMATE", 20, 420);
   
   push();
-    translate(30, 365);
+    translate(30, 350);
     rotateZ(-PI/2);
     textFont(uiFontSub);
     if(animateColor){
-      text("COLOR A", 0, 0);
-      text("COLOR B", -80, 0);
+      text("CLR-A", 0, 0);
+      text("CLR-B", -50, 0);
     } else {
-      text("SWATCHES", 0, 0);
+      text("SWATCH", 0, 0);
     }
   pop();
   
   for(var m = 0; m < 2; m ++){    //////////// DRAW SWATCH SELECT FOR TOP SWATCHES
-    for(var n = 0; n < 6; n ++){
-      if(swatchSel[m * 6 + n]){
+    for(var n = 0; n < 5; n ++){
+      if(swatchSel[m * 5 + n]){
         stroke(255);
         strokeWeight(2);
-        rect(35 + n * 35, 310 + m * 35, 30, 30);
+        rect(35 + n * 60, 315 + m * 20, 55, 15);
       }
     }
   }
   if(animateColor){
     for(var m = 0; m < 2; m ++){    //////////// DRAW SWATCH SELECT FOR BOT SWATCHES
-      for(var n = 0; n < 6; n ++){
-        if(swatchAnimSel[m * 6 + n]){
+      for(var n = 0; n < 5; n ++){
+        if(swatchAnimSel[m * 5 + n]){
           stroke(255);
           strokeWeight(2);
-          rect(35 + n * 35, 385 + m * 35, 30, 30);
+          rect(35 + n * 60, 365 + m * 20, 55, 15);
         }
       }
     }  
