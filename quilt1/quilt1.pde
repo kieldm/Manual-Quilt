@@ -32,7 +32,6 @@ boolean[] swatchSel = new boolean[swatchCount];
 boolean[] swatchAnimSel = new boolean[swatchCount];
 
 Field coreFlag;
-Field svgFlag;
 
 int xCount = 17;
 int xCountHold = xCount;
@@ -116,7 +115,6 @@ void settings(){
   smooth(8);
   
   pixelRes = displayDensity();
-  println(pixelRes);
   
   pixelDensity(pixelRes);  
 }
@@ -182,49 +180,46 @@ void draw(){
     splitInputIntoArray();
   }
   
-  if(exportSVGtoggle){      //////////////////////////////////////////////////////////////////////// SVG EXPORE   
-    //drawSVG();
-  } else {      ///////////////////////////////////////////////////////////////////////////////////// REGULAR DISPLAY
-    background(allBkgdColor);
-    
-    coreCanvas.beginDraw();
-    coreCanvas.textMode(SHAPE); 
+  background(allBkgdColor);
   
-    if(swatchSel[8]){
-      coreCanvas.background(0,0,0,0);
-    } else {
-      coreCanvas.background(bkgdColorActual);
-    }      
-      
-    coreFlag.run();
-    
-    coreCanvas.endDraw();
+  coreCanvas.beginDraw();
   
-    push();
-      translate(padding + boardWidth/2, padding + boardHeightPadding + boardHeight/2);
-      
-      //noFill();
-      //stroke(0, 0, 255);
-      //strokeWeight(0.5);
-      //rectMode(CENTER);
-      //rect(0, 0, boardWidth, boardHeight, 10);
-          
-      image(coreCanvas, -displayCoreW/2, -displayCoreH/2, displayCoreW, displayCoreH);
-    pop();
-      
-    drawUI();  
-      
-    noStroke();
-    if(exportMP4toggle || exportSeqToggle){
-      fill(255,0,0);
-      rect(uiWidth + padding, height - padding/2 + 5, boardWidth, -20);
-      fill(255);
-      text("RENDERING",uiWidth + padding, height - padding/2 + 2);
-    } else {
-      //fill(0,175);
-      //textFont(uiFontSys2);
-      //text("SCALE: " + imageScale + "%", uiWidth + padding, height - padding/2);
-    }
+  if(exportMP4toggle || exportSeqToggle){
+    coreCanvas.scale(1/float(pixelRes));
+  }
+  
+  coreCanvas.textMode(SHAPE); 
+
+  if(swatchSel[8]){
+    coreCanvas.background(0,0,0,0);
+  } else {
+    coreCanvas.background(bkgdColorActual);
+  }      
+    
+  coreFlag.run();
+  
+  coreCanvas.endDraw();
+
+  push();
+    translate(padding + boardWidth/2, padding + boardHeightPadding + boardHeight/2);
+    
+    //noFill();
+    //stroke(255, 0, 0);
+    //strokeWeight(0.5);
+    //rectMode(CENTER);
+    //rect(0, 0, boardWidth, boardHeight, 10);
+        
+    image(coreCanvas, -displayCoreW/2, -displayCoreH/2, displayCoreW, displayCoreH);
+  pop();
+    
+  drawUI();  
+    
+  noStroke();
+  if(exportMP4toggle || exportSeqToggle){
+    fill(255,0,0);
+    rect(padding, height - padding, boardWidth, -20);
+    fill(255);
+    text("RENDERING, " + seqCount + " frames of " + seqCap, padding + 5, height - padding - 6);
   }
   
   if(exportSeqToggle){
@@ -233,6 +228,8 @@ void draw(){
     
     if(seqCount >= seqCap){
       exportSeqToggle = false;
+      
+      canvasResizer();
     }
   }
     
@@ -243,43 +240,13 @@ void draw(){
     if(seqCount >= seqCap){
       videoExport.endMovie();
       exportMP4toggle = false;
+      
+      canvasResizer();
     }
   }
   
   colorAnimation();
 }
-
-//void drawSVG(){  
-//    String saveTag = "quiltVector_" + day() + minute() + second();
-//    beginRaw(SVG, "export/svg/" + saveTag + ".svg");
-  
-//    if(!swatchSel[8]){
-//      push();          /////////// draws background rect that's the same size as canvas size
-//        noStroke();
-//        fill(bkgdColorActual);
-//        translate(width/2, height/2, projZdist);
-//          println("width/2: " + width/2 + ", height/2: " + height/2);
-
-//        rectMode(CENTER);
-//        rect(0, 0, width * projZFact, height * projZFact);
-//        fill(0,0,255);
-//        ellipse(0, 0, 10, 10);
-//      pop();
-//    }
-    
-//    scale(1.0/float(pixelRes));
-    
-//    svgFlag.displaySVG();
-    
-//    endRaw();
-    
-//    exportSVGtoggle = false;
-//    println("SVG COMPLETE. RESTARTING.");
-//    //setup();
-//    //windowResize(1700, 1000);
-//    //exit();
-//    //println("DID IT RESIZE?");
-//}
 
 void colorAnimation(){
   if(animateColor){

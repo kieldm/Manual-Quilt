@@ -205,7 +205,7 @@ void drawUI(){
 
     text("Color", 0, 305); text("Transition", 190, 305);
     
-         text("Loop Length", 150, 520);
+    text("Loop Length", 150, 520);
 
 
     if(radialWave){

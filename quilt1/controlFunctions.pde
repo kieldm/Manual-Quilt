@@ -33,7 +33,7 @@ public void widthField(String theText){
   canvasResizer();
  }
 
-public void canvasHeight(String theText){
+public void heightField(String theText){
   coreCanvasH = int(theText);
   if(coreCanvasH < 10){ coreCanvasH = 10; }
   
@@ -42,22 +42,30 @@ public void canvasHeight(String theText){
 
 public void canvasResizer(){
   coreCanvas = createGraphics(int(coreCanvasW), int(coreCanvasH), P3D);  // create at actual size
+  //coreCanvas.resize(int(coreCanvasW), int(coreCanvasH));
   coreCanvas.smooth(4);
 
   // figure out display dimensions so it's scaled to proper display (displayCore) size
-  if(coreCanvasW > coreCanvasH){    //////////// HORZ COMP    
+  if(coreCanvasW > coreCanvasH){    //////////////////////////////////////////////// HORZ COMP
+    println("HORIZONTAL COMPOSITION");
+  
     coreRatio = coreCanvasH/coreCanvasW;
-    if(coreCanvasW > boardWidth){
-      displayCoreW = boardWidth;
-      displayCoreH = displayCoreW * coreRatio;
-    } else if(coreCanvasH > boardHeight){
+    if(coreCanvasH > boardHeight && coreCanvasW < boardWidth * coreRatio){
+      println("Height FIT");
       displayCoreH = boardHeight;
       displayCoreW = displayCoreH/coreRatio;
+    } else if(coreCanvasW > boardWidth){
+      println("Width FIT");
+      displayCoreW = boardWidth;
+      displayCoreH = displayCoreW * coreRatio;
     } else {
+      println("Equal FIT");
       displayCoreW = coreCanvasW;
       displayCoreH = coreCanvasH;
     }
-  } else {                          //////////// VERT COMP
+  } else {                          //////////////////////////////////////////////// VERT COMP
+    println("VERTICAL COMPOSITION");
+
     coreRatio = coreCanvasW/coreCanvasH;
     if(coreCanvasH > boardHeight){
       displayCoreH = boardHeight;
@@ -79,10 +87,10 @@ public void scrubMode(boolean theFlag){
   if(scrubSlider != null){
     if(theFlag){
       scrubSlider.setVisible(true);
-      scrubToggle.setColorActive(color(#6497F9));
+      scrubToggle.setColorActive(uiForeColor);
     } else {
       scrubSlider.setVisible(false);
-      scrubToggle.setColorActive(color(#374760));
+      scrubToggle.setColorActive(uiAccentColor);
     }
   }
 }
@@ -120,7 +128,7 @@ public void swatch4(){ resetSwatch(); swatchSel[4] = true; bkgdColor = #d8f4f7; 
 public void swatch5(){ resetSwatch(); swatchSel[5] = true; bkgdColor = #6497f9; foreColor = #d8f4f7;}
 public void swatch6(){ resetSwatch(); swatchSel[6] = true; bkgdColor = #fef9f3; foreColor = #186767;}
 public void swatch7(){ resetSwatch(); swatchSel[7] = true; bkgdColor = #186767; foreColor = #d8f4f7;}  
-public void swatch8(){ resetSwatch(); swatchSel[8] = true; bkgdColor = color(255, 255, 255, 0); foreColor = #ffffff;}  
+public void swatch8(){ resetSwatch(); swatchSel[8] = true; bkgdColor = color(255, 255, 255, 0); foreColor = #ffffff;}    
 
 public void swatchAnim0(){ resetSwatchAnim(); swatchAnimSel[0] = true; bkgdColorAnim = #ffffff; foreColorAnim = #000000;}
 public void swatchAnim1(){ resetSwatchAnim(); swatchAnimSel[1] = true; bkgdColorAnim = #000000; foreColorAnim = #ffffff;}  
@@ -138,7 +146,7 @@ public void yCount(int n){ yCount = n; }
 public void xSpace(float n){ xSpace = n; }
 public void ySpace(float n){ ySpace = n; }
 
-public void waveDimension(boolean theFlag){        //////// SORRY ALAN! I'LL CLEAN THIS UP LATER
+public void waveDimension(boolean theFlag){
   wave3D = theFlag;
   if(waveDimensionToggle != null){
     if(theFlag){
@@ -160,6 +168,7 @@ public void waveDimension(boolean theFlag){        //////// SORRY ALAN! I'LL CLE
     }
   }
 }
+
 public void radialWave(boolean theFlag){
   radialWave = theFlag;
   if(radialWaveToggle != null){
@@ -236,19 +245,16 @@ public void resetCamera(){
 }
 
 public void exportSVG(){
-  //svgFlag = new Field();
-  //textMode(SHAPE);
+  // need to figure out how to save coreCanvas as an SVG
   
-  println("coreCanvasW: " + coreCanvasW + ", coreCanvasH: " + coreCanvasH);
-  
-  SvgWindow SvgWindowSaver = new SvgWindow();
-
-  //windowResize(int(coreCanvasW), int(coreCanvasH));
-  
-  //exportSVGtoggle = true;
+  println("SVG SAVE DOWN! NEEDS FIXING!");
 }
 
 public void exportSeq(){
+  coreCanvas = createGraphics(int(coreCanvasW/float(pixelRes)), int(coreCanvasH/float(pixelRes)), P3D);  // create at actual size
+  //coreCanvas.resize(int(coreCanvasW), int(coreCanvasH));
+  coreCanvas.smooth(4);
+  
   exportSeqToggle = true;
   seqTag = "quiltSeq_" + day() + minute() + second();
   seqCount = 0;
@@ -259,12 +265,16 @@ public void exportSeq(){
 }
 
 public void exportMP4(){
+  coreCanvas = createGraphics(int(coreCanvasW/float(pixelRes)), int(coreCanvasH/float(pixelRes)), P3D);  // create at actual size
+  //coreCanvas.resize(int(coreCanvasW), int(coreCanvasH));
+  coreCanvas.smooth(4);
+  
   exportMP4toggle = true;
   
   String tempTag = "quiltMotion" + hour() + "_" + minute() + "_" + second();
   videoExport = new VideoExport(this, "export/mp4/" + tempTag + ".mp4", coreCanvas);
      
-  videoExport.setQuality(97, 1 );
+  videoExport.setQuality(97, 1);
   videoExport.setFrameRate(30);
   videoExport.startMovie();
   
