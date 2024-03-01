@@ -10,28 +10,37 @@ color bkgdColorAnim = #6497F9;
 color foreColor = #000000;
 color foreColorActual = #000000;
 color foreColorAnim = #D8F4F7;
-color uiBkgdColor = color(50);
+
+color allBkgdColor = #323232;
+color uiBkgdColor = #444444;
 color uiForeColor = #ffffff;
-PFont uiFontHead, uiFontMain, uiFontSub, uiFontSys1, uiFontSys2;
+color uiAccentColor = #6c6c6c;
+color uiAccentHR = #2f2f2f;
+color testColor = color(0, 0, 255);
+
+PFont uiFontHead, uiFontMain, uiFontSys, uiFontSys2;
 PFont genFont, genFontHeadline;
 
 int canvasWidth, canvasHeight;
-int currentWidth, currentHeight;
 
 String coreString = "BETTER CLIMATE BY DESIGN";
 int lineMax = 10;
 String[] coreStringArray = new String[lineMax];
-PImage[] swatch = new PImage[10];
-boolean[] swatchSel = new boolean[10];
-boolean[] swatchAnimSel = new boolean[10];
+int swatchCount = 9;
+PImage[] swatch = new PImage[swatchCount];
+boolean[] swatchSel = new boolean[swatchCount];
+boolean[] swatchAnimSel = new boolean[swatchCount];
 
 Field coreFlag;
 Field svgFlag;
+
 int xCount = 17;
 int xCountHold = xCount;
 int yCount = 20;
 int yCountHold = yCount;
 int loopLength = 0;
+
+int pixelRes = 1;
 
 float xSpace, ySpace = 25;
 float xWaveOffset, yWaveOffset, radialOffset, waveSize, waveSpeed = 0;
@@ -63,58 +72,80 @@ int seqCount = 0;
 int seqCap = 0;
 
 int uiWidth = 340;
-int padding = 30;
-int boardWidth = 1700 - uiWidth - padding * 2;
-int boardHeight = 1000 - padding * 2;
+int uiHeight = 500;
+int padding = 25;
+int boardHeightPadding = 80;
+int boardWidth, boardHeight;
 PGraphics coreCanvas;
 float coreCanvasW = 1080;
 float coreCanvasH = 1080;
 float coreRatio = coreCanvasH/coreCanvasW;
-float displayCoreH = boardHeight;
-float displayCoreW = displayCoreH/coreRatio;
-float imageScale = round((displayCoreH/coreCanvasH) * 100);
+float displayCoreH, displayCoreW, imageScale;
+
+float uiLeftRule;
+
+PImage quiltLogo;
 
 private ControlP5 cp5;
+private Textfield widthField, heightField;
 private Toggle headlineToggle;
 private RadioButton justifyRadio;
 private Slider xCountSlider, yCountSlider;
+private Slider xSpaceSlider, ySpaceSlider;
 private Toggle waveDimensionToggle;
 private Toggle animateColorToggle;
 private Slider xWaveOffsetSlider, yWaveOffsetSlider;
-private Slider radialOffsetSlider;
+private Slider coreScaleSlider, radialOffsetSlider;
 private Toggle radialWaveToggle;
 private Toggle animateCameraToggle;
 private Slider waveSizeSlider;
 private Toggle scrubToggle;
 private Slider scrubSlider;
+private Slider loopLengthSlider;
 private Slider cameraRotXSlider, cameraRotYSlider, cameraRotZSlider;
 private Slider cameraPosXSlider;
 private Slider animateRotXSlider, animateRotYSlider, animateRotZSlider;
 private Slider animateZoomZSlider, animatePosXSlider;
 private Textfield mainInputText;
+private Button resetCamera, exportSVG, exportSeq, exportMP4;
 private Button[] swatchButton = new Button[10];
 private Button[] swatchAnimButton = new Button[10];
 
-void setup() {
-  size(1700, 1000, P3D);
-  canvasWidth = 1080;
-  canvasHeight = 1080;
-  currentWidth = canvasWidth;
-  currentHeight = canvasHeight;
-  
+void settings(){
+  size(displayWidth, displayHeight, P3D);
   smooth(8);
   
+  pixelRes = displayDensity();
+  println(pixelRes);
+  
+  pixelDensity(pixelRes);  
+}
+
+void setup() {
+  //size(1700, 1000, P3D);
+  //smooth(8);
+  
+  textMode(SHAPE);
+  
+  background(uiBkgdColor);
+  
+  configureLayoutSizes();
+  
+  canvasWidth = 1080;
+  canvasHeight = 1080;
+  
   uiFontHead= createFont("STKBureau-Sans-Book-Trial.otf", 60);
-  uiFontMain = createFont("STKBureau-Sans-Book-Trial.otf", 20);
-  uiFontSub = createFont("IBMPlexMono-Medium.otf", 10);
-  uiFontSys1 = createFont("IBMPlexMono-Medium.otf", 10);
+  uiFontMain = createFont("STKBureau-Sans-Book-Trial.otf", 12);
+  uiFontSys = createFont("STKBureau-Sans-Book-Trial.otf", 6);
   uiFontSys2 = createFont("IBMPlexMono-Medium.otf", 14);
   
   genFont = createFont("STKBureau-Sans-Book-Trial.otf", pgTextSize);
   genFontHeadline = createFont("STKBureau-Serif-Book-Trial.otf", pgTextSize);
-  //genFont = createFont("STKBureau-Sans-Light-Trial.otf", pgTextSize);
   
-  for(var n = 0; n < 10; n++){
+  quiltLogo = loadImage("data/quilt_logo.png");
+  //quiltLogo.disableStyle();
+  
+  for(var n = 0; n < swatchCount; n++){
     swatch[n] = loadImage("swatch_main" + n + ".png");
   }
   
@@ -123,7 +154,9 @@ void setup() {
   resetSwatchAnim();
   swatchAnimSel[6] = true;
   
-  drawControls();
+  if(frameCount < 5){
+    drawControls();
+  }
   
   coreCanvas = createGraphics(int(coreCanvasW), int(coreCanvasH), P3D);
   coreCanvas.smooth(4);
@@ -132,7 +165,7 @@ void setup() {
 
   surface.setTitle("Main");
   surface.setResizable(true);
-  surface.setLocation(10, 10);
+  //surface.setLocation(10, 10);
     
   coreFlag = new Field();
 }
@@ -150,16 +183,14 @@ void draw(){
   }
   
   if(exportSVGtoggle){      //////////////////////////////////////////////////////////////////////// SVG EXPORE   
-    drawSVG();
+    //drawSVG();
   } else {      ///////////////////////////////////////////////////////////////////////////////////// REGULAR DISPLAY
-    background(uiBkgdColor);
+    background(allBkgdColor);
     
     coreCanvas.beginDraw();
     coreCanvas.textMode(SHAPE); 
   
-    drawUI();
-  
-    if(swatchSel[9]){
+    if(swatchSel[8]){
       coreCanvas.background(0,0,0,0);
     } else {
       coreCanvas.background(bkgdColorActual);
@@ -170,16 +201,18 @@ void draw(){
     coreCanvas.endDraw();
   
     push();
-      translate(uiWidth + padding + boardWidth/2, padding + boardHeight/2);
+      translate(padding + boardWidth/2, padding + boardHeightPadding + boardHeight/2);
       
-      noFill();
-      stroke(0,175);
-      strokeWeight(0.5);
-      rectMode(CENTER);
-      rect(0, 0, boardWidth, boardHeight, 10);
+      //noFill();
+      //stroke(0, 0, 255);
+      //strokeWeight(0.5);
+      //rectMode(CENTER);
+      //rect(0, 0, boardWidth, boardHeight, 10);
           
       image(coreCanvas, -displayCoreW/2, -displayCoreH/2, displayCoreW, displayCoreH);
     pop();
+      
+    drawUI();  
       
     noStroke();
     if(exportMP4toggle || exportSeqToggle){
@@ -188,9 +221,9 @@ void draw(){
       fill(255);
       text("RENDERING",uiWidth + padding, height - padding/2 + 2);
     } else {
-      fill(0,175);
-      textFont(uiFontSys2);
-      text("SCALE: " + imageScale + "%", uiWidth + padding, height - padding/2);
+      //fill(0,175);
+      //textFont(uiFontSys2);
+      //text("SCALE: " + imageScale + "%", uiWidth + padding, height - padding/2);
     }
   }
   
@@ -216,30 +249,37 @@ void draw(){
   colorAnimation();
 }
 
-void drawSVG(){
-    String saveTag = "quiltVector_" + day() + minute() + second();
-    beginRaw(SVG, "export/svg/" + saveTag + ".svg");
+//void drawSVG(){  
+//    String saveTag = "quiltVector_" + day() + minute() + second();
+//    beginRaw(SVG, "export/svg/" + saveTag + ".svg");
   
-    if(!swatchSel[9]){
-      push();          /////////// draws background rect that's the same size as canvas size
-        noStroke();
-        fill(bkgdColorActual);
-        translate(width/2, height/2, -2000);
-        rectMode(CENTER);
-        rect(0, 0, width * projZFact, height * projZFact);
-      pop();
-    }
+//    if(!swatchSel[8]){
+//      push();          /////////// draws background rect that's the same size as canvas size
+//        noStroke();
+//        fill(bkgdColorActual);
+//        translate(width/2, height/2, projZdist);
+//          println("width/2: " + width/2 + ", height/2: " + height/2);
+
+//        rectMode(CENTER);
+//        rect(0, 0, width * projZFact, height * projZFact);
+//        fill(0,0,255);
+//        ellipse(0, 0, 10, 10);
+//      pop();
+//    }
     
-    svgFlag.displaySVG();
+//    scale(1.0/float(pixelRes));
     
-    endRaw();
+//    svgFlag.displaySVG();
     
-    exportSVGtoggle = false;
-    println("SVG COMPLETE. RESTARTING.");
-    setup();
-    //exit();
-    //println("DID IT RESIZE?");
-}
+//    endRaw();
+    
+//    exportSVGtoggle = false;
+//    println("SVG COMPLETE. RESTARTING.");
+//    //setup();
+//    //windowResize(1700, 1000);
+//    //exit();
+//    //println("DID IT RESIZE?");
+//}
 
 void colorAnimation(){
   if(animateColor){
@@ -253,10 +293,25 @@ void colorAnimation(){
 }
 
 void resetSwatch(){
-  for(var m = 0; m < 10; m++){ swatchSel[m] = false;}
+  for(var m = 0; m < swatchCount; m++){ swatchSel[m] = false;}
 }
 void resetSwatchAnim(){
-  for(var m = 0; m < 10; m++){ swatchAnimSel[m] = false;}
+  for(var m = 0; m < swatchCount; m++){ swatchAnimSel[m] = false;}
 }
 
+void windowResized(){
+  configureLayoutSizes();
+
+  rePositionControls();
+}
   
+void configureLayoutSizes(){
+  boardWidth = width - uiWidth - padding * 3;
+  boardHeight = height - padding * 2 - boardHeightPadding * 2;
+  
+  displayCoreH = boardHeight;
+  displayCoreW = displayCoreH/coreRatio;
+  
+  uiHeight = height - padding * 2;
+  uiLeftRule = width - uiWidth - padding + 20;
+}

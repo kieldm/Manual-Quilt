@@ -11,8 +11,10 @@ class Field {
   }
         
   void display(){
+          //print("CANVAS RUNNING?");    
     coreCanvas.push();
       coreCanvas.translate(coreCanvasW/2, coreCanvasH/2);
+      //coreCanvas.translate(0,0,projZdist);
       
       // ANIMATE CAMERA
       if(animateCamera && wave3D){
@@ -144,7 +146,8 @@ class Field {
   void displaySVG(){
     push();
       translate(coreCanvasW/2, coreCanvasH/2);
-      
+      //translate(0,0,projZdist);
+
       // ANIMATE CAMERA
       if(animateCamera && wave3D){
         cameraAnimation();

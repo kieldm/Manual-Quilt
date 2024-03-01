@@ -1,116 +1,90 @@
 void drawControls(){
     cp5 = new ControlP5(this);
-    cp5.setColorBackground(color(60))
-       .setColorForeground(color(150))
-       .setColorActive(color(200))
-       .setColorCaptionLabel(color(255))
-       .setFont(uiFontSys1);
+    cp5.setColorBackground(uiAccentHR)
+       .setColorForeground(uiForeColor)
+       .setColorActive(uiForeColor)
+       .setFont(uiFontSys);
 
     // CANVAS
-    Textfield canvasWidth = cp5.addTextfield("canvasWidth")
-                               .setPosition(20, 100)
-                               .setSize(60, 25)
-                               .setValue("1080")
-                               .setAutoClear(false)
-                               .setColorBackground(color(0))
-                               .setColorValueLabel(color(200))
-                               .setFont(uiFontSys1)
-                               .setCaptionLabel("Width");
-    canvasWidth.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
-    canvasWidth.getValueLabel().setPaddingX(3);
+    widthField = cp5.addTextfield("widthField").setPosition(uiLeftRule, 62).setSize(130, 25)
+                               .setValue("1080").setAutoClear(false)
+                               .setColorBackground(uiBkgdColor).setColorValueLabel(uiForeColor).setColorForeground(uiAccentColor)
+                               .setCaptionLabel("");
+    widthField.getValueLabel().setPaddingX(3);
 
-    Textfield canvasHeight = cp5.addTextfield("canvasHeight")
-                                .setPosition(85, 100)
-                                .setSize(60, 25)
-                                .setValue("1080")
-                                .setAutoClear(false)
-                                .setColorBackground(color(0))
-                                .setColorValueLabel(color(200))
-                                .setFont(uiFontSys1)
-                                .setCaptionLabel("Height");
-    canvasHeight.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
-    canvasHeight.getValueLabel().setPaddingX(3);
+    heightField = cp5.addTextfield("heightField").setPosition(uiLeftRule + 150, 62).setSize(130, 25)
+                                .setValue("1080").setAutoClear(false)
+                                .setColorBackground(uiBkgdColor).setColorValueLabel(uiForeColor).setColorForeground(uiAccentColor)
+                                .setCaptionLabel("");
+    heightField.getValueLabel().setPaddingX(3);
     
     // TEXT
-    mainInputText = cp5.addTextfield("mainInput")
-                             .setPosition(20, 170)
-                             .setSize(310, 32)
-                             .setValue("BETTER CLIMATE BY DESIGN")
-                             .setAutoClear(false)
-                             .setColorBackground(color(0))
-                             .setColorValueLabel(color(255))
-                             .setFont(uiFontSys2)
+    mainInputText = cp5.addTextfield("mainInput").setPosition(uiLeftRule, 142).setSize(280, 32)
+                             .setValue("BETTER CLIMATE BY DESIGN").setAutoClear(false)
+                             .setColorBackground(uiBkgdColor).setColorValueLabel(uiForeColor).setColorForeground(uiAccentColor)
                              .setCaptionLabel("");
     mainInputText.getValueLabel().setPaddingX(2);
     
-    headlineToggle = cp5.addToggle("headline")
-                                .setPosition(20, 205)
-                                .setSize(60, 14)
-                                .setValue(false)
-                                .setCaptionLabel("HEADLINE")
+    headlineToggle = cp5.addToggle("headline").setPosition(20, 205).setSize(60, 14)
+                                .setValue(false).setCaptionLabel("HEADLINE")
                                 .setColorActive(color(#374760))
-                                .setMode(ControlP5.SWITCH);
+                                .setMode(ControlP5.SWITCH)
+                                .setVisible(false);
     headlineToggle.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
 
-    justifyRadio = cp5.addRadioButton("justifyMode")
-                                .setPosition(100, 205)
-                                .setSize(30, 14)
+    justifyRadio = cp5.addRadioButton("justifyMode").setPosition(100, 205).setSize(30, 14)
                                 .setItemsPerRow(5).setSpacingColumn(50)
                                 .setColorActive(color(#6497F9))
-                                .addItem("LEFT", 0)
-                                .addItem("CENTER", 1)
-                                .addItem("RIGHT", 2)
-                                .setVisible(false)
-                                .activate(0)
-                                .setNoneSelectedAllowed(false);
-    justifyRadio.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
+                                .addItem("LEFT", 0).addItem("CENTER", 1).addItem("RIGHT", 2).activate(0)
+                                .setVisible(false).setNoneSelectedAllowed(false);
 
 
-    Slider coreScale = cp5.addSlider("coreScale")
-                          .setPosition(20, 235)
-                          .setSize(310, 14)
+    coreScaleSlider = cp5.addSlider("coreScale").setPosition(uiLeftRule, 200).setSize(280, 6)
                           .setRange(0.1, 5)
                           .setValue(1.6)
-                          .setCaptionLabel("Scale");
-    coreScale.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
+                          .setLabelVisible(false)
+                          .setCaptionLabel("");
+    
+    // FIELD
+    xCountSlider = cp5.addSlider("xCount").setPosition(uiLeftRule, 250).setSize(130, 6).setRange(1, 50).setValue(24).setLabelVisible(false).setCaptionLabel("");
+
+    yCountSlider = cp5.addSlider("yCount").setPosition(uiLeftRule + 150, 250).setSize(130, 6).setRange(1, 50).setValue(30).setLabelVisible(false).setCaptionLabel("");    
+
+    xSpaceSlider = cp5.addSlider("xSpace").setPosition(uiLeftRule, 300).setSize(130, 6).setRange(1, 100).setValue(25).setLabelVisible(false).setCaptionLabel("");
+
+    ySpaceSlider = cp5.addSlider("ySpace").setPosition(uiLeftRule + 150, 300).setSize(130, 6).setRange(1, 100).setValue(30).setLabelVisible(false).setCaptionLabel("");    
     
     // COLOR
-    animateColorToggle = cp5.addToggle("animateColor")
-                             .setPosition(20,290)
-                             .setSize(80,14)
+    animateColorToggle = cp5.addToggle("animateColor").setPosition(uiLeftRule + 150, 350).setSize(35,12)
                              .setValue(false)
                              .setMode(ControlP5.SWITCH)
-                             .setColorActive(color(#374760))
-                             .setCaptionLabel("Animate Color");
-    animateColorToggle.getCaptionLabel().align(ControlP5.LEFT, ControlP5.RIGHT_OUTSIDE).setPaddingX(88);
+                             .setColorActive(uiAccentColor)
+                             .setCaptionLabel("");
     
-    swatchButton[0] = cp5.addButton("swatch0").setPosition(35, 315).setSize(55, 15).setImage(swatch[0]);
-    swatchButton[1] = cp5.addButton("swatch1").setPosition(95, 315).setSize(55, 15).setImage(swatch[1]);
-    swatchButton[2] = cp5.addButton("swatch2").setPosition(155, 315).setSize(55, 15).setImage(swatch[2]);
-    swatchButton[3] = cp5.addButton("swatch3").setPosition(215, 315).setSize(55, 15).setImage(swatch[3]);
-    swatchButton[4] = cp5.addButton("swatch4").setPosition(275, 315).setSize(55, 15).setImage(swatch[4]);
-    swatchButton[5] = cp5.addButton("swatch5").setPosition(35, 335).setSize(55, 15).setImage(swatch[5]);
-    swatchButton[6] = cp5.addButton("swatch6").setPosition(95, 335).setSize(55, 15).setImage(swatch[6]);
-    swatchButton[7] = cp5.addButton("swatch7").setPosition(155, 335).setSize(55, 15).setImage(swatch[7]);
-    swatchButton[8] = cp5.addButton("swatch8").setPosition(215, 335).setSize(55, 15).setImage(swatch[8]);
-    swatchButton[9] = cp5.addButton("swatch9").setPosition(275, 335).setSize(55, 15).setImage(swatch[9]);
+    swatchButton[0] = cp5.addButton("swatch0").setPosition(uiLeftRule, 370).setSize(27, 27).setVisible(true).setImage(swatch[0]);
+    swatchButton[1] = cp5.addButton("swatch1").setPosition(uiLeftRule + 35, 370).setSize(27, 27).setVisible(true).setImage(swatch[1]);
+    swatchButton[2] = cp5.addButton("swatch2").setPosition(uiLeftRule + 70, 370).setSize(27, 27).setVisible(true).setImage(swatch[2]);
+    swatchButton[3] = cp5.addButton("swatch3").setPosition(uiLeftRule + 105, 370).setSize(27, 27).setVisible(true).setImage(swatch[3]);
+    swatchButton[4] = cp5.addButton("swatch4").setPosition(uiLeftRule + 140, 370).setSize(27, 27).setVisible(true).setImage(swatch[4]);
+    swatchButton[5] = cp5.addButton("swatch5").setPosition(uiLeftRule + 175, 370).setSize(27, 27).setVisible(true).setImage(swatch[5]);
+    swatchButton[6] = cp5.addButton("swatch6").setPosition(uiLeftRule + 210, 370).setSize(27, 27).setVisible(true).setImage(swatch[6]);
+    swatchButton[7] = cp5.addButton("swatch7").setPosition(uiLeftRule + 245, 370).setSize(27, 27).setVisible(true).setImage(swatch[7]);
+    swatchButton[8] = cp5.addButton("swatch8").setPosition(uiLeftRule + 280, 370).setSize(27, 27).setVisible(true).setImage(swatch[8]);
 
-    swatchAnimButton[0] = cp5.addButton("swatchAnim0").setPosition(35, 365).setSize(55, 15).setVisible(false).setImage(swatch[0]);
-    swatchAnimButton[1] = cp5.addButton("swatchAnim1").setPosition(95, 365).setSize(55, 15).setVisible(false).setImage(swatch[1]);
-    swatchAnimButton[2] = cp5.addButton("swatchAnim2").setPosition(155, 365).setSize(55, 15).setVisible(false).setImage(swatch[2]);
-    swatchAnimButton[3] = cp5.addButton("swatchAnim3").setPosition(215, 365).setSize(55, 15).setVisible(false).setImage(swatch[3]);
-    swatchAnimButton[4] = cp5.addButton("swatchAnim4").setPosition(275, 365).setSize(55, 15).setVisible(false).setImage(swatch[4]);
-    swatchAnimButton[5] = cp5.addButton("swatchAnim5").setPosition(35, 385).setSize(55, 15).setVisible(false).setImage(swatch[5]);
-    swatchAnimButton[6] = cp5.addButton("swatchAnim6").setPosition(95, 385).setSize(55, 15).setVisible(false).setImage(swatch[6]);
-    swatchAnimButton[7] = cp5.addButton("swatchAnim7").setPosition(155, 385).setSize(55, 15).setVisible(false).setImage(swatch[7]);
-    swatchAnimButton[8] = cp5.addButton("swatchAnim8").setPosition(215, 385).setSize(55, 15).setVisible(false).setImage(swatch[8]);
-    swatchAnimButton[9] = cp5.addButton("swatchAnim9").setPosition(275, 385).setSize(55, 15).setVisible(false).setImage(swatch[9]);
+    swatchAnimButton[0] = cp5.addButton("swatchAnim0").setPosition(uiLeftRule, 405).setSize(27, 27).setVisible(false).setImage(swatch[0]);
+    swatchAnimButton[1] = cp5.addButton("swatchAnim1").setPosition(uiLeftRule + 35, 405).setSize(27, 27).setVisible(false).setImage(swatch[1]);
+    swatchAnimButton[2] = cp5.addButton("swatchAnim2").setPosition(uiLeftRule + 70, 405).setSize(27, 27).setVisible(false).setImage(swatch[2]);
+    swatchAnimButton[3] = cp5.addButton("swatchAnim3").setPosition(uiLeftRule + 105, 405).setSize(27, 27).setVisible(false).setImage(swatch[3]);
+    swatchAnimButton[4] = cp5.addButton("swatchAnim4").setPosition(uiLeftRule + 140, 405).setSize(27, 27).setVisible(false).setImage(swatch[4]);
+    swatchAnimButton[5] = cp5.addButton("swatchAnim5").setPosition(uiLeftRule + 175, 405).setSize(27, 27).setVisible(false).setImage(swatch[5]);
+    swatchAnimButton[6] = cp5.addButton("swatchAnim6").setPosition(uiLeftRule + 210, 405).setSize(27, 27).setVisible(false).setImage(swatch[6]);
+    swatchAnimButton[7] = cp5.addButton("swatchAnim7").setPosition(uiLeftRule + 245, 405).setSize(27, 27).setVisible(false).setImage(swatch[7]);
+    swatchAnimButton[8] = cp5.addButton("swatchAnim8").setPosition(uiLeftRule + 280, 405).setSize(27, 27).setVisible(false).setImage(swatch[8]);
 
     // SCRUBBER
-    scrubToggle = cp5.addToggle("scrubMode")
-                             .setPosition(180,405)
-                             .setSize(60,14)
+    scrubToggle = cp5.addToggle("scrubMode").setPosition(180,405).setSize(35,12)
                              .setValue(false)
+                             .setVisible(false)
                              .setMode(ControlP5.SWITCH)
                              .setColorActive(color(#374760))
                              .setCaptionLabel("SCRUB MODE");
@@ -119,187 +93,247 @@ void drawControls(){
     scrubSlider = cp5.addSlider("scrubber").setPosition(20, 425).setSize(300, 14).setRange(0, 1).setValue(0).setVisible(false).setCaptionLabel("SCRUBBER");    
     scrubSlider.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
 
-    // FIELD
-    xCountSlider = cp5.addSlider("xCount").setPosition(20, 480).setSize(150, 14).setRange(1, 50).setValue(24).setCaptionLabel("X Count");
-    xCountSlider.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
-
-    yCountSlider = cp5.addSlider("yCount").setPosition(20, 510).setSize(150, 14).setRange(1, 50).setValue(30).setCaptionLabel("Y Count");    
-    yCountSlider.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
-
-    cp5.addSlider("xSpace").setPosition(180, 480).setSize(150, 14).setRange(1, 100).setValue(25).setCaptionLabel("X Space");
-    cp5.getController("xSpace").getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
-
-    cp5.addSlider("ySpace").setPosition(180, 510).setSize(150, 14).setRange(1, 100).setValue(30).setCaptionLabel("Y Space");    
-    cp5.getController("ySpace").getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
-
     // WAVE
-    waveDimensionToggle = cp5.addToggle("waveDimension")
-                             .setPosition(20,570)
-                             .setSize(80,14)
+    waveDimensionToggle = cp5.addToggle("waveDimension").setPosition(uiLeftRule, 470).setSize(35,12)
                              .setValue(true)
                              .setMode(ControlP5.SWITCH)
-                             .setColorActive(color(#6497F9))
-                             .setCaptionLabel("3D Wave");
-    waveDimensionToggle.getCaptionLabel().align(ControlP5.LEFT, ControlP5.RIGHT_OUTSIDE).setPaddingX(88);
+                             .setColorActive(uiForeColor)
+                             .setCaptionLabel("");
     
-    radialWaveToggle = cp5.addToggle("radialWave")
-                                .setPosition(180, 570)
-                                .setSize(60, 14)
+    radialWaveToggle = cp5.addToggle("radialWave").setPosition(uiLeftRule + 150, 470).setSize(35,12)
                                 .setValue(false)
-                                .setCaptionLabel("Radial Wave")
-                                .setColorActive(color(#374760))
+                                .setCaptionLabel("")
+                                .setColorActive(uiAccentColor)
                                 .setMode(ControlP5.SWITCH);
-    radialWaveToggle.getCaptionLabel().align(ControlP5.LEFT, ControlP5.RIGHT_OUTSIDE).setPaddingX(68);
     
-    yWaveOffsetSlider = cp5.addSlider("yWaveOffset").setPosition(20, 590).setSize(150, 14).setRange(-PI/4, PI/4).setValue(-0.1).setCaptionLabel("Vertical Offset");    
-    yWaveOffsetSlider.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
+    yWaveOffsetSlider = cp5.addSlider("yWaveOffset").setPosition(uiLeftRule, 540).setSize(130, 6).setRange(-PI/4, PI/4).setValue(-0.1).setLabelVisible(false).setCaptionLabel("");    
 
-    xWaveOffsetSlider = cp5.addSlider("xWaveOffset").setPosition(180, 590).setSize(150, 14).setRange(-PI/4, PI/4).setValue(0.55).setCaptionLabel("Horizontal Offset");    
-    xWaveOffsetSlider.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
+    xWaveOffsetSlider = cp5.addSlider("xWaveOffset").setPosition(uiLeftRule + 150, 540).setSize(130, 6).setRange(-PI/4, PI/4).setValue(0.55).setLabelVisible(false).setCaptionLabel("");    
 
-    radialOffsetSlider = cp5.addSlider("radialOffset").setPosition(20, 590).setSize(310, 14).setRange(-1000, 1000).setValue(-300).setCaptionLabel("Radial Offset").setVisible(false);    
-    radialOffsetSlider.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
+    radialOffsetSlider = cp5.addSlider("radialOffset").setPosition(uiLeftRule, 540).setSize(280, 6).setRange(-1000, 1000).setValue(-300).setLabelVisible(false).setCaptionLabel("").setVisible(false);    
 
-    waveSizeSlider = cp5.addSlider("waveSize").setPosition(20, 620).setSize(310, 14).setRange(0, 200).setValue(24).setCaptionLabel("Size");    
-    cp5.getController("waveSize").getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
+    waveSizeSlider = cp5.addSlider("waveSize").setPosition(uiLeftRule, 590).setSize(130, 6).setRange(0, 200).setValue(24).setLabelVisible(false).setCaptionLabel("");    
 
-    cp5.addSlider("loopLength").setPosition(20, 650).setSize(310, 14).setRange(60,400).setValue(180).setCaptionLabel("Loop Length");    
-    cp5.getController("loopLength").getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
+    loopLengthSlider = cp5.addSlider("loopLength").setPosition(uiLeftRule + 150, 590).setSize(130, 6).setRange(60,400).setValue(180).setLabelVisible(false).setCaptionLabel("");    
 
     // CAMERA
-    cameraRotXSlider = cp5.addSlider("cameraRotX").setPosition(20, 720).setSize(150, 14).setRange(-PI/3, PI/3).setValue(0.26).setCaptionLabel("Rotate X");
-    cameraRotXSlider.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
+    cameraRotXSlider = cp5.addSlider("cameraRotX").setPosition(uiLeftRule, 700).setSize(130, 6).setRange(-PI/3, PI/3).setValue(0.26).setLabelVisible(false).setCaptionLabel("");
 
-    cameraRotYSlider = cp5.addSlider("cameraRotY").setPosition(20, 750).setSize(150, 14).setRange(-PI/3, PI/3).setValue(-0.25).setCaptionLabel("Rotate Y");
-    cameraRotYSlider.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
+    cameraRotYSlider = cp5.addSlider("cameraRotY").setPosition(uiLeftRule, 750).setSize(130, 6).setRange(-PI/3, PI/3).setValue(-0.25).setLabelVisible(false).setCaptionLabel("");
     
-    cameraRotZSlider = cp5.addSlider("cameraRotZ").setPosition(20, 780).setSize(150, 14).setRange(-PI/3, PI/3).setValue(-0.17).setCaptionLabel("Rotate Z");
-    cameraRotZSlider.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
+    cameraRotZSlider = cp5.addSlider("cameraRotZ").setPosition(uiLeftRule, 800).setSize(130, 6).setRange(-PI/3, PI/3).setValue(-0.17).setLabelVisible(false).setCaptionLabel("");
 
-    cameraPosXSlider = cp5.addSlider("cameraPosX").setPosition(20, 810).setSize(150, 14).setRange(-600, 600).setValue(0.0).setCaptionLabel("Pan X");
-    cameraPosXSlider.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
+    cameraPosXSlider = cp5.addSlider("cameraPosX").setPosition(uiLeftRule, 850).setSize(130, 6).setRange(-600, 600).setValue(0.0).setLabelVisible(false).setCaptionLabel("");
 
-
-    cp5.addButton("resetCamera").setPosition(20, 850).setSize(150,30).setCaptionLabel("Reset Camera");
-
-    animateCameraToggle = cp5.addToggle("animateCamera")
-                             .setPosition(180,700)
-                             .setSize(60,14)
+    animateCameraToggle = cp5.addToggle("animateCamera").setPosition(uiLeftRule + 150, 645).setSize(35,12)
                              .setValue(false)
                              .setMode(ControlP5.SWITCH)
-                             .setColorActive(color(#374760))
-                             .setCaptionLabel("Animate Camera");
-    animateCameraToggle.getCaptionLabel().align(ControlP5.LEFT, ControlP5.RIGHT_OUTSIDE).setPaddingX(65);
+                             .setColorActive(uiAccentColor)
+                             .setCaptionLabel("");
 
-    animateRotXSlider = cp5.addSlider("animateRotX")
-                           .setPosition(180, 720)
-                           .setSize(150, 14)
-                           .setRange(-PI/3, PI/3)
-                           .setValue(0)
-                           .setCaptionLabel("Animate Rotate X")
+    animateRotXSlider = cp5.addSlider("animateRotX").setPosition(uiLeftRule + 150, 700).setSize(130, 6)
+                           .setRange(-PI/3, PI/3).setValue(0)
+                           .setLabelVisible(false).setCaptionLabel("")
                            .setLock(true)
-                           .setColorForeground(color(70)).setColorCaptionLabel(color(100)).setColorValue(color(120));
-    animateRotXSlider.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
+                           .setColorForeground(uiAccentColor);
 
-    animateRotYSlider = cp5.addSlider("animateRotY")
-                           .setPosition(180, 750)
-                           .setSize(150, 14)
-                           .setRange(-PI/3, PI/3)
-                           .setValue(0.25)
-                           .setCaptionLabel("Animate Rotate Y")
+    animateRotYSlider = cp5.addSlider("animateRotY").setPosition(uiLeftRule + 150, 750).setSize(130, 6)
+                           .setRange(-PI/3, PI/3).setValue(0.25)
+                           .setLabelVisible(false).setCaptionLabel("")
                            .setLock(true)
-                           .setColorForeground(color(70)).setColorCaptionLabel(color(100)).setColorValue(color(120));
-    animateRotYSlider.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
+                           .setColorForeground(uiAccentColor);
     
-    animateRotZSlider = cp5.addSlider("animateRotZ")
-                           .setPosition(180, 780)
-                           .setSize(150, 14)
-                           .setRange(-PI/3, PI/3)
-                           .setValue(0)
-                           .setCaptionLabel("Animate Rotate Z")
+    animateRotZSlider = cp5.addSlider("animateRotZ").setPosition(uiLeftRule + 150, 800).setSize(130, 6)
+                           .setRange(-PI/3, PI/3).setValue(0)
+                           .setLabelVisible(false).setCaptionLabel("")
                            .setLock(true)
-                           .setColorForeground(color(70)).setColorCaptionLabel(color(100)).setColorValue(color(120));
-    animateRotZSlider.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
+                           .setColorForeground(uiAccentColor);
 
-    animateZoomZSlider = cp5.addSlider("animateZoomZ")
-                            .setPosition(180, 810)
-                            .setSize(150, 14)
-                            .setRange(-300, 300)
-                            .setValue(0)
-                            .setCaptionLabel("Animate Zoom Z")
+    animateZoomZSlider = cp5.addSlider("animateZoomZ").setPosition(uiLeftRule + 150, 850).setSize(130, 6)
+                            .setRange(-300, 300).setValue(0)
+                            .setLabelVisible(false).setCaptionLabel("")
                             .setLock(true)
-                            .setColorForeground(color(70)).setColorCaptionLabel(color(100)).setColorValue(color(120));
-    animateZoomZSlider.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
+                            .setColorForeground(uiAccentColor);
 
-    animatePosXSlider = cp5.addSlider("animatePosX")
-                            .setPosition(180, 840)
-                            .setSize(150, 14)
-                            .setRange(-400, 400)
-                            .setValue(0)
-                            .setCaptionLabel("Animate Pan X")
+    animatePosXSlider = cp5.addSlider("animatePosX").setPosition(uiLeftRule + 150, 900).setSize(130, 6)
+                            .setRange(-400, 400).setValue(0)
+                            .setLabelVisible(false).setCaptionLabel("")
                             .setLock(true)
-                            .setColorForeground(color(70)).setColorCaptionLabel(color(100)).setColorValue(color(120));;
-    animatePosXSlider.getCaptionLabel().align(ControlP5.BOTTOM, ControlP5.BOTTOM_OUTSIDE).setPaddingY(-2);
+                            .setColorForeground(uiAccentColor);
 
+    resetCamera = cp5.addButton("resetCamera").setPosition(uiLeftRule, 880).setSize(130, 25).setCaptionLabel("Reset Camera").setColorForeground(uiBkgdColor).setColorBackground(uiBkgdColor).setColorActive(uiBkgdColor);
+    
     // EXPORT
-    cp5.addButton("exportSVG").setPosition(20, 950).setSize(100,40).setCaptionLabel("SVG");
-    cp5.addButton("exportSeq").setPosition(125, 950).setSize(100,40).setCaptionLabel("Sequence");
-    cp5.addButton("exportMP4").setPosition(230, 950).setSize(100,40).setCaptionLabel("MP4");
+    exportSVG = cp5.addButton("exportSVG").setPosition(uiLeftRule, 940).setSize(80, 25).setCaptionLabel("SVG").setColorForeground(uiBkgdColor).setColorBackground(uiBkgdColor).setColorActive(uiBkgdColor);
+    exportSeq = cp5.addButton("exportSeq").setPosition(uiLeftRule + 90, 940).setSize(80, 25).setCaptionLabel("Sequence").setColorForeground(uiBkgdColor).setColorBackground(uiBkgdColor).setColorActive(uiBkgdColor);
+    exportMP4 = cp5.addButton("exportMP4").setPosition(uiLeftRule + 180, 940).setSize(80, 25).setCaptionLabel("MP4").setColorForeground(uiBkgdColor).setColorBackground(uiBkgdColor).setColorActive(uiBkgdColor);
 }
 
 void drawUI(){
-  noStroke();
-  fill(uiForeColor);
-            
-  textFont(uiFontHead);
-  textSize(60);
-  text("QUILT_0.51", 20, 65);
-  
-  textFont(uiFontMain);
-  textSize(20);
-  text("CANVAS", 20, 95);
-  text("TEXT", 20, 165);
-  text("COLOR", 20, 285);
-  text("ANIMATE", 20, 420);
-  
+  image(quiltLogo, padding, boardHeightPadding - 60);
+
   push();
-    translate(30, 350);
-    rotateZ(-PI/2);
-    textFont(uiFontSub);
-    if(animateColor){
-      text("CLR-A", 0, 0);
-      text("CLR-B", -50, 0);
-    } else {
-      text("SWATCH", 0, 0);
-    }
+    translate(width - uiWidth - padding, padding);
+    
+    fill(uiBkgdColor);
+    rectMode(CORNER);
+    rect(0, 0, uiWidth, uiHeight, 10);
+    
+    noFill();
+    stroke(uiAccentHR);
+    line(0, 80, uiWidth, 80);
+    line(0, 310, uiWidth, 310);
+    line(0, 430, uiWidth, 430);
+    line(0, 600, uiWidth, 600);
+    line(0, 900, uiWidth, 900);
   pop();
   
-  for(var m = 0; m < 2; m ++){    //////////// DRAW SWATCH SELECT FOR TOP SWATCHES
-    for(var n = 0; n < 5; n ++){
-      if(swatchSel[m * 5 + n]){
-        stroke(255);
-        strokeWeight(2);
-        rect(35 + n * 60, 315 + m * 20, 55, 15);
-      }
+  push();
+    translate(uiLeftRule, padding + 30);
+    
+    textFont(uiFontMain);
+    textSize(12);
+    
+    fill(uiForeColor);
+    text("Width", 0, 0); text("Height", 150, 0);
+    
+    text("Text", 0, 75);
+    text("Scale", 0, 135);
+    
+    text("Horizontal Count", 0, 180); text("Vertical Count", 150, 180);
+    text("Horizontal Spacing", 0, 230); text("Vertical Spacing", 150, 230);
+
+    text("Color", 0, 305); text("Transition", 190, 305);
+    
+         text("Loop Length", 150, 520);
+
+
+    if(radialWave){
+      text("Radial Frequency", 0, 470);
+      fill(uiForeColor);
+      text("Radial Wave", 190, 425);
+    } else {
+      text("Horizontal Wave Freq", 0, 470); text("Vertical Wave Freq", 150, 470);  
+      fill(uiAccentColor);
+      text("Radial Wave", 190, 425);
+    }
+        
+    if(wave3D){
+      fill(uiForeColor);
+    } else {
+      fill(uiAccentColor);
+    }
+    text("Wave 3D/2D", 40, 425);
+    
+    text("Wave Size", 0, 520);
+    
+    text("X Rotation", 0, 630); 
+    text("Y Rotation", 0, 680); 
+    text("Z Rotation", 0, 730); 
+    text("X Pan", 0, 780); 
+
+    if(animateCamera){
+      fill(uiForeColor);
+    } else {
+      fill(uiAccentColor);
+    }
+    text("Camera Motion", 190, 600);
+
+    text("X Rotation", 150, 630); 
+    text("Y Rotation", 150, 680); 
+    text("Z Rotation", 150, 730); 
+    text("Zoom", 150, 780); 
+    text("X Pan", 150, 830);  
+    
+    noFill();
+    stroke(uiForeColor);
+    rectMode(CORNER);
+    rect(0, 825, 130, 25, 25);
+    
+    rect(0, 885, 80, 25, 25);
+    rect(90, 885, 80, 25, 25);
+    rect(180, 885, 80, 25, 25);
+  pop();
+  
+  //push();
+  //  translate(30, 350);
+  //  rotateZ(-PI/2);
+  //  textFont(uiFontSub);
+  //  if(animateColor){
+  //    text("CLR-A", 0, 0);
+  //    text("CLR-B", -50, 0);
+  //  } else {
+  //    text("SWATCH", 0, 0);
+  //  }
+  //pop();
+  
+  for(var m = 0; m < swatchCount; m ++){    //////////// DRAW SWATCH SELECT FOR TOP SWATCHES
+    if(swatchSel[m]){
+      stroke(0);
+      fill(uiBkgdColor);
+      strokeWeight(2);
+      rect(uiLeftRule + m * 35, 370, 27, 27);
     }
   }
   if(animateColor){
-    for(var m = 0; m < 2; m ++){    //////////// DRAW SWATCH SELECT FOR BOT SWATCHES
-      for(var n = 0; n < 5; n ++){
-        if(swatchAnimSel[m * 5 + n]){
-          stroke(255);
-          strokeWeight(2);
-          rect(35 + n * 60, 365 + m * 20, 55, 15);
-        }
+    for(var m = 0; m < swatchCount; m ++){    //////////// DRAW SWATCH SELECT FOR TOP SWATCHES
+      if(swatchAnimSel[m]){
+        stroke(0);
+        fill(uiBkgdColor);
+        strokeWeight(2);
+        rect(uiLeftRule + m * 35, 405, 27, 27);
       }
     }  
   }
-  
-  text("FIELD", 20, 475);
-  text("WAVE", 20, 565);
+}
 
-  textFont(uiFontMain);
-  textSize(20);
-  text("CAMERA", 20, 715);
-  text("EXPORT", 20, 940);
+void rePositionControls(){
+  widthField.setPosition(uiLeftRule, 62);
+  heightField.setPosition(uiLeftRule + 150, 62);
+  mainInputText.setPosition(uiLeftRule, 142);
+  coreScaleSlider.setPosition(uiLeftRule, 200);
+  xCountSlider.setPosition(uiLeftRule, 250);
+  yCountSlider.setPosition(uiLeftRule + 150, 250);
+  xSpaceSlider.setPosition(uiLeftRule, 300);
+  ySpaceSlider.setPosition(uiLeftRule + 150, 300);
+  animateColorToggle.setPosition(uiLeftRule + 150, 350);
+  waveDimensionToggle.setPosition(uiLeftRule, 470);
+  radialWaveToggle.setPosition(uiLeftRule + 150, 470);
+  yWaveOffsetSlider.setPosition(uiLeftRule, 540);
+  xWaveOffsetSlider.setPosition(uiLeftRule + 150, 540);
+  radialOffsetSlider.setPosition(uiLeftRule, 540);
+  loopLengthSlider.setPosition(uiLeftRule + 150, 590);
+  waveSizeSlider.setPosition(uiLeftRule, 590);
+  animateCameraToggle.setPosition(uiLeftRule + 150, 645);
+  cameraRotXSlider.setPosition(uiLeftRule, 700);
+  cameraRotYSlider.setPosition(uiLeftRule, 750);
+  cameraRotZSlider.setPosition(uiLeftRule, 800);
+  cameraPosXSlider.setPosition(uiLeftRule, 850);
+  animateRotXSlider.setPosition(uiLeftRule + 150, 700);
+  animateRotYSlider.setPosition(uiLeftRule + 150, 750);
+  animateRotZSlider.setPosition(uiLeftRule + 150, 800);
+  animateZoomZSlider.setPosition(uiLeftRule + 150, 850);
+  animatePosXSlider.setPosition(uiLeftRule + 150, 900);
+  resetCamera.setPosition(uiLeftRule, 880);
+  exportSVG.setPosition(uiLeftRule, 940);
+  exportSeq.setPosition(uiLeftRule + 90, 940);
+  exportMP4.setPosition(uiLeftRule + 180, 940);
+  swatchButton[0].setPosition(uiLeftRule, 370);
+  swatchButton[1].setPosition(uiLeftRule + 35, 370);
+  swatchButton[2].setPosition(uiLeftRule + 70, 370);
+  swatchButton[3].setPosition(uiLeftRule + 105, 370);
+  swatchButton[4].setPosition(uiLeftRule + 140, 370);
+  swatchButton[5].setPosition(uiLeftRule + 175, 370);
+  swatchButton[6].setPosition(uiLeftRule + 210, 370);
+  swatchButton[7].setPosition(uiLeftRule + 245, 370);
+  swatchButton[8].setPosition(uiLeftRule + 280, 370);
+  swatchAnimButton[0].setPosition(uiLeftRule, 405);
+  swatchAnimButton[1].setPosition(uiLeftRule + 35, 405);
+  swatchAnimButton[2].setPosition(uiLeftRule + 70, 405);
+  swatchAnimButton[3].setPosition(uiLeftRule + 105, 405);
+  swatchAnimButton[4].setPosition(uiLeftRule + 140, 405);
+  swatchAnimButton[5].setPosition(uiLeftRule + 175, 405);
+  swatchAnimButton[6].setPosition(uiLeftRule + 210, 405);
+  swatchAnimButton[7].setPosition(uiLeftRule + 245, 405);
+  swatchAnimButton[8].setPosition(uiLeftRule + 280, 405);
 }
