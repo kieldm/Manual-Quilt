@@ -247,7 +247,7 @@ public void resetCamera(){
 public void exportSVG(){
   // need to figure out how to save coreCanvas as an SVG
   
-  SvgWindow svgWindowSaver = new SvgWindow();
+  SvgWindow svgWindowSaver = new SvgWindow(sketchPath());
   
   //println("SVG SAVE DOWN! NEEDS FIXING!");
 }

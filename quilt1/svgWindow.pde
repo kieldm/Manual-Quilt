@@ -1,7 +1,16 @@
 class SvgWindow extends PApplet {    
-  public SvgWindow() {
+
+  private String sketchPath;
+
+  public SvgWindow(String sketchPath) {
     super();
+    this.sketchPath = sketchPath + "/export/svg";
     PApplet.runSketch(new String[]{this.getClass().getName()}, this);
+  }
+
+  @Override
+  public String sketchPath() {
+      return sketchPath;
   }
 
   public void settings() {
@@ -15,13 +24,14 @@ class SvgWindow extends PApplet {
     surface.setTitle("SVG Window");
     surface.setResizable(false);
     surface.setLocation(10, 10);
+    surface.setVisible(false);
     
     textMode(SHAPE);
   }
 
   public void draw() {
-    String saveTag = "testVector" + day() + minute() + second();
-    beginRaw(SVG, "./export/" + saveTag + ".svg");  //// ALAN: THIS SPOT NEEDS THE CORRECT PATH
+    String saveTag = "testVector" + day() + minute() + second() + ".svg";
+    beginRaw(SVG, saveTag);
        
     background(bkgdColorActual);
 
