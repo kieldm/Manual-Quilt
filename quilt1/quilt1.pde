@@ -51,8 +51,6 @@ float animatorZoomZ, animateZoomZ = 0;
 float animatorPosX, animatePosX = 0;
 float pgTextSize = 20;
 float coreScale = 1;
-float projZdist = -2000;
-float projZFact = 3.13833429;
 
 boolean wave3D = true;
 boolean headlineMode = false;
