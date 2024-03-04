@@ -1,50 +1,77 @@
-class Field {
-  Field(){
+class SvgWindow extends PApplet {    
+  public SvgWindow() {
+    super();
+    PApplet.runSketch(new String[]{this.getClass().getName()}, this);
   }
-  
-  void run(){
-    update();
-    display();
+
+  public void settings() {
+    size(int(coreCanvasW), int(coreCanvasH), P3D);
+    smooth(8);
+    
+    pixelDensity(pixelRes);  
   }
-  
-  void update(){
+
+  public void setup() {       
+    surface.setTitle("SVG Window");
+    surface.setResizable(false);
+    surface.setLocation(10, 10);
+    
+    textMode(SHAPE);
   }
-        
-  void display(){
-    coreCanvas.push();
-      coreCanvas.translate(coreCanvasW/2, coreCanvasH/2);
-      
+
+  public void draw() {
+    String saveTag = "testVector" + day() + minute() + second();
+    beginRaw(SVG, "./export/" + saveTag + ".svg");  //// ALAN: THIS SPOT NEEDS THE CORRECT PATH
+       
+    background(bkgdColorActual);
+
+    scale(1.0/float(pixelRes));  ///////// scale to save correct resolution
+
+    if(!swatchSel[8]){
+      push();          /////////// draws background rect that's the same size as canvas size
+        noStroke();
+        fill(bkgdColorActual);
+        translate(width/2, height/2, 0);
+
+        rectMode(CENTER);
+        rect(0, 0, width, height);
+      pop();
+    }
+    
+    push();
+      translate(coreCanvasW/2, coreCanvasH/2);
+
       // ANIMATE CAMERA
       if(animateCamera && wave3D){
         cameraAnimation();
-        coreCanvas.translate(animatorPosX, 0, animatorZoomZ);
+        translate(animatorPosX, 0, animatorZoomZ);
         
-        coreCanvas.rotateX(animatorRotX);
-        coreCanvas.rotateY(animatorRotY);
-        coreCanvas.rotateZ(animatorRotZ);
+        rotateX(animatorRotX);
+        rotateY(animatorRotY);
+        rotateZ(animatorRotZ);
       }
           
       // CAMERA
       if(wave3D){
-        coreCanvas.translate(cameraPosX, 0);
-        coreCanvas.rotateX(cameraRotX);
-        coreCanvas.rotateY(cameraRotY);
-        coreCanvas.rotateZ(cameraRotZ);    
+        translate(cameraPosX, 0);
+        rotateX(cameraRotX);
+        rotateY(cameraRotY);
+        rotateZ(cameraRotZ);    
       }
   
-      // SCALE
-      coreCanvas.scale(coreScale);
+      //SCALE
+      scale(coreScale);
     
       int counter = 0;
   
-      coreCanvas.fill(foreColorActual);
-      coreCanvas.noStroke();
+      fill(foreColorActual);
+      noStroke();
             
-      coreCanvas.push();    
+      push();    
         float centerX = (xCount - 1) * xSpace/2;
         float centerY = (yCount - 1) * ySpace/2;
   
-        coreCanvas.translate(-centerX, -centerY);
+        translate(-centerX, -centerY);
         
         for(int m = 0; m < yCount; m++){
           int start = 0;
@@ -61,8 +88,8 @@ class Field {
             float x = n * xSpace;
             float y = m * ySpace;
                         
-            coreCanvas.push();
-              coreCanvas.translate(x, y);
+            push();
+              translate(x, y);
               
               ////////////// CREATE Z MOVEMENT WAVE AND DETERMINE ANGLE FIX
               if(radialWave){ /////////////// for Linear Wave
@@ -83,15 +110,15 @@ class Field {
                   float rotX = atan2(fullWaveBelow - fullWaveAbove, 2 * ySpace);
                   float rotY = atan2(fullWavePre - fullWavePost, 2 * xSpace);        
                   
-                  coreCanvas.translate(0, 0, fullWave);
-                  coreCanvas.rotateY(rotY);
-                  coreCanvas.rotateX(rotX);
+                  translate(0, 0, fullWave);
+                  rotateY(rotY);
+                  rotateX(rotX);
                 } else {   /////////////// for 2D
                   float distOffset = map(dist(centerX, centerY, x, y), 0, radialOffset, 0, TWO_PI);
                   float waver = sinEngine(1, distOffset, waveSpeed, 1);
                   float fullWave = map(waver, -1, 1, 0.1, 1);
                   
-                  coreCanvas.scale(fullWave);
+                  scale(fullWave);
                 }
               } else {
                 if(wave3D){ /////////////// for 3D
@@ -104,41 +131,44 @@ class Field {
                   float rotX = atan2(fullWaveBelow - fullWaveAbove, 2 * ySpace);
                   float rotY = atan2(fullWavePre - fullWavePost, 2 * xSpace);          
                   
-                  coreCanvas.translate(0, 0, fullWave);
-                  coreCanvas.rotateY(rotY);
-                  coreCanvas.rotateX(rotX);
+                  translate(0, 0, fullWave);
+                  rotateY(rotY);
+                  rotateX(rotX);
                 } else {   /////////////// for 2D
                   float waver = sinEngine2(m, yWaveOffset, n, xWaveOffset, waveSpeed, 1);
                   float fullWave = map(waver, -1, 1, 0.1, 1);
                   
-                  coreCanvas.scale(fullWave);
+                  scale(fullWave);
                 }
               }
   
               
               if(!headlineMode){
-                coreCanvas.textFont(genFont);
-                coreCanvas.textSize(pgTextSize);
-                coreCanvas.textAlign(CENTER);
+                textFont(genFont);
+                textSize(pgTextSize);
+                textAlign(CENTER);
                 
-                coreCanvas.text(coreString.charAt(counter%coreString.length()), 0, pgTextSize * 0.7/2);            
+                text(coreString.charAt(counter%coreString.length()), 0, pgTextSize * 0.7/2);            
               } else {
-                coreCanvas.textFont(genFontHeadline);
-                coreCanvas.textSize(pgTextSize);
-                coreCanvas.textAlign(CENTER);
+                textFont(genFontHeadline);
+                textSize(pgTextSize);
+                textAlign(CENTER);
                 
                 if(n - start < coreStringArray[m].length()){
-                  coreCanvas.text(coreStringArray[m].charAt(n - start), 0, pgTextSize * 0.7/2);
+                  text(coreStringArray[m].charAt(n - start), 0, pgTextSize * 0.7/2);
                 }
-                //coreCanvas.ellipse(0,0,5,5);
               }
-            coreCanvas.pop();
+            pop();
             
             counter ++;
           }
         }
-      coreCanvas.pop();
-    coreCanvas.pop();
+      pop();
+    pop();
+  
+    endRaw();
+      
+    noLoop();    
   }
   
   void cameraAnimation(){
@@ -149,6 +179,4 @@ class Field {
     animatorZoomZ = waver * animateZoomZ;
     animatorPosX = waver * animatePosX;
   }
-  
-  
 }
