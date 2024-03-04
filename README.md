@@ -15,17 +15,20 @@ brew install processing
 
 Or download the installer at [Processing Download](https://processing.org/download).
 
-`quilt1` requires the GUI library [controlP5](https://github.com/sojamo/controlp5). This library may also be installed with the Processing IDE using the following menu options:
-
-![manage libraries](./assets/controlp5-manage-libraries.png)
-
-![controlp5-install](./assets/controlp5-install.png)
-If the library does not install from the Processing IDE, follow the manual installation steps from the [controlP5 installations](https://github.com/sojamo/controlp5)
-
 To build `quilt1` via the cli, you must first install `processing-java` by opening a 
 sketch (any sketch or example will work) and clicking the following menu option:
 
 ![install processing-java](./assets/processing-java.png)
+
+`quilt1` requires `ffmpeg` and will look for it in the path `/opt/homebrew/bin/ffmpeg`.
+Install it with brew and it should be automatically detected.
+
+```bash
+brew install ffmpeg
+```
+
+If ffmpeg is installed in a different path, `quilt` will prompt for the path the first
+time an mp4 is rendered.
 
 ## Build
 
