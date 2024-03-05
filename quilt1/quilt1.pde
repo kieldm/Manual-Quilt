@@ -280,6 +280,5 @@ void configureLayoutSizes(){
   
   uiHeight = height - padding * 2;
   uiUnit = uiHeight/36;
-  println(uiUnit);
   uiLeftRule = width - uiWidth - padding + 20;
 }
