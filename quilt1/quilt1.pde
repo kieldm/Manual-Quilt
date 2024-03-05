@@ -18,7 +18,7 @@ color uiAccentColor = #6c6c6c;
 color uiAccentHR = #2f2f2f;
 color testColor = color(0, 0, 255);
 
-PFont uiFontHead, uiFontMain, uiFontSys, uiFontSys2;
+PFont uiFontHead, uiFontMain, uiFontSys;
 PFont genFont, genFontHeadline;
 
 int canvasWidth, canvasHeight;
@@ -26,7 +26,7 @@ int canvasWidth, canvasHeight;
 String coreString = "BETTER CLIMATE BY DESIGN";
 int lineMax = 10;
 String[] coreStringArray = new String[lineMax];
-int swatchCount = 9;
+int swatchCount = 10;
 PImage[] swatch = new PImage[swatchCount];
 boolean[] swatchSel = new boolean[swatchCount];
 boolean[] swatchAnimSel = new boolean[swatchCount];
@@ -53,7 +53,7 @@ float pgTextSize = 20;
 float coreScale = 1;
 
 boolean wave3D = true;
-boolean headlineMode = false;
+boolean fillFieldMode = false;
 boolean animateCamera = false;
 boolean animateColor = false;
 boolean radialWave = false;
@@ -61,15 +61,16 @@ boolean exportSVGtoggle = false;
 boolean exportSeqToggle = false;
 boolean exportMP4toggle = false;
 boolean scrubMode = false;
-int justifyMode = 0;
+boolean justifyMode = false;
 int scrubbed = 0;
 
 String seqTag;
 int seqCount = 0;
 int seqCap = 0;
 
-int uiWidth = 340;
+int uiWidth = 430;
 int uiHeight = 500;
+float uiUnit;
 int padding = 25;
 int boardHeightPadding = 80;
 int boardWidth, boardHeight;
@@ -85,8 +86,8 @@ PImage quiltLogo;
 
 private ControlP5 cp5;
 private Textfield widthField, heightField;
-private Toggle headlineToggle;
-private RadioButton justifyRadio;
+private Toggle fillFieldToggle;
+private Toggle justifyToggle;
 private Slider xCountSlider, yCountSlider;
 private Slider xSpaceSlider, ySpaceSlider;
 private Toggle waveDimensionToggle;
@@ -105,6 +106,7 @@ private Slider animateRotXSlider, animateRotYSlider, animateRotZSlider;
 private Slider animateZoomZSlider, animatePosXSlider;
 private Textfield mainInputText;
 private Button resetCamera, exportSVG, exportSeq, exportMP4;
+private Button[] preset = new Button[6];
 private Button[] swatchButton = new Button[10];
 private Button[] swatchAnimButton = new Button[10];
 
@@ -130,12 +132,11 @@ void setup() {
   canvasWidth = 1080;
   canvasHeight = 1080;
   
-  uiFontHead= createFont("STKBureau-Sans-Book-Trial.otf", 60);
-  uiFontMain = createFont("STKBureau-Sans-Book-Trial.otf", 12);
-  uiFontSys = createFont("STKBureau-Sans-Book-Trial.otf", 6);
-  uiFontSys2 = createFont("IBMPlexMono-Medium.otf", 14);
+  uiFontHead= createFont("Quilt-SansBook.otf", 60);
+  uiFontMain = createFont("Quilt-SansBook.otf", 12);
+  uiFontSys = createFont("Quilt-SansBook.otf", 6);
   
-  genFont = createFont("STKBureau-Sans-Book-Trial.otf", pgTextSize);
+  genFont = createFont("Quilt-SansBook.otf", pgTextSize);
   genFontHeadline = createFont("STKBureau-Serif-Book-Trial.otf", pgTextSize);
   
   quiltLogo = loadImage("data/quilt_logo.png");
@@ -159,7 +160,7 @@ void setup() {
 
   frameRate(30);
 
-  surface.setTitle("Main");
+  surface.setTitle("Kinetic Type Generator");
   surface.setResizable(true);
   //surface.setLocation(10, 10);
     
@@ -167,7 +168,7 @@ void setup() {
 }
 
 void draw(){
-  if(!headlineMode){        ///////////////////////////////////// MAKE THE TEXTFIELD APPEAR TO BE LIVE
+  if(fillFieldMode){        ///////////////////////////////////// MAKE THE TEXTFIELD APPEAR TO BE LIVE
     if(mainInputText.getText().length() == 0){
       mainInputText.setText(" ");
       coreString = " ";
@@ -188,7 +189,7 @@ void draw(){
   
   coreCanvas.textMode(SHAPE); 
 
-  if(swatchSel[8]){
+  if(swatchSel[9]){
     coreCanvas.background(0,0,0,0);
   } else {
     coreCanvas.background(bkgdColorActual);
@@ -278,5 +279,7 @@ void configureLayoutSizes(){
   displayCoreW = displayCoreH/coreRatio;
   
   uiHeight = height - padding * 2;
+  uiUnit = uiHeight/36;
+  println(uiUnit);
   uiLeftRule = width - uiWidth - padding + 20;
 }

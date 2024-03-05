@@ -48,11 +48,9 @@ class Field {
         
         for(int m = 0; m < yCount; m++){
           int start = 0;
-          if(headlineMode){
-            if(justifyMode == 1){
+          if(!fillFieldMode){
+            if(!justifyMode){
               start = int((xCount - coreStringArray[m].length())/2);          
-            } else if(justifyMode == 2){
-              start = xCount - coreStringArray[m].length();
             }
           }
           
@@ -63,6 +61,11 @@ class Field {
                         
             coreCanvas.push();
               coreCanvas.translate(x, y);
+              
+              coreCanvas.textFont(genFont);
+              coreCanvas.textSize(pgTextSize);
+              coreCanvas.textAlign(CENTER);
+              
               
               ////////////// CREATE Z MOVEMENT WAVE AND DETERMINE ANGLE FIX
               if(radialWave){ /////////////// for Linear Wave
@@ -116,17 +119,9 @@ class Field {
               }
   
               
-              if(!headlineMode){
-                coreCanvas.textFont(genFont);
-                coreCanvas.textSize(pgTextSize);
-                coreCanvas.textAlign(CENTER);
-                
+              if(fillFieldMode){
                 coreCanvas.text(coreString.charAt(counter%coreString.length()), 0, pgTextSize * 0.7/2);            
               } else {
-                coreCanvas.textFont(genFontHeadline);
-                coreCanvas.textSize(pgTextSize);
-                coreCanvas.textAlign(CENTER);
-                
                 if(n - start < coreStringArray[m].length()){
                   coreCanvas.text(coreStringArray[m].charAt(n - start), 0, pgTextSize * 0.7/2);
                 }
@@ -149,6 +144,4 @@ class Field {
     animatorZoomZ = waver * animateZoomZ;
     animatorPosX = waver * animatePosX;
   }
-  
-  
 }

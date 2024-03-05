@@ -37,7 +37,7 @@ class SvgWindow extends PApplet {
 
     scale(1.0/float(pixelRes));  ///////// scale to save correct resolution
 
-    if(!swatchSel[8]){
+    if(!swatchSel[9]){
       push();          /////////// draws background rect that's the same size as canvas size
         noStroke();
         fill(bkgdColorActual);
@@ -85,11 +85,9 @@ class SvgWindow extends PApplet {
         
         for(int m = 0; m < yCount; m++){
           int start = 0;
-          if(headlineMode){
-            if(justifyMode == 1){
+          if(!fillFieldMode){
+            if(!justifyMode){
               start = int((xCount - coreStringArray[m].length())/2);          
-            } else if(justifyMode == 2){
-              start = xCount - coreStringArray[m].length();
             }
           }
           
@@ -100,6 +98,10 @@ class SvgWindow extends PApplet {
                         
             push();
               translate(x, y);
+              
+              textFont(genFont);
+              textSize(pgTextSize);
+              textAlign(CENTER);
               
               ////////////// CREATE Z MOVEMENT WAVE AND DETERMINE ANGLE FIX
               if(radialWave){ /////////////// for Linear Wave
@@ -153,17 +155,9 @@ class SvgWindow extends PApplet {
               }
   
               
-              if(!headlineMode){
-                textFont(genFont);
-                textSize(pgTextSize);
-                textAlign(CENTER);
-                
+              if(fillFieldMode){
                 text(coreString.charAt(counter%coreString.length()), 0, pgTextSize * 0.7/2);            
               } else {
-                textFont(genFontHeadline);
-                textSize(pgTextSize);
-                textAlign(CENTER);
-                
                 if(n - start < coreStringArray[m].length()){
                   text(coreStringArray[m].charAt(n - start), 0, pgTextSize * 0.7/2);
                 }

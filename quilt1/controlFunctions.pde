@@ -1,30 +1,34 @@
-public void headline(boolean theFlag){
-  headlineMode = theFlag;
+public void fillField(boolean theFlag){
+  fillFieldMode = theFlag;
 
   if(theFlag){
+    xCount = xCountHold;
+    yCount = yCountHold;
+    if (xCountSlider != null) {
+      xCountSlider.setLock(false).setColorForeground(uiForeColor);
+      yCountSlider.setLock(false).setColorForeground(uiForeColor);
+      fillFieldToggle.setColorActive(uiForeColor);
+      justifyToggle.setLock(true);
+      justifyToggle.setColorActive(uiAccentColor);
+    }
+  } else {
     xCountHold = xCount;
     yCountHold = yCount;
 
     splitInputIntoArray(); 
     if (xCountSlider != null) {
-      xCountSlider.setLock(true).setColorForeground(color(70)).setColorCaptionLabel(color(100)).setColorValue(color(120));
-      yCountSlider.setLock(true).setColorForeground(color(70)).setColorCaptionLabel(color(100)).setColorValue(color(120));
-      headlineToggle.setColorActive(color(#6497F9)); 
-      justifyRadio.setVisible(true);
-    }
-  } else {
-    xCount = xCountHold;
-    yCount = yCountHold;
-    if (xCountSlider != null) {
-      xCountSlider.setLock(false).setColorForeground(color(150)).setColorCaptionLabel(color(255)).setColorValue(color(255));
-      yCountSlider.setLock(false).setColorForeground(color(150)).setColorCaptionLabel(color(255)).setColorValue(color(255));
-      headlineToggle.setColorActive(color(#374760));
-      justifyRadio.setVisible(false);
+      xCountSlider.setLock(true).setColorForeground(uiAccentColor);
+      yCountSlider.setLock(true).setColorForeground(uiAccentColor);
+      fillFieldToggle.setColorActive(uiAccentColor); 
+      justifyToggle.setLock(false);
+      justifyToggle.setColorActive(uiForeColor);
     }
   }
 }
 
-public void justifyMode(int n){ justifyMode = n; }
+public void justify(boolean theFlag){
+  justifyMode = theFlag;
+}
 
 public void widthField(String theText){
   coreCanvasW = int(theText);
@@ -88,9 +92,13 @@ public void scrubMode(boolean theFlag){
     if(theFlag){
       scrubSlider.setVisible(true);
       scrubToggle.setColorActive(uiForeColor);
+      exportSeq.setColorLabel(uiAccentColor).setLock(true);
+      exportMP4.setColorLabel(uiAccentColor).setLock(true);
     } else {
       scrubSlider.setVisible(false);
       scrubToggle.setColorActive(uiAccentColor);
+      exportSeq.setColorLabel(uiForeColor).setLock(false);
+      exportMP4.setColorLabel(uiForeColor).setLock(false);
     }
   }
 }
@@ -122,23 +130,25 @@ public void animateColor(boolean theFlag){
   
 public void swatch0(){ resetSwatch(); swatchSel[0] = true; bkgdColor = #ffffff; foreColor = #000000;}
 public void swatch1(){ resetSwatch(); swatchSel[1] = true; bkgdColor = #000000; foreColor = #ffffff;}  
-public void swatch2(){ resetSwatch(); swatchSel[2] = true; bkgdColor = #fff3d2; foreColor = #FF7B5E;}  
-public void swatch3(){ resetSwatch(); swatchSel[3] = true; bkgdColor = #ff7b5e; foreColor = #fff3d2;}  
-public void swatch4(){ resetSwatch(); swatchSel[4] = true; bkgdColor = #d8f4f7; foreColor = #202a79;}  
-public void swatch5(){ resetSwatch(); swatchSel[5] = true; bkgdColor = #6497f9; foreColor = #d8f4f7;}
-public void swatch6(){ resetSwatch(); swatchSel[6] = true; bkgdColor = #fef9f3; foreColor = #186767;}
-public void swatch7(){ resetSwatch(); swatchSel[7] = true; bkgdColor = #186767; foreColor = #d8f4f7;}  
-public void swatch8(){ resetSwatch(); swatchSel[8] = true; bkgdColor = color(255, 255, 255, 0); foreColor = #ffffff;}    
+public void swatch2(){ resetSwatch(); swatchSel[2] = true; bkgdColor = #FEF9F3; foreColor = #000000;} 
+public void swatch3(){ resetSwatch(); swatchSel[3] = true; bkgdColor = #fff3d2; foreColor = #FF7B5E;}   
+public void swatch4(){ resetSwatch(); swatchSel[4] = true; bkgdColor = #ff7b5e; foreColor = #fff3d2;} 
+public void swatch5(){ resetSwatch(); swatchSel[5] = true; bkgdColor = #d8f4f7; foreColor = #202a79;}
+public void swatch6(){ resetSwatch(); swatchSel[6] = true; bkgdColor = #6497f9; foreColor = #d8f4f7;}
+public void swatch7(){ resetSwatch(); swatchSel[7] = true; bkgdColor = #fef9f3; foreColor = #186767;}  
+public void swatch8(){ resetSwatch(); swatchSel[7] = true; bkgdColor = #186767; foreColor = #d8f4f7;}   
+public void swatch9(){ resetSwatch(); swatchSel[8] = true; bkgdColor = color(255, 255, 255, 0); foreColor = #ffffff;}    
 
 public void swatchAnim0(){ resetSwatchAnim(); swatchAnimSel[0] = true; bkgdColorAnim = #ffffff; foreColorAnim = #000000;}
 public void swatchAnim1(){ resetSwatchAnim(); swatchAnimSel[1] = true; bkgdColorAnim = #000000; foreColorAnim = #ffffff;}  
-public void swatchAnim2(){ resetSwatchAnim(); swatchAnimSel[2] = true; bkgdColorAnim = #fff3d2; foreColorAnim = #FF7B5E;}  
-public void swatchAnim3(){ resetSwatchAnim(); swatchAnimSel[3] = true; bkgdColorAnim = #ff7b5e; foreColorAnim = #fff3d2;}  
-public void swatchAnim4(){ resetSwatchAnim(); swatchAnimSel[4] = true; bkgdColorAnim = #d8f4f7; foreColorAnim = #202A79;}  
-public void swatchAnim5(){ resetSwatchAnim(); swatchAnimSel[5] = true; bkgdColorAnim = #6497f9; foreColorAnim = #d8f4f7;}
-public void swatchAnim6(){ resetSwatchAnim(); swatchAnimSel[6] = true; bkgdColorAnim = #fef9f3; foreColorAnim = #186767;}
-public void swatchAnim7(){ resetSwatchAnim(); swatchAnimSel[7] = true; bkgdColorAnim = #186767; foreColorAnim = #d8f4f7;}  
-public void swatchAnim8(){ resetSwatchAnim(); swatchAnimSel[8] = true; bkgdColorAnim = color(255, 255, 255, 0); foreColorAnim = #ffffff;}  
+public void swatchAnim2(){ resetSwatchAnim(); swatchAnimSel[2] = true; bkgdColorAnim = #FEF9F3; foreColorAnim = #000000;}  
+public void swatchAnim3(){ resetSwatchAnim(); swatchAnimSel[3] = true; bkgdColorAnim = #fff3d2; foreColorAnim = #FF7B5E;} 
+public void swatchAnim4(){ resetSwatchAnim(); swatchAnimSel[4] = true; bkgdColorAnim = #ff7b5e; foreColorAnim = #fff3d2;} 
+public void swatchAnim5(){ resetSwatchAnim(); swatchAnimSel[5] = true; bkgdColorAnim = #d8f4f7; foreColorAnim = #202A79;} 
+public void swatchAnim6(){ resetSwatchAnim(); swatchAnimSel[6] = true; bkgdColorAnim = #6497f9; foreColorAnim = #d8f4f7;}
+public void swatchAnim7(){ resetSwatchAnim(); swatchAnimSel[7] = true; bkgdColorAnim = #fef9f3; foreColorAnim = #186767;}
+public void swatchAnim8(){ resetSwatchAnim(); swatchAnimSel[7] = true; bkgdColorAnim = #186767; foreColorAnim = #d8f4f7;}  
+public void swatchAnim9(){ resetSwatchAnim(); swatchAnimSel[8] = true; bkgdColorAnim = color(255, 255, 255, 0); foreColorAnim = #ffffff;}  
 
 public void coreScale(float n){ coreScale = n; }
 public void xCount(int n){ xCount = n; }
@@ -218,7 +228,7 @@ public void animateCamera(boolean theFlag){
       animateZoomZSlider.setLock(false).setColorForeground(uiForeColor);
       animatePosXSlider.setLock(false).setColorForeground(uiForeColor);
     } else {
-      animateCameraToggle.setColorActive(uiForeColor);
+      animateCameraToggle.setColorActive(uiAccentColor);
       animateRotXSlider.setLock(true).setColorForeground(uiAccentColor);
       animateRotYSlider.setLock(true).setColorForeground(uiAccentColor);
       animateRotZSlider.setLock(true).setColorForeground(uiAccentColor);
@@ -305,4 +315,149 @@ public void splitInputIntoArray(){
       measurer = coreStringArray[m].length();
     }
   }
+}
+
+public void resetValues(){
+  mainInputText.setValue("BETTER CLIMATE BY DESIGN"); 
+  
+  fillFieldToggle.setValue(true);
+  justifyToggle.setValue(true);
+  
+  animateColorToggle.setValue(false);
+  waveDimensionToggle.setValue(true);
+  radialWaveToggle.setValue(false);
+  
+  resetCamera();
+  animateCameraToggle.setValue(false);
+  
+  scrubToggle.setValue(false);
+}
+
+public void preset0(){          ///////////////////// WAVE 1
+  resetValues();
+  
+  widthField.setValue("1080"); widthField("1080");
+  heightField.setValue("1920"); heightField("1920");
+  
+  coreScaleSlider.setValue(1.3);
+  xCountSlider.setValue(24);
+  yCountSlider.setValue(45);
+  xSpaceSlider.setValue(25.0);
+  ySpaceSlider.setValue(30.0);
+  
+  yWaveOffsetSlider.setValue(0.15);
+  xWaveOffsetSlider.setValue(0.20);
+  waveSizeSlider.setValue(38.0);
+  loopLengthSlider.setValue(400);
+  
+  cameraRotXSlider.setValue(0.38);
+  cameraRotYSlider.setValue(-0.71);
+  cameraRotZSlider.setValue(0.27);
+  cameraPosXSlider.setValue(-24);
+}
+
+public void preset1(){          ///////////////////// WAVE 2
+  resetValues();
+  
+  widthField.setValue("1080"); widthField("1080");
+  heightField.setValue("1920"); heightField("1920");
+  
+  coreScaleSlider.setValue(1.3);
+  xCountSlider.setValue(24);
+  yCountSlider.setValue(45);
+  xSpaceSlider.setValue(25.0);
+  ySpaceSlider.setValue(30.0);
+  
+  yWaveOffsetSlider.setValue(0.18);
+  xWaveOffsetSlider.setValue(0.20);
+  waveSizeSlider.setValue(55.0);
+  loopLengthSlider.setValue(330);
+  
+  cameraRotXSlider.setValue(0.22);
+  cameraRotYSlider.setValue(-0.75);
+  cameraRotZSlider.setValue(0.25);
+  cameraPosXSlider.setValue(-24);
+}
+
+public void preset2(){          ///////////////////// HEADLINE
+  resetValues();
+  
+  fillFieldToggle.setValue(false);
+  justifyToggle.setValue(false);
+  
+  mainInputText.setValue("BETTER CLIMATE|BY DESIGN"); 
+  
+  widthField.setValue("1920"); widthField("1920");
+  heightField.setValue("1080"); heightField("1080");
+  
+  coreScaleSlider.setValue(2.4);
+  xSpaceSlider.setValue(22.0);
+  ySpaceSlider.setValue(30.0);
+  
+  yWaveOffsetSlider.setValue(0.00);
+  xWaveOffsetSlider.setValue(0.30);
+  waveSizeSlider.setValue(35.0);
+  loopLengthSlider.setValue(290);
+  
+  cameraRotXSlider.setValue(0.40);
+  cameraRotYSlider.setValue(-0.30);
+  cameraRotZSlider.setValue(0.05);
+  cameraPosXSlider.setValue(-40);
+}
+
+public void preset3(){          ///////////////////// RADIAL
+  resetValues();
+  
+  widthField.setValue("1080"); widthField("1080");
+  heightField.setValue("1080"); heightField("1080");
+  
+  coreScaleSlider.setValue(1.68);
+  xCountSlider.setValue(24);
+  yCountSlider.setValue(20);
+  xSpaceSlider.setValue(26.0);
+  ySpaceSlider.setValue(31.0);
+
+  waveDimensionToggle.setValue(false);
+  radialWaveToggle.setValue(true);  
+  
+  radialOffsetSlider.setValue(-300);
+  loopLengthSlider.setValue(105);
+}
+
+public void preset4(){          ///////////////////// DIAGONAL
+  resetValues();
+  
+  widthField.setValue("1080"); widthField("1080");
+  heightField.setValue("1080"); heightField("1080");
+  
+  coreScaleSlider.setValue(1.68);
+  xCountSlider.setValue(24);
+  yCountSlider.setValue(20);
+  xSpaceSlider.setValue(26.0);
+  ySpaceSlider.setValue(31.0);
+  
+  yWaveOffsetSlider.setValue(-0.20);
+  xWaveOffsetSlider.setValue(-0.20);
+  loopLengthSlider.setValue(115);
+  
+  waveDimensionToggle.setValue(false);
+}
+
+public void preset5(){          ///////////////////// LINEAR
+  resetValues();
+  
+  widthField.setValue("1080"); widthField("1080");
+  heightField.setValue("1080"); heightField("1080");
+  
+  coreScaleSlider.setValue(1.68);
+  xCountSlider.setValue(24);
+  yCountSlider.setValue(20);
+  xSpaceSlider.setValue(26.0);
+  ySpaceSlider.setValue(31.0);
+  
+  yWaveOffsetSlider.setValue(0.20);
+  xWaveOffsetSlider.setValue(0);
+  loopLengthSlider.setValue(130);
+  
+  waveDimensionToggle.setValue(false);
 }
