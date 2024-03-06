@@ -15,20 +15,26 @@ brew install processing
 
 Or download the installer at [Processing Download](https://processing.org/download).
 
-To build `quilt1` via the cli, you must first install `processing-java` by opening a 
-sketch (any sketch or example will work) and clicking the following menu option:
-
-![install processing-java](./assets/processing-java.png)
-
 `quilt1` requires `ffmpeg` and will look for it in the path `/opt/homebrew/bin/ffmpeg`.
-Install it with brew and it should be automatically detected.
 
 ```bash
 brew install ffmpeg
 ```
 
-If ffmpeg is installed in a different path, `quilt` will prompt for the path the first
-time an mp4 is rendered.
+If `ffmpeg` is installed in a different path, `quilt` will prompt for the path the first
+time an mp4 is rendered. Check to see where `ffmpeg` is installed by running:
+
+```bash
+brew --prefix ffmpeg
+```
+
+Update `ffmpeg_path` in `quilt1/settings.json` if it is different than the default or use
+the prompt that appears when an mp4 is rendered.
+
+Optional: To build `quilt1` via the cli, you must first install `processing-java` by opening a 
+sketch (any sketch or example will work) and clicking the following menu option:
+
+![install processing-java](./assets/processing-java.png)
 
 ## Build
 
