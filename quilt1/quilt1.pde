@@ -28,6 +28,7 @@ int lineMax = 10;
 String[] coreStringArray = new String[lineMax];
 int swatchCount = 10;
 PImage[] swatch = new PImage[swatchCount];
+PImage[] swatchShadow = new PImage[swatchCount];
 boolean[] swatchSel = new boolean[swatchCount];
 boolean[] swatchAnimSel = new boolean[swatchCount];
 
@@ -107,8 +108,8 @@ private Slider animateZoomZSlider, animatePosXSlider;
 private Textfield mainInputText;
 private Button resetCamera, exportSVG, exportSeq, exportMP4;
 private Button[] preset = new Button[6];
-private Button[] swatchButton = new Button[10];
-private Button[] swatchAnimButton = new Button[10];
+private Button[] swatchButton = new Button[swatchCount];
+private Button[] swatchAnimButton = new Button[swatchCount];
 
 void settings(){
   size(displayWidth, displayHeight, P3D);
@@ -144,6 +145,7 @@ void setup() {
   
   for(var n = 0; n < swatchCount; n++){
     swatch[n] = loadImage("swatch_main" + n + ".png");
+    swatchShadow[n] = loadImage("swatch_shadow" + n + ".png");
   }
   
   resetSwatch();
@@ -259,10 +261,23 @@ void colorAnimation(){
 }
 
 void resetSwatch(){
-  for(var m = 0; m < swatchCount; m++){ swatchSel[m] = false;}
+  for(var m = 0; m < swatchCount; m++){
+    swatchSel[m] = false;
+    if(swatchButton[m] != null){
+      swatchButton[m].setImage(swatchShadow[m]);    
+    }
+  }
 }
+    //swatchButton[0] = cp5.addButton("swatch0").setPosition(uiLeftRule, 370).setSize(24, 24).setVisible(true).setImage(swatch[0]);
+
+
 void resetSwatchAnim(){
-  for(var m = 0; m < swatchCount; m++){ swatchAnimSel[m] = false;}
+  for(var m = 0; m < swatchCount; m++){
+    swatchAnimSel[m] = false;
+    if(swatchAnimButton[m] != null){
+      swatchAnimButton[m].setImage(swatchShadow[m]);    
+    }    
+  }
 }
 
 void windowResized(){

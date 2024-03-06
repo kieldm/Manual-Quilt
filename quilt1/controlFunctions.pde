@@ -86,19 +86,17 @@ public void canvasResizer(){
 }
 
 public void scrubMode(boolean theFlag){
-  scrubMode = theFlag;
+  scrubMode = !theFlag;
 
   if(scrubSlider != null){
     if(theFlag){
-      scrubSlider.setVisible(true);
-      scrubToggle.setColorActive(uiForeColor);
-      exportSeq.setColorLabel(uiAccentColor).setLock(true);
-      exportMP4.setColorLabel(uiAccentColor).setLock(true);
-    } else {
       scrubSlider.setVisible(false);
-      scrubToggle.setColorActive(uiAccentColor);
       exportSeq.setColorLabel(uiForeColor).setLock(false);
       exportMP4.setColorLabel(uiForeColor).setLock(false);
+    } else {
+      scrubSlider.setVisible(true);
+      exportSeq.setColorLabel(uiAccentColor).setLock(true);
+      exportMP4.setColorLabel(uiAccentColor).setLock(true);
     }
   }
 }
@@ -128,27 +126,27 @@ public void animateColor(boolean theFlag){
   }
 }
   
-public void swatch0(){ resetSwatch(); swatchSel[0] = true; bkgdColor = #ffffff; foreColor = #000000;}
-public void swatch1(){ resetSwatch(); swatchSel[1] = true; bkgdColor = #000000; foreColor = #ffffff;}  
-public void swatch2(){ resetSwatch(); swatchSel[2] = true; bkgdColor = #FEF9F3; foreColor = #000000;} 
-public void swatch3(){ resetSwatch(); swatchSel[3] = true; bkgdColor = #fff3d2; foreColor = #FF7B5E;}   
-public void swatch4(){ resetSwatch(); swatchSel[4] = true; bkgdColor = #ff7b5e; foreColor = #fff3d2;} 
-public void swatch5(){ resetSwatch(); swatchSel[5] = true; bkgdColor = #d8f4f7; foreColor = #202a79;}
-public void swatch6(){ resetSwatch(); swatchSel[6] = true; bkgdColor = #6497f9; foreColor = #d8f4f7;}
-public void swatch7(){ resetSwatch(); swatchSel[7] = true; bkgdColor = #fef9f3; foreColor = #186767;}  
-public void swatch8(){ resetSwatch(); swatchSel[7] = true; bkgdColor = #186767; foreColor = #d8f4f7;}   
-public void swatch9(){ resetSwatch(); swatchSel[8] = true; bkgdColor = color(255, 255, 255, 0); foreColor = #ffffff;}    
+public void swatch0(){ resetSwatch(); swatchSel[0] = true; swatchButton[0].setImage(swatch[0]); bkgdColor = #ffffff; foreColor = #000000;}
+public void swatch1(){ resetSwatch(); swatchSel[1] = true; swatchButton[1].setImage(swatch[1]); bkgdColor = #000000; foreColor = #ffffff;}  
+public void swatch2(){ resetSwatch(); swatchSel[2] = true; swatchButton[2].setImage(swatch[2]); bkgdColor = #FEF9F3; foreColor = #000000;} 
+public void swatch3(){ resetSwatch(); swatchSel[3] = true; swatchButton[3].setImage(swatch[3]); bkgdColor = #fff3d2; foreColor = #FF7B5E;}   
+public void swatch4(){ resetSwatch(); swatchSel[4] = true; swatchButton[4].setImage(swatch[4]); bkgdColor = #ff7b5e; foreColor = #fff3d2;} 
+public void swatch5(){ resetSwatch(); swatchSel[5] = true; swatchButton[5].setImage(swatch[5]); bkgdColor = #d8f4f7; foreColor = #202a79;}
+public void swatch6(){ resetSwatch(); swatchSel[6] = true; swatchButton[6].setImage(swatch[6]); bkgdColor = #6497f9; foreColor = #d8f4f7;}
+public void swatch7(){ resetSwatch(); swatchSel[7] = true; swatchButton[7].setImage(swatch[7]); bkgdColor = #fef9f3; foreColor = #186767;}  
+public void swatch8(){ resetSwatch(); swatchSel[8] = true; swatchButton[8].setImage(swatch[8]); bkgdColor = #186767; foreColor = #d8f4f7;}   
+public void swatch9(){ resetSwatch(); swatchSel[9] = true; swatchButton[9].setImage(swatch[9]); bkgdColor = color(255, 255, 255, 0); foreColor = #ffffff;}    
 
-public void swatchAnim0(){ resetSwatchAnim(); swatchAnimSel[0] = true; bkgdColorAnim = #ffffff; foreColorAnim = #000000;}
-public void swatchAnim1(){ resetSwatchAnim(); swatchAnimSel[1] = true; bkgdColorAnim = #000000; foreColorAnim = #ffffff;}  
-public void swatchAnim2(){ resetSwatchAnim(); swatchAnimSel[2] = true; bkgdColorAnim = #FEF9F3; foreColorAnim = #000000;}  
-public void swatchAnim3(){ resetSwatchAnim(); swatchAnimSel[3] = true; bkgdColorAnim = #fff3d2; foreColorAnim = #FF7B5E;} 
-public void swatchAnim4(){ resetSwatchAnim(); swatchAnimSel[4] = true; bkgdColorAnim = #ff7b5e; foreColorAnim = #fff3d2;} 
-public void swatchAnim5(){ resetSwatchAnim(); swatchAnimSel[5] = true; bkgdColorAnim = #d8f4f7; foreColorAnim = #202A79;} 
-public void swatchAnim6(){ resetSwatchAnim(); swatchAnimSel[6] = true; bkgdColorAnim = #6497f9; foreColorAnim = #d8f4f7;}
-public void swatchAnim7(){ resetSwatchAnim(); swatchAnimSel[7] = true; bkgdColorAnim = #fef9f3; foreColorAnim = #186767;}
-public void swatchAnim8(){ resetSwatchAnim(); swatchAnimSel[7] = true; bkgdColorAnim = #186767; foreColorAnim = #d8f4f7;}  
-public void swatchAnim9(){ resetSwatchAnim(); swatchAnimSel[8] = true; bkgdColorAnim = color(255, 255, 255, 0); foreColorAnim = #ffffff;}  
+public void swatchAnim0(){ resetSwatchAnim(); swatchAnimSel[0] = true; swatchAnimButton[0].setImage(swatch[0]); bkgdColorAnim = #ffffff; foreColorAnim = #000000;}
+public void swatchAnim1(){ resetSwatchAnim(); swatchAnimSel[1] = true; swatchAnimButton[1].setImage(swatch[1]); bkgdColorAnim = #000000; foreColorAnim = #ffffff;}  
+public void swatchAnim2(){ resetSwatchAnim(); swatchAnimSel[2] = true; swatchAnimButton[2].setImage(swatch[2]); bkgdColorAnim = #FEF9F3; foreColorAnim = #000000;}  
+public void swatchAnim3(){ resetSwatchAnim(); swatchAnimSel[3] = true; swatchAnimButton[3].setImage(swatch[3]); bkgdColorAnim = #fff3d2; foreColorAnim = #FF7B5E;} 
+public void swatchAnim4(){ resetSwatchAnim(); swatchAnimSel[4] = true; swatchAnimButton[4].setImage(swatch[4]); bkgdColorAnim = #ff7b5e; foreColorAnim = #fff3d2;} 
+public void swatchAnim5(){ resetSwatchAnim(); swatchAnimSel[5] = true; swatchAnimButton[5].setImage(swatch[5]); bkgdColorAnim = #d8f4f7; foreColorAnim = #202A79;} 
+public void swatchAnim6(){ resetSwatchAnim(); swatchAnimSel[6] = true; swatchAnimButton[6].setImage(swatch[6]); bkgdColorAnim = #6497f9; foreColorAnim = #d8f4f7;}
+public void swatchAnim7(){ resetSwatchAnim(); swatchAnimSel[7] = true; swatchAnimButton[7].setImage(swatch[7]); bkgdColorAnim = #fef9f3; foreColorAnim = #186767;}
+public void swatchAnim8(){ resetSwatchAnim(); swatchAnimSel[8] = true; swatchAnimButton[8].setImage(swatch[8]); bkgdColorAnim = #186767; foreColorAnim = #d8f4f7;}  
+public void swatchAnim9(){ resetSwatchAnim(); swatchAnimSel[9] = true; swatchAnimButton[9].setImage(swatch[9]); bkgdColorAnim = color(255, 255, 255, 0); foreColorAnim = #ffffff;}  
 
 public void coreScale(float n){ coreScale = n; }
 public void xCount(int n){ xCount = n; }
