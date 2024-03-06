@@ -294,6 +294,6 @@ void configureLayoutSizes(){
   displayCoreW = displayCoreH/coreRatio;
   
   uiHeight = height - padding * 2;
-  uiUnit = uiHeight/36;
+  uiUnit = float(uiHeight)/36;
   uiLeftRule = width - uiWidth - padding + 20;
 }

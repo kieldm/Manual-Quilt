@@ -79,13 +79,13 @@ void drawControls(){
     swatchAnimButton[9] = cp5.addButton("swatchAnim9").setPosition(uiLeftRule + 325, 405).setSize(24, 24).setVisible(false).setImage(swatch[9]);
 
     // SCRUBBER
-    scrubToggle = cp5.addToggle("scrubMode").setPosition(uiLeftRule, padding + 36 * uiUnit - 10).setSize(30,12)
+    scrubToggle = cp5.addToggle("scrubMode").setPosition(uiLeftRule, padding + 35 * uiUnit - 10).setSize(30,12)
                              .setValue(true)
                              .setMode(ControlP5.SWITCH)
                              .setColorActive(uiForeColor)
                              .setCaptionLabel("");
     
-    scrubSlider = cp5.addSlider("scrubber").setPosition(uiLeftRule + 150, padding + 36 * uiUnit - 5).setSize(130, 6).setRange(0, 1).setValue(0).setLabelVisible(false).setVisible(false).setCaptionLabel("");    
+    scrubSlider = cp5.addSlider("scrubber").setPosition(uiLeftRule + 150, padding + 35 * uiUnit - 5).setSize(130, 6).setRange(0, 1).setValue(0).setLabelVisible(false).setVisible(false).setCaptionLabel("");    
 
     // WAVE
     waveDimensionToggle = cp5.addToggle("waveDimension").setPosition(uiLeftRule, padding + 18 * uiUnit - 10).setSize(30,12)
@@ -151,9 +151,9 @@ void drawControls(){
     resetCamera = cp5.addButton("resetCamera").setPosition(uiLeftRule, 32.5 * uiUnit).setSize(130, 25).setCaptionLabel("Reset Camera").setColorForeground(uiBkgdColor).setColorBackground(uiBkgdColor).setColorActive(uiBkgdColor);
     
     // EXPORT
-    exportSVG = cp5.addButton("exportSVG").setPosition(uiLeftRule + 320, padding + 32.5 * uiUnit).setSize(75, 25).setCaptionLabel("SVG").setColorForeground(uiBkgdColor).setColorBackground(uiBkgdColor).setColorActive(uiBkgdColor);
-    exportSeq = cp5.addButton("exportSeq").setPosition(uiLeftRule + 320, padding + 34 * uiUnit).setSize(75, 25).setCaptionLabel("Sequence").setColorForeground(uiBkgdColor).setColorBackground(uiBkgdColor).setColorActive(uiBkgdColor);
-    exportMP4 = cp5.addButton("exportMP4").setPosition(uiLeftRule + 320, padding + 35.5 * uiUnit).setSize(75, 25).setCaptionLabel("MP4").setColorForeground(uiBkgdColor).setColorBackground(uiBkgdColor).setColorActive(uiBkgdColor);
+    exportSVG = cp5.addButton("exportSVG").setPosition(uiLeftRule + 320, padding + 31.5 * uiUnit).setSize(75, 25).setCaptionLabel("SVG").setColorForeground(uiBkgdColor).setColorBackground(uiBkgdColor).setColorActive(uiBkgdColor);
+    exportSeq = cp5.addButton("exportSeq").setPosition(uiLeftRule + 320, padding + 33 * uiUnit).setSize(75, 25).setCaptionLabel("Sequence").setColorForeground(uiBkgdColor).setColorBackground(uiBkgdColor).setColorActive(uiBkgdColor);
+    exportMP4 = cp5.addButton("exportMP4").setPosition(uiLeftRule + 320, padding + 34.5 * uiUnit).setSize(75, 25).setCaptionLabel("MP4").setColorForeground(uiBkgdColor).setColorBackground(uiBkgdColor).setColorActive(uiBkgdColor);
 
     // EXPORT
     preset[0] = cp5.addButton("preset0").setPosition(uiLeftRule + 320, padding + 1.5 * uiUnit).setSize(75, 25).setCaptionLabel("Wave 1").setColorForeground(uiBkgdColor).setColorBackground(uiBkgdColor).setColorActive(uiBkgdColor);
@@ -181,7 +181,7 @@ void drawUI(){
     line(0, 12 * uiUnit, 325, 12 * uiUnit);
     line(0, 16.5 * uiUnit, 325, 16.5 * uiUnit);
     line(0, 23 * uiUnit, 325, 23 * uiUnit);
-    line(0, 34.5 * uiUnit, 325, 34.5 * uiUnit);
+    line(0, 34.25 * uiUnit, 325, 34.25 * uiUnit);
     line(325, 0, 325, uiHeight);
   pop();
   
@@ -214,9 +214,9 @@ void drawUI(){
     text("Loop Length", 150, 21 * uiUnit);
 
     text("Presets:", 320, uiUnit);
-    text("Export:", 320, 32 * uiUnit);
+    text("Export:", 320, 31 * uiUnit);
 
-    text("Play/Pause", 40, 36 * uiUnit);
+    text("Play/Pause", 40, 35 * uiUnit);
 
     if(radialWave){
       text("Radial Frequency", 0, 19 * uiUnit);
@@ -262,11 +262,11 @@ void drawUI(){
     rect(320, 9 * uiUnit, 75, 25, 25);
     
     // EXPORTS
-    rect(320, 32.5 * uiUnit, 75, 25, 25);
+    rect(320, 31.5 * uiUnit, 75, 25, 25);
     
     if(scrubMode){stroke(uiAccentColor);} else {stroke(uiForeColor);}
-    rect(320, 34 * uiUnit, 75, 25, 25);
-    rect(320, 35.5 * uiUnit, 75, 25, 25);
+    rect(320, 33 * uiUnit, 75, 25, 25);
+    rect(320, 34.5 * uiUnit, 75, 25, 25);
   pop();
   
   //push();
@@ -341,12 +341,12 @@ void rePositionControls(){
   preset[4].setPosition(uiLeftRule + 320, padding + 7.5 * uiUnit);
   preset[5].setPosition(uiLeftRule + 320, padding + 9 * uiUnit);
 
-  exportSVG.setPosition(uiLeftRule + 320, padding + 32.5 * uiUnit);
-  exportSeq.setPosition(uiLeftRule + 320, padding + 34 * uiUnit);
-  exportMP4.setPosition(uiLeftRule + 320, padding + 35.5 * uiUnit);
+  exportSVG.setPosition(uiLeftRule + 320, padding + 31.5 * uiUnit);
+  exportSeq.setPosition(uiLeftRule + 320, padding + 33 * uiUnit);
+  exportMP4.setPosition(uiLeftRule + 320, padding + 34.5 * uiUnit);
 
-  scrubToggle.setPosition(uiLeftRule, padding + 36 * uiUnit - 10);
-  scrubSlider.setPosition(uiLeftRule + 150, padding + 36 * uiUnit - 5);
+  scrubToggle.setPosition(uiLeftRule, padding + 35 * uiUnit - 10);
+  scrubSlider.setPosition(uiLeftRule + 150, padding + 35 * uiUnit - 5);
   
   swatchButton[0].setPosition(uiLeftRule, padding + 13.5 * uiUnit);
   swatchButton[1].setPosition(uiLeftRule + 30, padding + 13.5 * uiUnit);
