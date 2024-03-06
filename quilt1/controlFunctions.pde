@@ -328,7 +328,7 @@ public void resetValues(){
   resetCamera();
   animateCameraToggle.setValue(false);
   
-  scrubToggle.setValue(false);
+  scrubToggle.setValue(true);
 }
 
 public void preset0(){          ///////////////////// WAVE 1
